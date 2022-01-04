@@ -1,0 +1,33 @@
+
+// base
+@import 'base/index.scss';
+@import 'base/base.scss';
+
+
+// components
+@import 'components/headerTweeter.scss';
+@import 'components/userInfoBasic.scss';
+@import 'components/componentBtn.scss';
+@import 'components/filterPost.scss';
+@import 'components/fileImage.scss';
+
+@import 'components/post/showPost.scss';
+@import 'components/post/comments.scss';
+
+// Home page
+@import 'pages/home/home.scss';
+@import 'pages/home/createPost.scss';
+@import 'pages/home/trends.scss';
+@import 'pages/home/whoToFollow.scss';
+
+
+// Profile Page
+@import 'pages/profile/profile.scss';
+@import 'pages/profile/modalFollow.scss';
+@import 'pages/profile/itemUserModal.scss';
+
+// Explore Page
+@import 'pages/explore/explore.scss';
+
+// Moorkmarks Pages
+@import 'pages/bookmarks/bookmarks.scss';

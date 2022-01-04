@@ -1,0 +1,37 @@
+
+
+.home_container__main{
+
+    width: 100%;
+    // height: 100vh;
+    background-color: #E0E0E0;
+
+    padding-top: 24px;
+    display: flex;
+    justify-content: center;
+
+    .main__posts__aside{
+
+        display: flex;
+        flex-direction: row;
+        
+
+        .div__create_post_show{
+
+            display: flex;
+            flex-direction: column;
+            margin-right: 25px;
+
+        }
+
+        .div__section__aside{
+
+            display: flex;
+            flex-direction: column;
+
+
+        }
+
+    }
+
+}

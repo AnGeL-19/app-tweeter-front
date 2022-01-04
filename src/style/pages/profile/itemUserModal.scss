@@ -1,0 +1,30 @@
+
+.container_user_profile_basic{
+
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+
+    .user_profile_btn{
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 15px;
+
+    }
+
+    .user_biography{
+
+        .biography{
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 19px;
+            letter-spacing: -0.035em;
+
+            color: #828282;
+        }
+
+    }
+
+}

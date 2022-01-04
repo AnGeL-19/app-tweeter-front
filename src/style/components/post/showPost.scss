@@ -1,0 +1,278 @@
+
+.div__sohw_post{
+
+    width: 745px;
+
+    .show_posts{
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        .div__post{
+
+            width: 100%;
+            margin-bottom: 25px;
+
+            .div__retweet{
+
+                display: flex;
+                flex-direction: row; 
+                align-items: center;
+                margin-bottom: 10px;
+
+                .material-icons{
+                    font-size: 20px;
+                }
+                
+                .user_retweet{
+
+                    margin-left: 10px;
+
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 19px;
+                    
+                    letter-spacing: -0.035em;
+ 
+                }
+
+            }
+            
+            .post{
+
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+                border-radius: 8px;
+
+                .description_post{
+
+                    margin: 20px 0;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 22px;
+
+                    letter-spacing: -0.035em;
+
+                    color: #4F4F4F;
+
+                }
+
+                .image_post{
+
+                    width: 100%;
+                    min-height: 330px;
+                    // max-height: 360px;
+                    margin-bottom: 12px;
+
+                    img{
+                        width: 100%;
+                        height: 100%;
+
+                        object-fit: cover;
+                        border-radius: 8px
+                    }
+
+                }
+
+                .post__characteristics{
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    margin-bottom: 8px;
+
+                    .characteristics{
+
+                        margin-left: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 16px;
+                        letter-spacing: -0.035em;
+
+                        color: #BDBDBD;
+
+                    }
+
+                }
+
+                .btns_social_acations{
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    padding: 4px 0;
+
+                    border-top: 1px solid #F2F2F2;
+                    border-bottom: 1px solid #F2F2F2;
+
+                    .btn__social_action{
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 14px;
+                        line-height: 19px;
+    
+                        letter-spacing: -0.035em;
+    
+                        color: #4F4F4F;
+                        background-color: #fff;
+                    }
+
+                    .btn__social_action:hover{
+
+                        background: #F2F2F2;
+                        border-radius: 8px;
+                    }
+                    
+                    
+
+                    .material-icons{
+                        font-size: 17px;
+                    }
+
+
+                    .btn_saved:hover{
+                        color: #2D9CDB;
+
+                        .material-icons{
+                            color: #2D9CDB;
+                        }
+                    }
+
+                    .btn_retweets:hover{
+                        color: #27AE60;
+
+                        .material-icons{
+                            color: #27AE60;
+                        }
+
+                    }
+
+                    .btn_likes:hover{
+                        
+                        color: #EB5757;
+
+                        .material-icons{
+                            color: #EB5757;
+                        }
+                    }
+
+                    
+                }
+
+                .user__input_image_comment{
+
+                    display: flex;
+                    flex-direction: column;
+
+                    .img__input_comment{
+
+                        display: flex;
+                        flex-direction: row;
+                        padding: 10px 0;
+                        
+                        width: 100%;
+                        border-bottom: 1px solid #F2F2F2;
+    
+                        .img__comment{
+    
+                            width: 40px;
+                            height: 40px;
+                            margin-right: 15px;
+    
+                            img{
+    
+                                width: 40px;
+                                height: 100%;
+    
+                                object-fit: cover;
+                                border-radius: 8px;
+    
+                            }
+    
+                        }
+    
+                        form{
+
+                            width: 100%;
+
+                            .txt_comments{
+    
+                                position: relative;
+                                width: 100%;
+                                height: 40px;
+        
+                                #txtcomment{
+        
+                                    width: 100%;
+                                    height: 100%;
+                                    padding: 9px 35px 9px 12px;
+        
+                                    font-style: normal;
+                                    font-weight: 500;
+                                    font-size: 14px;
+                                    line-height: 19px;
+        
+                                    letter-spacing: -0.035em;
+                                    background: #FAFAFA;
+                                    border: 1px solid #F2F2F2;
+           
+                                    border-radius: 8px;
+        
+                                    color: #BDBDBD;
+                                    resize: none;
+                                    
+                                    outline: none;
+                                }
+        
+                                .gallery_file{
+                                    position: absolute;
+                                    
+                                   
+                                    right: 8px;
+                                    top: 8px;
+                                    z-index: 999;
+        
+                                    label{
+                                        
+                                        .material-icons{
+                                            padding: 5px;
+                                            font-size: 15px;
+                                        }
+        
+                                        .material-icons:hover{
+                                            border-radius: 5px;
+                                            color: #6d6d6d;
+                                            background-color: #b3b3b3;
+                                        }
+        
+                                    }
+                                }
+        
+                            }
+        
+                        }
+                        
+                    }
+
+                }
+                
+
+                
+                
+
+            }
+
+
+        }
+
+        
+
+    }
+
+}

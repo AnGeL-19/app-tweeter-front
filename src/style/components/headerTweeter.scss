@@ -1,0 +1,196 @@
+
+.header__nav{
+
+    width: 100%;
+    height: 68px;
+    padding: 0 5%;
+
+    .header__nav__divs{
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        
+
+        .nav__list{
+
+            height: 100%;
+            
+            .nav__list__ul{
+                
+                height: 100%;
+                width: 500px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                
+                
+
+                .item__li{
+
+                    height: 100%;
+                    width: 80px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    list-style: none;
+                    text-align: center;
+                    
+                    .nav_item{
+                        
+                        text-decoration: none;
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 21px;
+                        color: #2F80ED;
+                    }
+
+                    .underline__nav{
+                        height: 3px;
+                        width: 100%;
+                        margin-top: 15px;
+                        border-radius: 8px 8px 0px 0px;
+                    }
+
+                    .active{
+                        background-color: #2F80ED;
+                    }
+
+                }
+
+            }
+
+        }
+
+        .div__profile_user{
+
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .img_user{
+
+                width: 32px;
+                height: 32px;
+                margin-right: 11px;
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 6px;
+                    object-fit: cover;
+                }
+
+            }
+
+            .span__user_name{
+
+                margin-right: 16px;
+                
+                font-style: normal;
+                font-weight: bold;
+                font-size: 12px;
+                line-height: 16px;
+                letter-spacing: -0.035em;
+
+                color: #333333;
+            }
+
+            .menu{
+
+                background-color: #fff;
+                color: #333333;
+                display: flex;
+                align-items: center;
+
+                .material-icons:hover{
+                    background-color: rgb(236, 236, 236);
+                    border-radius: 50%;
+                }
+
+                .menuActive{
+                    background-color: rgb(236, 236, 236);
+                    border-radius: 50%;
+                }
+
+            }
+            
+
+            .menu_profile{
+
+                position: absolute;
+                top: 58px;
+                left: -35px;
+                z-index: 99999;
+                
+                padding: 15px 13px;
+                width: 192px;
+                // height: 100px;
+                background-color: #fff;
+                border: 1px solid #E0E0E0;
+
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+                border-radius: 12px;
+
+                .items_menu{
+
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+
+                    width: 100%;
+                    padding: 11px 13px;
+
+                    .material-icons{
+
+                        font-size: 22px;
+
+                    }
+
+                    .txt{
+
+                        margin-left: 10px;
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 16px;
+                        letter-spacing: -0.035em;
+
+                        
+
+                    }
+
+                }
+
+                .items_menu:hover{
+                    background-color: #F2F2F2;
+                    border-radius: 8px;
+                }
+
+                .line{
+                    margin:10px 0;
+                    width: 100%;
+                    border: 1px solid #E0E0E0;
+                }
+
+                .logout{
+                    color: #EB5757;
+                }
+
+                .logoutHover:hover{
+                    background-color: #eb57577c;
+                }
+
+            }
+
+        }
+
+    }
+
+}
+

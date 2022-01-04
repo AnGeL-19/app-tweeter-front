@@ -1,0 +1,264 @@
+.div__create_post{
+
+    width: 745px;
+    margin-bottom: 25px;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+
+    .title{
+
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 18px;
+        /* identical to box height */
+
+        letter-spacing: -0.035em;
+
+        /* Gray 2 */
+
+        color: #4F4F4F;
+    }
+
+    .line{
+        width: 100%;
+        height: 1px;
+        background-color: #E0E0E0;
+        border-radius: .5px;
+        margin-bottom: 8px;
+    }
+
+    .img__inputs__post{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        .img__user{
+            width: 44px;
+            height: 40px;
+            margin-right: 12px;
+
+            img{
+                width: 100%;
+                height: 100%;
+                border-radius: 7px;
+                object-fit: cover;
+            }
+        }
+
+        .form__img__btn{
+
+            width: 100%;
+            height: 100%;
+
+            .txt__image__icons__btn{
+        
+                // width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                .div__txt{
+                    // width: 100%;
+
+                    width: 100%;
+                    height: 70px;
+                    max-height: 70px;
+                    background-color: #4F4F4F;
+                    margin-bottom: 10px;
+                    
+                    #txtTweeter{
+                        width: 100%;
+                        height: 100%;
+                        max-height: 80px;
+                        padding-top: 8px;
+                        // max-height: 70px;
+
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 22px;
+                        /* identical to box height */
+
+                        letter-spacing: -0.035em;
+
+                        /* Gray 4 */
+
+                        color: #BDBDBD;
+                        resize: none;
+                        border-style: none;
+                        outline: none;
+                    }
+
+                }
+
+                
+
+            }
+
+            .div__icons__btn{
+
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                .div__img__privacity{
+
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+
+                        .hover_reply{
+                            padding: 5px;
+                            border-radius: 8px;
+                        }
+
+                        .hover_reply:hover{
+                            background-color: #b3d3fd; 
+                        }
+              
+                        .icons_select{
+
+                            
+                            display: flex;
+                            align-items: center;
+                            cursor: pointer;
+
+                            label{
+                                display: flex;
+                                align-items: center;
+                            }
+
+                            .txtIcon{
+                                font-weight: 500;
+                                font-size: 12px;
+                                line-height: 16px;
+                                letter-spacing: -0.035em;
+                                
+                                /* Blue 1 */
+                                
+                                color: #2F80ED;
+                            }
+
+                        }
+                    
+
+                    .material-icons{
+            
+                        width: 16px;
+                        height: 16px;
+                        font-size: 16px;
+                        cursor: pointer;
+                    }
+
+                    
+
+                    .div__menu_select{
+
+                        position: relative;
+
+                        .div__menu{
+
+                            position: absolute;
+                            width: 235px;
+                            padding: 9px 12px;
+                            margin-top: 22px;
+                            z-index: 9999;
+
+                            background-color: #fff;
+                            border: 1px solid #E0E0E0;
+               
+                            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+                            border-radius: 12px;
+
+                            .div__title_description{
+
+                                display: flex;
+                                flex-direction: column;
+                                margin-bottom: 8px;
+
+                                .title{
+
+                                    margin-bottom:3px;
+
+                                    font-style: normal;
+                                    font-weight: 600;
+                                    font-size: 12px;
+                                    line-height: 18px;
+
+                                    letter-spacing: -0.035em;
+
+                                    color: #4F4F4F;
+                                }
+
+
+                                .description{
+
+                                    font-style: normal;
+                                    font-weight: normal;
+                                    font-size: 12px;
+                                    line-height: 16px;
+                                    letter-spacing: -0.035em;
+                                    
+                                }
+
+                            }
+
+                            .select_privacity{
+
+                                display: flex;
+                                flex-direction: column;
+                                
+                                .privacity{
+
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
+                                    padding: 11px 13px;
+
+                                    .reply{
+                                        font-style: normal;
+                                        font-weight: 500;
+                                        font-size: 12px;
+                                        line-height: 16px;
+                                        letter-spacing: -0.035em;
+                                    }
+
+                                }
+
+                                .privacity:hover{
+
+                                    background-color: #F2F2F2;
+                                    border-radius: 8px;
+
+                                    span{
+                                        
+                                        color: #828282;
+                                    }
+
+                                }
+
+                                
+
+                            }
+
+                        }
+
+                    }
+                }
+
+                .btn__right{
+
+                    width: 81px;
+                    height: 32px;
+                    
+                    
+
+                }
+
+            }
+
+        }
+    }
+}
