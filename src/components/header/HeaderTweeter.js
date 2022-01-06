@@ -5,7 +5,8 @@ import {
     useLocation
   } from "react-router-dom";
 
-import LogoTweeter from '../static/tweeter.svg';
+import LogoTweeter from '../../static/tweeter.svg';
+import { MenuHeader } from './MenuHeader';
 
 const PATHS = {
     home: '/home',
@@ -76,39 +77,7 @@ export const HeaderTweeter = () => {
                         {
                             showMenu
                             && 
-                            (
-
-                            <div className="menu_profile">
-                                <div className="items_menu">
-                                    <span className="material-icons gray2Color">
-                                        account_circle
-                                    </span>
-                                    <span className="txt gray2Color">My Profile</span>
-                                </div>
-                                <div className="items_menu">
-                                    <span className="material-icons gray2Color">
-                                        people
-                                    </span>
-                                    <span className="txt gray2Color">Group Chat</span>
-                                </div>
-                                <div className="items_menu ">
-                                    <span className="material-icons gray2Color">
-                                        settings
-                                    </span>
-                                    <span className="txt gray2Color">Settings</span>
-                                </div>
-
-                                <div className="line"></div>
-
-                                <div className="items_menu logoutHover">
-                                    <span className="material-icons logout">
-                                        logout
-                                    </span>
-                                    <span className="txt logout">Logout</span>
-                                </div>
-                            </div>
-
-                            )
+                            <MenuHeader />
                         }
                         
                     </div>

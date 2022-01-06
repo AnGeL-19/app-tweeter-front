@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeaderTweeter } from '../components/HeaderTweeter'
+import { HeaderTweeter } from '../components/header/HeaderTweeter';
 import { CreatePost } from '../components/home/CreatePost';
 import { Trends } from '../components/home/Trends';
 import { WhoToFollow } from '../components/home/WhoToFollow';

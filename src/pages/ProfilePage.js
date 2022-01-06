@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
 import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
-import { HeaderTweeter } from '../components/HeaderTweeter'
+import { HeaderTweeter } from '../components/header/HeaderTweeter'
+
 import { ModalFollow } from '../components/profile/ModalFollow'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FilterPost } from '../components/FilterPost'
-import { HeaderTweeter } from '../components/HeaderTweeter'
+import { HeaderTweeter } from '../components/header/HeaderTweeter'
+
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 
 export const BookmarksPage = () => {

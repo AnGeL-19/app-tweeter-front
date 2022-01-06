@@ -5,7 +5,8 @@
 
 
 // components
-@import 'components/headerTweeter.scss';
+@import 'components/header/headerTweeter.scss';
+@import 'components/header/menuHeader.scss';
 @import 'components/userInfoBasic.scss';
 @import 'components/componentBtn.scss';
 @import 'components/filterPost.scss';

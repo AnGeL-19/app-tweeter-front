@@ -1,7 +1,8 @@
 import React from 'react'
 import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
-import { HeaderTweeter } from '../components/HeaderTweeter'
+import { HeaderTweeter } from '../components/header/HeaderTweeter'
+
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 
 export const ExplorePage = () => {
