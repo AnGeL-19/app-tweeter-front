@@ -1,14 +1,26 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
     NavLink
   } from "react-router-dom";
+import { logoutUser } from '../../action/authAction';
+
 
 export const MenuHeader = () => {
+
+    const dispatch = useDispatch();
+    const {user} = useSelector(state => state.auth);
+
+    const handleLogout = () => {
+        console.log("si jala");
+        dispatch(logoutUser());
+    }
+
     return (
         <div className="menu_profile">
             <div className="items_menu">
-                <NavLink to="/profile" 
+                <NavLink to={`/profile/${user.uid}`} 
                         className="nav_item"
                         activeClassName="selected">
                     <span className="material-icons gray2Color">
@@ -41,14 +53,12 @@ export const MenuHeader = () => {
             <div className="line"></div>
 
             <div className="items_menu logoutHover">
-                <NavLink to="/" 
-                        className="nav_item"
-                        activeClassName="selected">
+                <div className="nav_item" onClick={handleLogout}>
                     <span className="material-icons logout">
                         logout
                     </span>
-                    <span className="txt logout">Logout</span>
-                </NavLink>
+                    <span className="txt logout" >Logout</span>
+                </div>
             </div>
         </div>
     )

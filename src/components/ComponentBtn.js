@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const ComponentBtn = ({big,normal,median,addicon,txtBtn,functionBtn}) => {
+export const ComponentBtn = ({big,normal,median,full,addicon,txtBtn,functionBtn}) => {
 
 
 
@@ -13,7 +13,8 @@ export const ComponentBtn = ({big,normal,median,addicon,txtBtn,functionBtn}) => 
             `btn-icon 
             ${normal ? 'btn-normal':''} 
             ${big ? 'btn-big' : ''}
-            ${median ? 'btn-median' : ''}`}>
+            ${median ? 'btn-median' : ''}
+            ${full ? 'btn-full' : ''}`}>
 
             {
                 addicon

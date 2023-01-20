@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import {
     NavLink,
-    useLocation
+    useRouteMatch
   } from "react-router-dom";
 
 import LogoTweeter from '../../static/tweeter.svg';
@@ -12,19 +13,21 @@ const PATHS = {
     home: '/home',
     explore: '/explore',
     bookmarks: '/bookmarks',
-    profile: '/profile',
+    profile: '/profile/:id',
 }
 
 export const HeaderTweeter = () => {
 
-    let location = useLocation();
+    const match = useRouteMatch()
+
+    const {user} = useSelector(state => state.auth);
     const [path, setPath] = useState('');
 
     const [showMenu, setShowMenu] = useState(false);
 
     useEffect(() => {
-        setPath(location.pathname);
-    }, [location])
+        setPath(match.path);
+    }, [match])
 
     return (
         <div>
@@ -64,9 +67,9 @@ export const HeaderTweeter = () => {
                     </div>
                     <div className="div__profile_user">
                         <div className="img_user">
-                            <img src="https://th.bing.com/th/id/OIP.ia3f6X2LTEwPjGX6Pdmk4gHaHa?pid=ImgDet&rs=1" alt="userimg" />
+                            <img src={user.imgUser} alt="userimg" />
                         </div>
-                        <span className="span__user_name">Xanthe Neal</span>
+                        <span className="span__user_name">{user.name}</span>
                         <button className="menu"
                                 onClick={()=> setShowMenu(!showMenu)}>
                             <span className={`material-icons ${showMenu ? 'menuActive' : ''} `}>
@@ -76,7 +79,7 @@ export const HeaderTweeter = () => {
 
                         {
                             showMenu
-                            && 
+                                && 
                             <MenuHeader />
                         }
                         

@@ -1,31 +1,45 @@
-import React, { useContext, useEffect } from 'react'
-import { ContextShowModal } from '../../pages/ProfilePage';
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchGetApi } from '../../helpers/fetch';
 import { ItemUserModal } from './ItemUserModal'
 
-export const ModalFollow = () => {
+export const ModalFollow = ({isFollowers, setShowModal}) => {
 
-    const {handleShowModalFollowers,handleShowModalFollowing} = useContext(ContextShowModal);
+    const {user, token} = useSelector(state => state.auth);
+    const params = useParams();
+    // const {token} = useSelector(state => state.auth.token);
+    // const {handleShowModalFollowers,handleShowModalFollowing} = useContext(ContextShowModal);
+    const [data, setData] = useState({})
+    console.log(data);
 
     useEffect(() => {
-        console.log("hola");
+        console.log(token);
+        const url = !isFollowers ? `user/followers/${params.id}`:`user/following/${params.id}`
+        const follow = async () => {
+            const rest = await fetchGetApi(url,token)
+            const restData = await rest.json()
+            console.log(restData);
+            setData(restData);
+        } 
+
+        follow()
         return () => {
             console.log("salir");
         }
-    }, [])
+    }, [isFollowers])
 
     return (
         <div className="container_modal">
-
-            
 
             <div className="modal_main">
 
                 <div className="user__btn_exit">
                     <div className="div_name_user">
-                        <span className="name_user_following">Daniel Jensen is following</span>
+                        <span className="name_user_following">{user.name} is {isFollowers ? 'Following':'Followers'}</span>
                     </div>
                     <div className="btn_exit">
-                        <button onClick={handleShowModalFollowers || handleShowModalFollowing}>
+                        <button onClick={() => setShowModal(false)}>
                             <span className="material-icons">
                                 close
                             </span>
@@ -35,18 +49,18 @@ export const ModalFollow = () => {
                 
                 <div className="users_followers">
 
-                    <div className="line"></div>
-                    <ItemUserModal />
+                    {
+                        data.users
+                        &&
+                        data.users.map((user,index) => (
+                            <>
+                                <div className="line"></div>
+                                <ItemUserModal key={user.uid+index} user={user} isFollowers={isFollowers}/>
+                            </>
+                        ))
 
-                    <div className="line"></div>
-                    <ItemUserModal />
+                    }
                     
-                    <div className="line"></div>
-                    <ItemUserModal />
-
-                    <div className="line"></div>
-                    <ItemUserModal />
-
                 </div>                
 
             </div>

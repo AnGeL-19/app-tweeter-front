@@ -1,36 +1,58 @@
 import React from 'react'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
+import { fetchGetApi } from '../helpers/fetch'
 
 export const ExplorePage = () => {
 
-    const objFilter = {
-        filter1: {
+    const {token} = useSelector(state => state.auth);
+    const [dataTweets, setDataTweets] = useState([])
+    
+    console.log(dataTweets);
+    useEffect(() => {
+        
+        const respData = async () => {
+            const data = await fetchGetApi('tweets/populates',token)
+            const resp = await data.json();
+
+            setDataTweets(resp.tweets)
+        }
+        respData()
+
+        return () => {
+            
+        }
+    }, [])
+
+    const objFilter = [
+        {
             nameObj: 'top',
             select: true,
             name: 'Top'
         },
-        filter2: {
+        {
             nameObj: 'lastest',
             select: false,
             name: 'Lastest'
         },
-        filter3: {
+        {
             nameObj: 'people',
             select: false,
             name: 'People'
         },
-        filter4: {
+        {
             nameObj: 'media',
             select: false,
             name: 'Media'
         },
-    }
+    ]
 
-    
 
     return (
         <div>
@@ -60,7 +82,7 @@ export const ExplorePage = () => {
 
                         </form>
 
-                        <ShowPosts />
+                        <ShowPosts tweets={dataTweets}/>
                       
                     </div>
 

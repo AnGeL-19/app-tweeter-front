@@ -2,19 +2,19 @@ import React from 'react'
 import { Post } from './Post'
 
 
-export const ShowPosts = () => {
-
-    
+export const ShowPosts = ({tweets}) => {
 
     return (
         <div className="div__sohw_post">
 
             <section className="show_posts">
 
-                <Post />
-
-                <Post />
-
+                {
+                    tweets.map((tweet,index) => (
+                        <Post key={tweet.tid+index} tweet={tweet} tid={tweet.tid+index}/>
+                    ))
+                }
+                
             </section>      
 
         </div>

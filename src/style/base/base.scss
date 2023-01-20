@@ -12,6 +12,14 @@
     margin-right: 9px;
 }
 
+.mrg_t_9{
+    margin-top: 9px;
+}
+
+.mrg_b_9{
+    margin-bottom: 9px;
+}
+
 .primaryColor{
     color: #2F80ED;
 }
@@ -32,3 +40,15 @@
     background-color: #b3d3fd; 
 }
 
+.input_basic{
+    padding: 10px 10px;                    
+    width: 100%;
+    background: #FAFAFA;
+    border: 1px solid #F2F2F2;
+    border-radius: 8px;
+
+    color: #BDBDBD;
+    resize: none;
+
+    outline: none;
+}

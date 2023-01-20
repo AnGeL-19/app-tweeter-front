@@ -89,11 +89,16 @@
                         resize: none;
                         border-style: none;
                         outline: none;
+
                     }
 
                 }
 
-                
+                .div_add_url{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                }
 
             }
 
@@ -135,7 +140,7 @@
                                 font-size: 12px;
                                 line-height: 16px;
                                 letter-spacing: -0.035em;
-                                
+                                text-transform: capitalize;
                                 /* Blue 1 */
                                 
                                 color: #2F80ED;
@@ -231,6 +236,7 @@
 
                                     background-color: #F2F2F2;
                                     border-radius: 8px;
+                                    cursor: pointer;
 
                                     span{
                                         

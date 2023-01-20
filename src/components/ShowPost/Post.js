@@ -1,24 +1,30 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { fetchApi, fetchGetApi } from '../../helpers/fetch'
+import { hashtagText } from '../../helpers/findHashtag'
 import { FileImage } from '../FileImage'
 import { UserInfoBasic } from '../UserInfoBasic'
 import { Comments } from './Comments'
 
-export const Post = () => {
+export const Post = ({tweet,tid}) => {
 
-    const user = {
-        img: 'https://th.bing.com/th/id/OIP.ia3f6X2LTEwPjGX6Pdmk4gHaHa?pid=ImgDet&rs=1',
-        name: 'Mikael Stanley',
-        other: '24 August at 20:43 ',
-    }
-
+    const {userTweet} = tweet;
+    const {token,user} = useSelector(state => state.auth);
     const extensions = ["jpg","png","gif","svg"];
 
+    const [addComment, setAddComment] = useState(false);
     const [imageCmt, setImageCmt] = useState(null);
 
-    const [valuesCmt, setValuesCmt] = useState({
-        txtCmt: "",
-    });
+    const [valuesStatus, setValuesStatus] = useState({
+        likes: tweet.likes || [],
+        retweets: tweet.retweets || [],
+        saved: tweet.saved || [],
+        comments: tweet.comentPeople || []
+    })
 
+    // console.log(valuesStatus);
+
+    const [valuesCmt, setValuesCmt] = useState('');
 
     const handleEliminateImgComment = () => {
         console.log("eliminar");
@@ -59,51 +65,183 @@ export const Post = () => {
         
     }
 
-    const handleSubmit = (e) => {
+    const handleLike = async () => {
+        const respt = await fetchApi({
+            idTweet: tweet.tid
+        },
+        'tweet/like', 
+        'PUT',
+        token)
+        const info = await respt.json();
+        if(info.ok){
+            if (valuesStatus.likes.includes(user.uid)) {
+                setValuesStatus(status => ({
+                    ...status,
+                    likes: valuesStatus.likes.filter(likeUser => likeUser !== user.uid)
+                }))
+            }else{
+                setValuesStatus(status => ({
+                    ...status,
+                    likes: [...valuesStatus.likes, user.uid]
+                }))
+            }
+        }else{
+            console.log(info);
+        }
+    }
+
+    const handleAddComment = () => {
+        console.log('commetns');
+        setAddComment(!addComment);
+        setValuesCmt('')
+    }
+
+    const handleRetweet = async () => {
+        console.log('Retweet');
+        const respt = await fetchApi({
+            idTweet: tweet.tid
+        },
+        'tweet/retweet', 
+        'PUT',
+        token)
+        const info = await respt.json();
+        if(info.ok){
+            if (valuesStatus.retweets.includes(user.uid)) {
+                setValuesStatus(status => ({
+                    ...status,
+                    retweets: valuesStatus.retweets.filter(retweet => retweet !== user.uid)
+                }))
+            }else{
+                setValuesStatus(status => ({
+                    ...status,
+                    retweets: [...valuesStatus.retweets, user.uid]
+                }))
+            }
+        }else{
+            console.log(info);
+        }
+    }
+
+    const handleSaved = async () => {
+        console.log('Saved');
+        const respt = await fetchApi({
+            idTweet: tweet.tid
+        },
+        'tweet/save', 
+        'PUT',
+        token)
+        const info = await respt.json();
+        if(info.ok){
+            if (valuesStatus.saved.includes(user.uid)) {
+                setValuesStatus(status => ({
+                    ...status,
+                    saved: valuesStatus.saved.filter(save => save !== user.uid)
+                }))
+            }else{
+                setValuesStatus(status => ({
+                    ...status,
+                    saved: [...valuesStatus.saved, user.uid]
+                }))
+            }
+        }else{
+            console.log(info);
+        }
+    }
+
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
+        console.log("holis",valuesCmt);
+        const respt = await fetchApi({
+            idTweet: tweet.tid,
+            comment : valuesCmt       
+        },
+        'tweet/msg', 
+        'POST',
+        token)
+        const info = await respt.json();
 
-        console.log("holis");
+        if (info.ok) {
 
-
+            const { userComment, ...rest } = info.newCommet
+            const newCmmt = {
+                ...rest,
+                userComment: {
+                    uid: user.uid,
+                    name: user.name,
+                    imgUser: user.imgUser
+                }
+            }
+            setValuesStatus(status => ({
+                ...status,
+                comments: [...valuesStatus.comments, newCmmt]
+            }))
+            setAddComment(!addComment);
+            setValuesCmt('')
+        }else{
+            console.log(info);
+        }
+ 
     }
 
 
     return (
         <div className="div__post">
 
-            <div className="div__retweet">
-                <span className="material-icons gray3Color">
-                cached
-                </span>
-                <span className="user_retweet gray3Color">
-                    Daniel Jensen Retweeted
-                </span>
-            </div>
+            {
+                tweet.retweetUser
+                &&
+                (
+                <div className="div__retweet">
+                    <span className="material-icons gray3Color">
+                    cached
+                    </span>
+                    <span className="user_retweet gray3Color">
+                        {tweet.retweetUser}
+                    </span>
+                </div>
+                )
+            }
+            
 
             <div className="post">
 
-                <UserInfoBasic  img={user.img} 
-                                name={user.name} 
-                                other={user.other} />
+                <UserInfoBasic uid={userTweet.uid}  
+                                img={userTweet.imgUser} 
+                                name={userTweet.name} 
+                                date={tweet.date}
+                                followers={userTweet.followers} 
+                                addDate
+                                />
 
-                <p className="description_post">
-                    Traveling – it leaves you speechless, then turns you into a storyteller.
+                <p className="description_post"
+                >
+                    {hashtagText(tweet.description)}
                 </p>
 
-                <div className="image_post">
-                    <img src="https://www.highdefwallpaper.com/wp-content/uploads/2017/06/a-screenshot-from-space-engine.jpg" alt="" />
-                </div>
+                {
+                    tweet.imgTweet
+                        &&
+                    (
+                        <div className="image_post">
+                            <img src={tweet.imgTweet} alt="" />
+                        </div>
+                    )
+                }
+                
 
                 <div className="post__characteristics">
-                    <span className="characteristics">449 Comments</span>
-                    <span className="characteristics">59k Retweets</span>
-                    <span className="characteristics">234 Saved</span>
+                    <span className="characteristics">{valuesStatus.comments.length || 0} Comments</span>
+                    <span className="characteristics">{valuesStatus.retweets.length || 0} Retweets</span>
+                    <span className="characteristics">{valuesStatus.likes.length || 0} Likes</span>
+                    <span className="characteristics">{valuesStatus.saved.length || 0} Saved</span>
                 </div>
 
                 <div className="btns_social_acations">
 
-                    <button className="btn_comments btn-icon btn__social_action">
+                    <button 
+                    onClick={handleAddComment}
+                    className= {`btn_comments btn-icon btn__social_action`}>
                         <span className="material-icons">
                             mode_comment
                         </span>
@@ -111,100 +249,125 @@ export const Post = () => {
                             Comment
                         </span>
                     </button>
-                    <button className="btn_retweets 
-                                        btn-icon
-                                        btn__social_action">
+                    <button
+                    onClick={handleRetweet} 
+                    className={`btn_retweets btn-icon btn__social_action ${
+                        valuesStatus.retweets.includes(user.uid) ? 'btn_retweets_retweeted': ''
+                    }`}>
                         <span className="material-icons">
                             cached
                         </span>
                         <span>
-                            Retweet
+                            {valuesStatus.retweets.includes(user.uid) ? 'Retweeted': 'Retweet'}
                         </span>
                     </button>
-                    <button className="btn_likes btn-icon btn__social_action">
+                    <button 
+                    onClick={handleLike}
+                    className={`btn_likes btn-icon btn__social_action ${
+                        valuesStatus.likes.includes(user.uid) ? 'btn_likes_liked': ''
+                    }`}>
                         <span className="material-icons">
                             favorite_border
                         </span>
                         <span>
-                            Like
+                            {valuesStatus.likes.includes(user.uid) ? 'Liked': 'Like'}
                         </span>
                     </button>
-                    <button className="btn_saved btn-icon btn__social_action">
+                    <button 
+                    onClick={handleSaved}
+                    className={`btn_saved btn-icon btn__social_action ${
+                        valuesStatus.saved.includes(user.uid) ? 'btn_save_saved': ''
+                    }`}>
                         <span className="material-icons">
                             bookmark_border
                         </span>
-                        <span>
-                            Saved
+                        <span> 
+                            {valuesStatus.saved.includes(user.uid) ? 'Saved': 'Save'}
                         </span>
                     </button>
 
                 </div>
 
-                <div className="user__input_image_comment">
+                {
 
-                    <div className="img__input_comment">
+                    addComment
+                    &&
+                    (
+                        <div className="user__input_image_comment">
 
-                        <div className="img__comment">
-                            <img src={user.img}  alt={user.name}/>
+                        <div className="img__input_comment">
+
+                            <div className="img__comment">
+                                <img src={userTweet.imgUser}  alt={userTweet.name}/>
+                            </div>
+
+                            <form onSubmit={handleSubmit}>
+                                <div className="txt_comments">
+                                    <textarea 
+                                    id="txtcomment"
+                                    placeholder="Tweet your reply"
+                                    onChange={(e) => setValuesCmt(e.target.value)}
+                                    >
+
+                                    </textarea>
+                                    <div className="gallery_file">
+
+                                        <input type="file" 
+                                            id={tid} // poner id de delpost
+                                            hidden
+                                            accept=".jpg, .jpeg, .png" 
+                                            onChangeCapture={handleFileChangeCmt}
+                                            multiple/>
+
+                                        <label htmlFor={tid} // poner id de delpost
+                                                                        > 
+                                            <span className="material-icons gray3Color">
+                                                    collections
+                                            </span>
+
+                                        </label>
+
+                                        {
+                                            valuesCmt.length > 0
+                                            &&
+                                            (
+                                            <button type='submit'>
+                                                <span className="material-icons gray3Color">
+                                                        send
+                                                </span>
+                                            </button>
+                                            )
+                                        }
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </form>
+
                         </div>
 
-                        <form onSubmit={handleSubmit}>
-                            <div className="txt_comments">
-                                <textarea id="txtcomment"
-                                placeholder="Tweet your reply">
+                        {
+                            imageCmt
+                            &&
+                            <FileImage image={imageCmt} 
+                                        functionCmt={handleEliminateImgComment}
+                                        small />
+                        }
+                        </div>
+                    )
 
-                                </textarea>
-                                <div className="gallery_file">
 
-                                    <input type="file" 
-                                        id="fileGalleryCmt" // poner id de delpost
-                                        hidden
-                                        accept=".jpg, .jpeg, .png" 
-                                        onChangeCapture={handleFileChangeCmt}
-                                        multiple />
-
-                                    <label htmlFor="fileGalleryCmt"  // poner id de delpost
-                                                                    > 
-                                   
-                                        <span className="material-icons gray3Color">
-                                                collections
-                                        </span>
-
-                                    </label>
-                                </div>
-                                
-                            </div>
-                        </form>
-
-                    </div>
-                    
-
-                    {
-                        imageCmt
-                        &&
-                        <FileImage image={imageCmt} 
-                                    functionCmt={handleEliminateImgComment}
-                                    small />
-                        // <div className="file_img">
-                        //     <div className="btn_exit">
-                        //         <button onClick={handleEliminateImg}>
-                        //             <span className="material-icons">
-                        //                 close
-                        //             </span>
-                        //         </button>
-                        //     </div>
-                        //     <div className="image_post">
-                        //         <img src={image} alt="userimg" />
-                        //     </div>   
-                        // </div>
-                    }
-                </div>
+                }
+                
 
                 {/* crear componente */}
                 <div className="people_comments">
                     
-                    <Comments />
-                    <Comments />
+                    {
+                        valuesStatus.comments.map((comment) => (
+                            <Comments key={comment.cid} comment={comment} />
+                        ))
+                    }
 
                 </div>
             </div>

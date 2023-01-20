@@ -1,11 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { fetchApi } from '../../helpers/fetch';
+import { hashtagText } from '../../helpers/findHashtag';
+import { dateFormat } from '../../helpers/formatDate'
 
-export const Comments = () => {
+export const Comments = ({comment}) => {
 
-    const user = {
-        img: 'https://th.bing.com/th/id/OIP.ia3f6X2LTEwPjGX6Pdmk4gHaHa?pid=ImgDet&rs=1',
-        name: 'Mikael Stanley',
-        other: '24 August at 20:43 ',
+    const {token,user} = useSelector(state => state.auth);
+    const [valuesStatus, setValuesStatus] = useState({
+        likes: comment.likes || [],
+    })
+
+    const handleLike = async () => {
+        
+        console.log(token,user.uid);
+        const respt = await fetchApi({
+            idComment: comment.cid
+        },
+        'tweet/likeCmmt', 
+        'PUT',
+        token)
+        const info = await respt.json();
+        if(info.ok){
+            if (valuesStatus.likes.includes(user.uid)) {
+                setValuesStatus(status => ({
+                    ...status,
+                    likes: valuesStatus.likes.filter(likeUser => likeUser !== user.uid)
+                }))
+            }else{
+                setValuesStatus(status => ({
+                    ...status,
+                    likes: [...valuesStatus.likes, user.uid]
+                }))
+            }
+        }else{
+            console.log(info);
+        }
     }
 
     return (
@@ -13,35 +43,59 @@ export const Comments = () => {
         <div className="user_comment">
 
             <div className="img_user">
-                <img src={user.img} alt={user.name}/>
+                <img src={comment.userComment.imgUser} alt={comment.userComment.name}/>
             </div>
             <div className="comment_likes">
                 <div className="info_comment">
                     <div className="info_user">
                         <span className="name_user">
-                            Waqar Bloom
+                            {comment.userComment.name}
                         </span>
                         <span className="date_comment">
-                            24 August at 20:43 
+                            {dateFormat(comment.date)}
                         </span>
                     </div>
+                    {
+                        comment.imgComment
+                        &&
+                        <div className="img_comment">
+                            <img src={comment.imgComment} alt={comment.userComment.name}/>
+                        </div>
+                    }
+                    
                     <p className="comment">
-                        I’ve seen awe-inspiring things that I thought 
-                        I’d never be able to explain to another person.
+                        {hashtagText(comment.commentText)}
                     </p>
                 </div>
-                <div className="cont_likes">
 
-                    <div className="like">
+                <div className="cont_likes"
+                    onClick={handleLike}>
+
+                    <div className={`like ${
+                        valuesStatus.likes.includes(user.uid) ? 'like_liked': ''
+                    }`}>
                         <span className="material-icons">
                             favorite_border
                         </span>
-                        <span className="txtlike">Liked</span>
+                        <span className="txtlike">
+                            {valuesStatus.likes.includes(user.uid) ? 'Liked': 'Like'}
+                        </span>
                     </div>
                     
-                    <span className="txtCont">
-                        12k Likes
-                    </span>
+                    {
+                        valuesStatus.likes.length > 0
+                        &&
+                        (
+                        <span className="txtCont">
+                            {
+                                valuesStatus.likes.length > 1 
+                                ? `${valuesStatus.likes.length} Likes` 
+                                : `${valuesStatus.likes.length} Like`
+                            }
+                        </span>
+                        )
+                    }
+                    
                 </div>
             </div>
 

@@ -2,8 +2,6 @@ import React from 'react'
 
 export const FileImage = ({image, functionCmt, small }) => {
 
-    console.log("llega", image);
-
     return (
         <div className={`file_img ${small ? 'smallImg': ''}`}>
 

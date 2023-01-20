@@ -59,6 +59,16 @@
 
                     color: #4F4F4F;
 
+                    .hashtag_link{
+                        color: #1ea5e4;
+                        text-decoration: none;
+                        font-weight: bold;
+                    }
+
+                    .hashtag_link:hover{
+                        color: #118ac2;
+                    }
+
                 }
 
                 .image_post{
@@ -127,6 +137,8 @@
 
                         background: #F2F2F2;
                         border-radius: 8px;
+                        cursor: pointer;
+
                     }
                     
                     
@@ -144,7 +156,23 @@
                         }
                     }
 
+                    .btn_save_saved{
+                        color: #2D9CDB;
+                        .material-icons{
+                            color: #2D9CDB;
+                        }
+                    }
+
                     .btn_retweets:hover{
+                        color: #27AE60;
+
+                        .material-icons{
+                            color: #27AE60;
+                        }
+
+                    }
+
+                    .btn_retweets_retweeted{
                         color: #27AE60;
 
                         .material-icons{
@@ -162,6 +190,12 @@
                         }
                     }
 
+                    .btn_likes_liked{     
+                        color: #EB5757;
+                        .material-icons{
+                            color: #EB5757;
+                        }
+                    }
                     
                 }
 
@@ -231,9 +265,9 @@
                                 }
         
                                 .gallery_file{
+
                                     position: absolute;
-                                    
-                                   
+
                                     right: 8px;
                                     top: 8px;
                                     z-index: 999;
@@ -251,6 +285,22 @@
                                             background-color: #b3b3b3;
                                         }
         
+                                    }
+
+                                    button{
+
+                                        background-color: #FAFAFA;
+
+                                        .material-icons{
+                                            padding: 5px;
+                                            font-size: 15px;
+                                        }
+        
+                                        .material-icons:hover{
+                                            border-radius: 5px;
+                                            color: #6d6d6d;
+                                            background-color: #b3b3b3;
+                                        }
                                     }
                                 }
         

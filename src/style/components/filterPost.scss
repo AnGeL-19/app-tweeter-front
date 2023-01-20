@@ -45,6 +45,14 @@
             
         }
 
+        .nameFilter:hover{
+            color: #2F80ED;
+        }
+        
+    }
+
+    .filter:hover{
+        cursor: pointer;
     }
 
     .active-line{
@@ -54,6 +62,8 @@
     .active-text{
         color: #2F80ED;
     }
+
+
 
 }
 
