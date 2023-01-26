@@ -23,6 +23,18 @@ export const authReducer = (state = initialState, action) => {
                 user: null,
                 token: null,
             } 
+        case types.followUnfollowFollowing:
+
+            const { user ,...rest} = state;
+            const { following, ...userRest } = user;
+
+            return{
+                ...rest,
+                user: {
+                    ...userRest,
+                    following: action.payload
+                }
+            } 
         default: 
             return state;
     }

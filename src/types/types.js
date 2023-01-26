@@ -3,4 +3,6 @@ export const types = {
     authLogout: '[auth] Auth logout user',
     
     registerUser: '[user] Register user',
+
+    followUnfollowFollowing: '[user] Follow Unfollow user Following',
 }

@@ -26,7 +26,7 @@ export const hashtagText = (value='') => {
                     return value+' ';
                 }else{
                     return (
-                        <NavLink to={`/explore?hashtag=${value}`} 
+                        <NavLink to={`/explore?hashtag=${value.slice(1,value.length)}`} 
                             className="hashtag_link"
                         >
                             {`${value} `}

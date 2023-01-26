@@ -2,23 +2,34 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { fetchGetApi } from '../helpers/fetch'
+import { useQuery } from '../hooks/useQuery'
 
 export const ExplorePage = () => {
+
+ 
+    const query = useQuery()
 
     const {token} = useSelector(state => state.auth);
     const [dataTweets, setDataTweets] = useState([])
     
     console.log(dataTweets);
+    console.log(query.get("hashtag"));
+
     useEffect(() => {
-        
+        // /hashtag/search
+        // ?hashtag=${query.get("name")}
         const respData = async () => {
-            const data = await fetchGetApi('tweets/populates',token)
+            const data = !query.get("hashtag") 
+            ? await fetchGetApi(`tweets/populates`,token)
+            : await fetchGetApi(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`,token)
+
             const resp = await data.json();
 
             setDataTweets(resp.tweets)

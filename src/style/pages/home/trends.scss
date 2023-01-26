@@ -35,22 +35,35 @@
         flex-direction: column;
         margin-bottom: 20px;
 
-        .name_trend{
-            
-            margin-bottom: 8px;
+        a{
 
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 22px;
-            /* identical to box height */
+            text-decoration: none;
+
+            .name_trend{
             
-            letter-spacing: -0.035em;
-            
-            /* Gray 1 */
-            
-            color: #333333;   
+                margin-bottom: 8px;
+    
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 22px;
+                /* identical to box height */
+                
+                letter-spacing: -0.035em;
+                
+                /* Gray 1 */
+                
+                color: #333333;   
+            }
+    
+            .name_trend:hover{
+                cursor: pointer;
+                color: #118ac2;
+            }
+
         }
+        
+    
 
         .number__tweets{
             font-weight: 500;
@@ -63,6 +76,7 @@
             color: #828282;
         }
 
+        
     }
 
 
