@@ -6,6 +6,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
+import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { fetchGetApi } from '../helpers/fetch'
@@ -17,10 +18,11 @@ export const ExplorePage = () => {
     const query = useQuery()
 
     const {token} = useSelector(state => state.auth);
-    const [dataTweets, setDataTweets] = useState([])
+    const [data, setData] = useState([])
+    const [peopleWhoFollow, setPeopleWhoFollow] = useState(false)
     
-    console.log(dataTweets);
-    console.log(query.get("hashtag"));
+    // console.log(data);
+    // console.log(query.get("hashtag"));
 
     useEffect(() => {
         // /hashtag/search
@@ -32,7 +34,7 @@ export const ExplorePage = () => {
 
             const resp = await data.json();
 
-            setDataTweets(resp.tweets)
+            setData(resp.data)
         }
         respData()
 
@@ -45,22 +47,26 @@ export const ExplorePage = () => {
         {
             nameObj: 'top',
             select: true,
-            name: 'Top'
+            name: 'Top',
+            url: 'tweets/populates?filter=top'
         },
         {
             nameObj: 'lastest',
             select: false,
-            name: 'Lastest'
+            name: 'Lastest',
+            url: 'tweets/populates?filter=lastest'
         },
         {
             nameObj: 'people',
             select: false,
-            name: 'People'
+            name: 'People',
+            url: 'user/people'
         },
         {
             nameObj: 'media',
             select: false,
-            name: 'Media'
+            name: 'Media',
+            // url: 'user/people'
         },
     ]
 
@@ -75,7 +81,7 @@ export const ExplorePage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={objFilter}/>
+                        <FilterPost filters={objFilter} setFilter={setData} setShowPeople={setPeopleWhoFollow}/>
 
                     </div>
 
@@ -93,7 +99,13 @@ export const ExplorePage = () => {
 
                         </form>
 
-                        <ShowPosts tweets={dataTweets}/>
+                        {
+                            peopleWhoFollow 
+                            ? <ShowPoeple users={data}/>
+                            : <ShowPosts tweets={data}/>
+                            
+                        }
+                        
                       
                     </div>
 

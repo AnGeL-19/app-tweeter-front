@@ -6,7 +6,9 @@ import { dateFormat } from '../../helpers/formatDate'
 
 export const Comments = ({comment}) => {
 
-    const {token,user} = useSelector(state => state.auth);
+    const user = useSelector(state => state.user);
+    const {token} = useSelector(state => state.auth);
+    
     const [valuesStatus, setValuesStatus] = useState({
         likes: comment.likes || [],
     })

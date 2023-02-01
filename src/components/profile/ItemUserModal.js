@@ -8,15 +8,16 @@ import { UserInfoBasic } from '../UserInfoBasic'
 export const ItemUserModal = ({user, isFollowers}) => {
 
     const dispatch = useDispatch();
-    const { user: usersF, token } = useSelector(state => state.auth);
-    const [follow, setFollow] = useState(usersF.following)
-    // console.log(usersF.following);
 
-    // const user = {
-    //     img: 'https://th.bing.com/th/id/OIP.ia3f6X2LTEwPjGX6Pdmk4gHaHa?pid=ImgDet&rs=1',
-    //     name: 'Mikael Stanley',
-    //     other: '230k followers',
-    // }
+    const usersF = useSelector(state => state.user);
+    const { token } = useSelector(state => state.auth);
+
+
+
+    const [follow, setFollow] = useState(usersF.following)
+
+
+
 
     // REALIZAR TAREA DE SEGUIR Y NO SEGUIR
     // /followUnfollow/:id data, label, method,token
@@ -24,17 +25,14 @@ export const ItemUserModal = ({user, isFollowers}) => {
         const rest = await fetchApi({},`user/followUnfollow/${user.uid}`,'PUT',token)
         const restData = await rest.json()
         console.log(restData);
-        // if(restData.ok){
-        //     dispatch(followUnFollowFollowing(user.uid, usersF.following))
-        //     console.log(usersF.following); 
-        // }
+        if(restData.ok){
+            dispatch(followUnFollowFollowing(user.uid, usersF.following))
+        }
         if (follow.includes(user.uid)) {
             setFollow( follow.filter( f => f !== user.uid ) )
         }else{
             setFollow([...follow, user.uid])
         }
-        
-        console.log('amonos');
     }
 
     return (
@@ -42,7 +40,7 @@ export const ItemUserModal = ({user, isFollowers}) => {
 
             <div className="user_profile_btn">
 
-                <UserInfoBasic  img={user.img} 
+                <UserInfoBasic  img={user.imgUser} 
                                 name={user.name}
                                 followers={user.followers.length} 
                                 uid={user.uid}/>
@@ -50,17 +48,11 @@ export const ItemUserModal = ({user, isFollowers}) => {
                 {
                     <ComponentBtn
                         normal 
-                        txtBtn={`${(follow.includes(user.uid)) ? 'unFollow': 'follow'}`}
+                        txtBtn={`${(follow.includes(user.uid)) ? 'Unfollow': 'Follow'}`}
+                        addicon={(follow.includes(user.uid)) ? 'person_remove': 'person_add'}
                         functionBtn={followUnFollow}
                     />
-                    // :
-                    // <ComponentBtn
-                    //     normal 
-                    //     txtBtn={`${isFollowers ? 'unFollow': 'follow'}`}
-                    //     addicon='person_add'
-                    //     functionBtn={followUnFollow}
-                    // />
-
+ 
                 }
                 
             </div>
@@ -68,11 +60,6 @@ export const ItemUserModal = ({user, isFollowers}) => {
             <div className="user_biography">
                 <p className="biography">
                     {user.bio}
-                    {/* @jjonthan on Instagram
-                    **Over a decade as a lifestyle, adventure, and studio photographer. 
-                    Traveling with my wife @travelfoodlove on instagram. 
-                    PLEASE LINK ALL PHOTOS TO jonathangallegos.com -- not required but 
-                    much appreciated! */}
                 </p>
             </div>           
         </div>

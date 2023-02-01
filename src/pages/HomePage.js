@@ -25,7 +25,7 @@ export const HomePage = () => {
             const data = await fetchGetApi('tweets/?limit=5&start=1&end=5',token)
             const resp = await data.json();
 
-            setDataTweets(resp.tweets)
+            setDataTweets(resp.data)
         }
         respData()
 
@@ -51,7 +51,7 @@ export const HomePage = () => {
 
                     <div className="div__section__aside">
 
-                        <Trends />
+                        <Trends  />
 
                         <WhoToFollow />
 

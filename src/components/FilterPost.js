@@ -1,13 +1,29 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { fetchGetApi } from '../helpers/fetch'
 
-export const FilterPost = ({filters, setFilter }) => {
+export const FilterPost = ({filters, setFilter, setShowPeople }) => {
 
     // ARREGLAR
+    const {token} = useSelector(state => state.auth);
     const [selectF, setSelectFilter] = useState(filters);
 
-    const handleSelect = (filter) => {
+    const handleSelect = async (filter) => {
 
         // BUSCAR FILTRADO, - HACER FETCH
+        console.log(filter);
+
+        const data = await fetchGetApi(filter.ulr,token)
+        const resp = await data.json();
+        console.log(resp);
+
+        // setFilter()
+
+        if (filter.nameObj === 'people') {
+            setShowPeople(true)
+        }else{
+            setShowPeople(false)
+        }
 
         const updateObj = selectF.map(f => {
             if (f.nameObj === filter.nameObj) {

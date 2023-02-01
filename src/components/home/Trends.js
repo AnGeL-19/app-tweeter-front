@@ -15,7 +15,7 @@ export const Trends = () => {
             const data = await fetchGetApi('tweets/hashtags',token)
             const resp = await data.json();
 
-            setDataTweets(resp.tweets)
+            setDataTweets(resp.data)
         }
 
         respData()

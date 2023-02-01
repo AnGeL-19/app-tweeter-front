@@ -10,7 +10,7 @@ import { logoutUser } from '../../action/authAction';
 export const MenuHeader = () => {
 
     const dispatch = useDispatch();
-    const {user} = useSelector(state => state.auth);
+    const user = useSelector(state => state.user);
 
     const handleLogout = () => {
         console.log("si jala");

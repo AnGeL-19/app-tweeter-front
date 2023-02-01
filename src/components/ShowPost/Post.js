@@ -9,7 +9,8 @@ import { Comments } from './Comments'
 export const Post = ({tweet,tid}) => {
 
     const {userTweet} = tweet;
-    const {token,user} = useSelector(state => state.auth);
+    const user = useSelector(state => state.user);
+    const {token} = useSelector(state => state.auth);
     const extensions = ["jpg","png","gif","svg"];
 
     const [addComment, setAddComment] = useState(false);

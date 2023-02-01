@@ -10,7 +10,8 @@ import { MenuPrivacity } from './MenuPrivacity';
 
 export const CreatePost = () => {
 
-    const {user, token} = useSelector(state => state.auth);
+    const user = useSelector(state => state.user);
+    const {token} = useSelector(state => state.auth);
 
     const [showMenuImage, setShowMenuImage] = useState(false);
     const [showMenu, setShowMenu] = useState(false);

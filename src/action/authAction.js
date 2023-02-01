@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { fetchApi, fetchGetApi } from "../helpers/fetch"
 
 import { types } from "../types/types";
+import { userData } from "./userAction";
 
 
 export const loginUser = (data) => {
@@ -16,7 +17,8 @@ export const loginUser = (data) => {
             console.log(body);
             if(body.ok){   
                 Cookies.set('token', body.token);        
-                dispatch(login({ok:body.ok, user: body.user, token: body.token}));
+                dispatch(login({ok:body.ok, user: body.data, token: body.token}));
+                dispatch(userData(body.data));
             }
             
         }catch(err){
@@ -83,7 +85,8 @@ export const startCheking = () => {
 
         if(body.ok){
             Cookies.set('token', body.token);        
-            dispatch(login({ok:body.ok, user: body.user, token: body.token}));
+            dispatch(login({ok:body.ok, token: body.token}));
+            dispatch(userData(body.data));
         }
     }
 }

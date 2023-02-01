@@ -11,7 +11,7 @@ export const ShowPosts = ({tweets}) => {
 
                 {
                     tweets.map((tweet,index) => (
-                        <Post key={tweet.tid+index} tweet={tweet} tid={tweet.tid+index}/>
+                        <Post key={tweet.tid+index} tweet={tweet} tid={tweet.tid}/>
                     ))
                 }
                 

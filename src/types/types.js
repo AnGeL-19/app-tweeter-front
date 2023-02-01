@@ -4,5 +4,6 @@ export const types = {
     
     registerUser: '[user] Register user',
 
+    userAddData: '[user] Add data user',
     followUnfollowFollowing: '[user] Follow Unfollow user Following',
 }

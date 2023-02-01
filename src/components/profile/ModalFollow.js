@@ -6,17 +6,17 @@ import { ItemUserModal } from './ItemUserModal'
 
 export const ModalFollow = ({isFollowers, setShowModal}) => {
 
-    const {user, token} = useSelector(state => state.auth);
-    // console.log(user.following);
+    const user = useSelector(state => state.user);
+
+    const {token} = useSelector(state => state.auth);
 
     const params = useParams();
-    // const {token} = useSelector(state => state.auth.token);
-    // const {handleShowModalFollowers,handleShowModalFollowing} = useContext(ContextShowModal);
+
     const [data, setData] = useState({})
-    // console.log(data);
 
     useEffect(() => {
-        console.log(token);
+
+        console.log(token); 
         const url = !isFollowers ? `user/followers/${params.id}`:`user/following/${params.id}`
         const follow = async () => {
             const rest = await fetchGetApi(url,token)
@@ -52,15 +52,16 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
                 <div className="users_followers">
 
                     {
-                        data.users
-                        &&
-                        data.users.map((user,index) => (
+                        (data.data?.length === 0 || !data.data) 
+                        ? <span>No hay followers</span>
+                        : 
+                        data.data.map((userf,index) => (
                             <>
                                 <div className="line"></div>
-                                <ItemUserModal key={user.uid+index} user={user}  />
+                                <ItemUserModal key={userf.uid+index} user={userf}  />
                             </>
                         ))
-
+                       
                     }
                     
                 </div>                

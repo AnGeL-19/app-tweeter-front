@@ -18,7 +18,7 @@ export const BookmarksPage = () => {
             const data = await fetchGetApi('tweets/saved',token)
             const resp = await data.json();
 
-            setDataTweets(resp.tweets)
+            setDataTweets(resp.data)
         }
         respData()
 

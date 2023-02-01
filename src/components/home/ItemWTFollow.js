@@ -2,34 +2,36 @@ import React from 'react'
 import { ComponentBtn } from '../ComponentBtn'
 import { UserInfoBasic } from '../UserInfoBasic'
 
-export const ItemWTFollow = () => {
+export const ItemWTFollow = ({user}) => {
 
-    const user = {
-        img: 'https://th.bing.com/th/id/OIP.ia3f6X2LTEwPjGX6Pdmk4gHaHa?pid=ImgDet&rs=1',
-        name: 'Mikael Stanley',
-        other: '230k followers',
-    }
+    // const user = {
+    //     img: 'https://th.bing.com/th/id/OIP.ia3f6X2LTEwPjGX6Pdmk4gHaHa?pid=ImgDet&rs=1',
+    //     name: 'Mikael Stanley',
+    //     other: '230k followers',
+    // }
 
 
     return (
         <div className="populate__user">
 
             <div className="div__user_btn">
-                <UserInfoBasic  img={user.img} 
+                <UserInfoBasic  uid={user.uid}
+                                img={user.imgUser} 
                                 name={user.name} 
-                                other={user.other} />
+                                followers={user.followers.length} />
 
                 
                 <ComponentBtn normal txtBtn="Follow" addicon="person_add"/> 
             </div>
             <div className="div__info_desc__imgB">
                 <p className="info_desc">
-                    Photographer & Filmmaker based in 
-                    Copenhagen, Denmark ✵ 🇩🇰
+                    { 
+                        user.bio 
+                    }
                 </p>
 
                 <div className="div_imgBackground">
-                    <img  src="https://www.highdefwallpaper.com/wp-content/uploads/2017/06/a-screenshot-from-space-engine.jpg" />
+                    <img  src={`${user.imgUserBackground}`} alt='imagen'/>
                 </div>
             </div>
           

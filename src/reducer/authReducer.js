@@ -2,8 +2,7 @@ import { types } from "../types/types";
 
 const initialState = { 
    auth: false,
-   token: null,
-   user: null
+   token: null
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -22,18 +21,6 @@ export const authReducer = (state = initialState, action) => {
                 auth: action.payload,
                 user: null,
                 token: null,
-            } 
-        case types.followUnfollowFollowing:
-
-            const { user ,...rest} = state;
-            const { following, ...userRest } = user;
-
-            return{
-                ...rest,
-                user: {
-                    ...userRest,
-                    following: action.payload
-                }
             } 
         default: 
             return state;

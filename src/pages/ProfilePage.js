@@ -15,32 +15,31 @@ export const ContextShowModal = createContext();
 export const ProfilePage = () => {
 
     const params = useParams();
-    const {user, token} = useSelector(state => state.auth);
+    const user = useSelector(state => state.user);
+    const { token } = useSelector(state => state.auth);
+
     const [showModal, setShowModal] = useState(false);
     const [filterFollower, setFilterFollower] = useState(false);
     const [dataTweets, setDataTweets] = useState([])
     const [dataUser, setDataUser] = useState({})
 
-    console.log(params);
-    console.log(dataUser);
-    console.log(dataTweets);
+    useEffect(() => {
+        setDataUser(user)
+    },[user])
 
     useEffect(() => {
         
         if (params.id !== user.uid) {
-            console.log('Es igual');
-
             const respDataUser = async () => {
                 const data = await fetchGetApi(`user/${params.id}`,token)
                 const resp = await data.json();
                 
                 if (resp.user) {
-                    setDataUser(resp.user)
+                    setDataUser(resp.data)
                 }else{
                     setDataUser(user)
                 }  
             }
-
             respDataUser()
         }else{
             setDataUser(user);
@@ -49,10 +48,9 @@ export const ProfilePage = () => {
         const respData = async () => {
             const data = await fetchGetApi(`tweets/${params.id}?limit=5&start=1&end=5`,token)
             const resp = await data.json();
-            setDataTweets(resp.tweets)
+            setDataTweets(resp.data)
         }
 
-        
         respData()
 
     }, [params.id])
@@ -82,13 +80,11 @@ export const ProfilePage = () => {
 
     const handleShowModalFollowing = () => {
         setShowModal(true);
-        console.log(showModal, 'handleShowModalFollowing');
         setFilterFollower(true)
     }
 
     const handleShowModalFollowers = () => {
         setShowModal(true);
-        console.log(showModal, 'handleShowModalFollowers');
         setFilterFollower(false)
     }
 
@@ -157,8 +153,15 @@ export const ProfilePage = () => {
                                     </div>
         
                             </div>
-        
-                                <ComponentBtn big txtBtn="Follow" addicon="person_add"/>
+                           
+                               {
+                                    (dataUser.uid !== user.uid)
+                                        &&
+                                    <ComponentBtn big 
+                                    txtBtn={user.following?.includes(dataUser.uid) ? 'Unfollow': 'Follow'}
+                                    addicon={user.following?.includes(dataUser.uid) ? 'person_remove': 'person_add'}/>
+                                    //    
+                               } 
         
                             </div>
                             <main className="container_main">

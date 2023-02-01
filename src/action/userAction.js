@@ -5,6 +5,12 @@ import { fetchApi, fetchGetApi } from "../helpers/fetch"
 import { types } from "../types/types";
 
 
+export const userData = (dataUser) => {
+    return async(dispatch) => {
+        dispatch(userAddData(dataUser))
+    }
+}
+
 export const followUnFollowFollowing = (userId, following) => {
 
     return async(dispatch) => {
@@ -13,12 +19,8 @@ export const followUnFollowFollowing = (userId, following) => {
 
             if (following.includes(userId)) {
                 dispatch(userFollowUnFollowFollowing( following.filter( f => f !== userId) ));
-                console.log('si esta');
-                console.log(following.filter( f => f !== userId));
             }else{
                 dispatch(userFollowUnFollowFollowing( [...following, userId] ));
-                console.log('No esta');
-                console.log([...following, userId]);
             }
 
         }catch(err){
@@ -29,7 +31,15 @@ export const followUnFollowFollowing = (userId, following) => {
 
 }
 
+const userAddData = (data) => ({
+    type: types.userAddData,
+    payload: data
+});
+
 const userFollowUnFollowFollowing = (updateFollowing) => ({
     type: types.followUnfollowFollowing,
-    payload: updateFollowing
+    payload: {
+        following: updateFollowing,
+        nfollowing: updateFollowing.length
+    }
 });
