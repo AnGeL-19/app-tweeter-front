@@ -19,17 +19,14 @@ export const ExplorePage = () => {
 
     const {token} = useSelector(state => state.auth);
     const [data, setData] = useState([])
-    const [peopleWhoFollow, setPeopleWhoFollow] = useState(false)
+    const [peopleWhoFollow, setPeopleWhoFollow] = useState([])
     
-    // console.log(data);
-    // console.log(query.get("hashtag"));
 
     useEffect(() => {
-        // /hashtag/search
-        // ?hashtag=${query.get("name")}
         const respData = async () => {
+            
             const data = !query.get("hashtag") 
-            ? await fetchGetApi(`tweets/populates`,token)
+            ? await fetchGetApi(`tweets/populates?filter=top`,token)
             : await fetchGetApi(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`,token)
 
             const resp = await data.json();
@@ -66,7 +63,7 @@ export const ExplorePage = () => {
             nameObj: 'media',
             select: false,
             name: 'Media',
-            // url: 'user/people'
+            url: ''
         },
     ]
 
@@ -100,8 +97,8 @@ export const ExplorePage = () => {
                         </form>
 
                         {
-                            peopleWhoFollow 
-                            ? <ShowPoeple users={data}/>
+                            (!!peopleWhoFollow && peopleWhoFollow.length > 0) 
+                            ? <ShowPoeple users={peopleWhoFollow}/>
                             : <ShowPosts tweets={data}/>
                             
                         }

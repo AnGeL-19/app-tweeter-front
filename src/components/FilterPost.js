@@ -13,16 +13,16 @@ export const FilterPost = ({filters, setFilter, setShowPeople }) => {
         // BUSCAR FILTRADO, - HACER FETCH
         console.log(filter);
 
-        const data = await fetchGetApi(filter.ulr,token)
+        const data = await fetchGetApi(filter.url,token)
         const resp = await data.json();
         console.log(resp);
-
-        // setFilter()
-
+        
+       
         if (filter.nameObj === 'people') {
-            setShowPeople(true)
+            setShowPeople(resp.data)
         }else{
-            setShowPeople(false)
+            setFilter(resp.data)
+            setShowPeople([])
         }
 
         const updateObj = selectF.map(f => {
@@ -39,6 +39,7 @@ export const FilterPost = ({filters, setFilter, setShowPeople }) => {
             }
         })
         setSelectFilter(updateObj);
+        
  
     }
 

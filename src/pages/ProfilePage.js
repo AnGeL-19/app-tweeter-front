@@ -23,9 +23,6 @@ export const ProfilePage = () => {
     const [dataTweets, setDataTweets] = useState([])
     const [dataUser, setDataUser] = useState({})
 
-    useEffect(() => {
-        setDataUser(user)
-    },[user])
 
     useEffect(() => {
         
@@ -34,7 +31,8 @@ export const ProfilePage = () => {
                 const data = await fetchGetApi(`user/${params.id}`,token)
                 const resp = await data.json();
                 
-                if (resp.user) {
+                console.log(resp);
+                if (resp.data) {
                     setDataUser(resp.data)
                 }else{
                     setDataUser(user)
@@ -54,6 +52,10 @@ export const ProfilePage = () => {
         respData()
 
     }, [params.id])
+
+    useEffect(() => {
+        setDataUser(user)
+    },[user])
 
     const objFilter = [
         {
