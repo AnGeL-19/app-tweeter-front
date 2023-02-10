@@ -1,17 +1,16 @@
 .div__sohw_people{
 
     width: 745px;
-    height: 100vh;
+    height: 100%;
 
     .show_people{
+
         width: 100%;
         height: 100%;
 
         display: grid;
-        // grid-template: repeat(2, 1fr) / 50% 100px;
-        // flex-direction: row;
-        // flex-wrap: wrap;
-        // gap: 10px;
-        //  ARREGLAR DESPUES GRID DE GENTE
+        grid-template-columns: auto auto ;
+        gap: 10px;
+    
     }
 }

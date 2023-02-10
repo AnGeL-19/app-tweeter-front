@@ -13,7 +13,7 @@ export const ShowPoeple = ({users}) => {
                 {
                     users.map((user,index) => (
                         <>
-                            <div className="line"></div>
+                            {/* <div className="line"></div> */}
                             <ItemWTFollow key={user.uid+index} user={user}/>
                         </>
                     ))

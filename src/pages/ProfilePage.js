@@ -23,7 +23,6 @@ export const ProfilePage = () => {
     const [dataTweets, setDataTweets] = useState([])
     const [dataUser, setDataUser] = useState({})
 
-
     useEffect(() => {
         
         if (params.id !== user.uid) {
@@ -61,12 +60,14 @@ export const ProfilePage = () => {
         {
             nameObj: 'tweets',
             select: true,
-            name: 'Tweets'
+            name: 'Tweets',
+            url: `tweets/${params.id}`
         },
         {
             nameObj: 'TweetsReplies',
             select: false,
-            name: 'Tweets & replies'
+            name: 'Tweets & replies',
+            url: `tweets/retweets/${params.id}`
         },
         {
             nameObj: 'media',
@@ -76,7 +77,8 @@ export const ProfilePage = () => {
         {
             nameObj: 'likes',
             select: false,
-            name: 'Likes'
+            name: 'Likes',
+            url: `tweets/${params.id}?filter=likes`
         },
     ]
 
@@ -160,9 +162,11 @@ export const ProfilePage = () => {
                                     (dataUser.uid !== user.uid)
                                         &&
                                     <ComponentBtn big 
-                                    txtBtn={user.following?.includes(dataUser.uid) ? 'Unfollow': 'Follow'}
-                                    addicon={user.following?.includes(dataUser.uid) ? 'person_remove': 'person_add'}/>
-                                    //    
+                                                txtBtn={user.following?.includes(dataUser.uid) ? 'Unfollow': 'Follow'}
+                                                addicon={user.following?.includes(dataUser.uid) ? 'person_remove': 'person_add'}
+
+                                    />
+                                    
                                } 
         
                             </div>
@@ -170,7 +174,7 @@ export const ProfilePage = () => {
         
                                 <div className="div_filter">
         
-                                    <FilterPost filters={objFilter} />
+                                    <FilterPost filters={objFilter} setFilter={setDataTweets} />
         
                                 </div>
         

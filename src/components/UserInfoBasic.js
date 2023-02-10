@@ -9,7 +9,7 @@ export const UserInfoBasic = ({img, name, followers, uid, date, addDate}) => {
             
             <div className="div__img_user">
                 <NavLink to={`/profile/${uid}`}>
-                    <img src={img} alt={name}/>
+                    <img src={img} alt={name.split(' ')[0]}/>
                 </NavLink>
             </div>
             <div className="div__info">

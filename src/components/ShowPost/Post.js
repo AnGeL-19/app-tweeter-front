@@ -190,7 +190,7 @@ export const Post = ({tweet,tid}) => {
         <div className="div__post">
 
             {
-                tweet.retweetUser
+                tweet.userRetweet
                 &&
                 (
                 <div className="div__retweet">
@@ -198,7 +198,7 @@ export const Post = ({tweet,tid}) => {
                     cached
                     </span>
                     <span className="user_retweet gray3Color">
-                        {tweet.retweetUser}
+                        {tweet.userRetweet}
                     </span>
                 </div>
                 )
