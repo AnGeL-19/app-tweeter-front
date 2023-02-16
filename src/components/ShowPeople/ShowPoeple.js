@@ -1,9 +1,9 @@
 import React from 'react'
 import { ItemWTFollow } from '../home/ItemWTFollow'
 
-export const ShowPoeple = ({users}) => {
+export const ShowPoeple = ({users, loading}) => {
 
-    console.log(users);
+    console.log(users, !!users);
 
   return (
     <div className="div__sohw_people">
@@ -11,12 +11,14 @@ export const ShowPoeple = ({users}) => {
             <section className="show_people">
 
                 {
+
+                    (loading)
+                    ? <samp>Loading...</samp>
+                    : 
                     users.map((user,index) => (
-                        <>
-                            {/* <div className="line"></div> */}
-                            <ItemWTFollow key={user.uid+index} user={user}/>
-                        </>
+                        <ItemWTFollow key={user.uid+index} user={user}/>
                     ))
+
                 }
                 
             </section>      

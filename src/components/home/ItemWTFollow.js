@@ -32,7 +32,7 @@ export const ItemWTFollow = ({user}) => {
                 <UserInfoBasic  uid={user.uid}
                                 img={user.imgUser} 
                                 name={user.name} 
-                                followers={user.followers.length} />
+                                followers={user.followers.length || 0} />
 
                 
                 <ComponentBtn normal 

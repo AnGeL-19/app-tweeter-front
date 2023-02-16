@@ -21,10 +21,8 @@ export const HeaderTweeter = () => {
     const match = useRouteMatch()
 
     const user = useSelector(state => state.user);
-    console.log(user, "-------------------------------");
 
     const [path, setPath] = useState('');
-
     const [showMenu, setShowMenu] = useState(false);
 
     useEffect(() => {

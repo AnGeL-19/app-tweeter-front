@@ -1,38 +1,25 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import { HeaderTweeter } from '../components/header/HeaderTweeter';
 import { CreatePost } from '../components/Post/CreatePost';
 import { Trends } from '../components/home/Trends';
 import { WhoToFollow } from '../components/home/WhoToFollow';
 import { ShowPosts } from '../components/ShowPost/ShowPosts';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { fetchGetApi } from '../helpers/fetch';
+import { useFetch } from '../hooks/useFetch';
 
 
 
 export const HomePage = () => {
-
+    
     const {token} = useSelector(state => state.auth);
+    const [ data, loading, error ] = useFetch('tweets/?limit=5&start=1&end=5',{},'GET',token)
+    
     const [dataTweets, setDataTweets] = useState([])
-    
-    console.log(dataTweets);
-    // localhost:8080/api/tweets/?limit=5&start=1&end=5
-    
-    useEffect(() => {
-        
-        const respData = async () => {
-            const data = await fetchGetApi('tweets/?limit=5&start=1&end=5',token)
-            const resp = await data.json();
 
-            setDataTweets(resp.data)
-        }
-        respData()
-
-    return () => {
-        
-    }
-    }, [])
+    useEffect(()=>{
+        setDataTweets(data.data )
+        return() => setDataTweets([])
+    },[data])
     
     return (
         <div>
@@ -45,7 +32,7 @@ export const HomePage = () => {
 
                         <CreatePost />
                         
-                        <ShowPosts tweets={dataTweets}/>
+                        <ShowPosts tweets={dataTweets} loading={loading}/>
 
                     </div>
 

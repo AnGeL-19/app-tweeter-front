@@ -10,35 +10,10 @@ import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { fetchGetApi } from '../helpers/fetch'
+import { useFetch } from '../hooks/useFetch'
 import { useQuery } from '../hooks/useQuery'
 
 export const ExplorePage = () => {
-
- 
-    const query = useQuery()
-
-    const {token} = useSelector(state => state.auth);
-    const [data, setData] = useState([])
-    const [peopleWhoFollow, setPeopleWhoFollow] = useState([])
-    
-
-    useEffect(() => {
-        const respData = async () => {
-            
-            const data = !query.get("hashtag") 
-            ? await fetchGetApi(`tweets/populates?filter=top`,token)
-            : await fetchGetApi(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`,token)
-
-            const resp = await data.json();
-
-            setData(resp.data)
-        }
-        respData()
-
-        return () => {
-            
-        }
-    }, [])
 
     const objFilter = [
         {
@@ -67,6 +42,33 @@ export const ExplorePage = () => {
         },
     ]
 
+    const query = useQuery()
+
+    const {token} = useSelector(state => state.auth);
+
+    const [dataResponse, setDataResponse] = useState([])
+    const [filter, setFilter] = useState(objFilter)
+    const [dataPeople, setDataPeople] = useState([])
+
+    const [ data, loading, error, setLabelFetch ] = useFetch(`tweets/populates?filter=top`,{},'GET',token)
+
+    useEffect(() => {
+
+            if (query.get("hashtag") ) {
+                setLabelFetch(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`)
+                // query.delete("hashtag")
+            }
+
+            if(filter.find(f => f.nameObj === 'people').select){
+                setDataPeople(data.data)
+                console.log("si entro");
+            }else{
+                setDataPeople([])
+            }
+                
+            setDataResponse(data.data)
+
+    }, [data])
 
     return (
         <div>
@@ -78,7 +80,7 @@ export const ExplorePage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={objFilter} setFilter={setData} setShowPeople={setPeopleWhoFollow}/>
+                        <FilterPost filters={ objFilter } setLabel={ setLabelFetch } setFilter={ setFilter }/>
 
                     </div>
 
@@ -97,10 +99,9 @@ export const ExplorePage = () => {
                         </form>
 
                         {
-                            (!!peopleWhoFollow && peopleWhoFollow.length > 0) 
-                            ? <ShowPoeple users={peopleWhoFollow}/>
-                            : <ShowPosts tweets={data}/>
-                            
+                            (dataPeople.length !== 0)
+                            ? <ShowPoeple users={ dataPeople } loading={ loading } />
+                            : <ShowPosts tweets={ dataResponse } loading={ loading } />  
                         }
                         
                       

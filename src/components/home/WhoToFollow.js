@@ -1,47 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { fetchGetApi } from '../../helpers/fetch';
+import { useFetch } from '../../hooks/useFetch';
 import { ItemWTFollow } from './ItemWTFollow'
 
 export const WhoToFollow = () => {
 
     const {token} = useSelector(state => state.auth);
     const [dataUser, setDataUser] = useState([])
-    console.log(dataUser);
 
-    useEffect(() => {
-        
-        const respData = async () => {
+    const [ data, loading, error, setLabelFetch ] = useFetch('user/recomment',{},'GET',token)
 
-            const data = await fetchGetApi('user/recomment',token)
-            const resp = await data.json();
-
-            setDataUser(resp.data)
-        }
-
-        respData()
-
-    }, [])
-
-
+    useEffect(()=>{
+        setDataUser(data.data )
+        return() => setDataUser([])
+    },[data])
+    
     return (
         <aside className="aside__follow">
 
             <h2 className="title">Who to follow</h2>
 
             {
+                loading
+                ? <span>Loading...</span>
+                :
                 dataUser.map( (user, index) => (
                     <>
                         <div className="line"></div>
-                        <ItemWTFollow key={user.uid+index} user={user}/>
+                        <ItemWTFollow key={user.uid+index+'wh'} user={user}/>
                     </>
                 ))
             }
-            
-
-            {/* <div className="line"></div>
-
-            <ItemWTFollow /> */}
 
         </aside>
     )

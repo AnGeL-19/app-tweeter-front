@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { fetchGetApi } from '../../helpers/fetch';
+import { useFetch } from '../../hooks/useFetch';
 import { ItemTrend } from './ItemTrend'
 
 export const Trends = () => {
@@ -9,18 +10,13 @@ export const Trends = () => {
     const [dataTweets, setDataTweets] = useState([])
     console.log(dataTweets);
 
-    useEffect(() => {
-        
-        const respData = async () => {
-            const data = await fetchGetApi('tweets/hashtags',token)
-            const resp = await data.json();
+    const [ data, loading, error, setLabelFetch ] = useFetch('tweets/hashtags',{},'GET',token)
 
-            setDataTweets(resp.data)
-        }
+    useEffect(()=>{
+        setDataTweets(data.data )
+        return() => setDataTweets([])
+    },[data])
 
-        respData()
-
-    }, [])
 
     return (
         <section className="section__trends">
@@ -29,6 +25,9 @@ export const Trends = () => {
             <div className="line"></div>
 
             {
+                loading
+                ? <span>Loading...</span>
+                :
                 dataTweets.map( trend => (
                     <ItemTrend key={trend.hid} trend={trend} />
                 ))

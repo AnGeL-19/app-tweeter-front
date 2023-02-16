@@ -4,47 +4,44 @@ import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
-import { fetchGetApi } from '../helpers/fetch'
+import { useFetch } from '../hooks/useFetch'
 
 export const BookmarksPage = () => {
 
     const {token} = useSelector(state => state.auth);
-    const [dataTweets, setDataTweets] = useState([])
+    const [ data, loading, error ] = useFetch('tweets/saved',{},'GET',token)
     
-    console.log(dataTweets);
-    useEffect(() => {
-        
-        const respData = async () => {
-            const data = await fetchGetApi('tweets/saved',token)
-            const resp = await data.json();
+    const [dataTweets, setDataTweets] = useState([])
 
-            setDataTweets(resp.data)
-        }
-        respData()
-
-    }, [])
+    useEffect(()=>{
+        setDataTweets(data.data )
+        return() => setDataTweets([])
+    },[data])
 
     const objFilter = [
         {
             nameObj: 'tweets',
             select: true,
-            name: 'Tweets'
-            
+            name: 'Tweets',
+            url: `tweets/saved`
         },
         {
             nameObj: 'TweetsReplies',
             select: false,
-            name: 'Tweets & replies'
+            name: 'Tweets & replies',
+            url: ''
         },
         {
             nameObj: 'media',
             select: false,
-            name: 'Media'
+            name: 'Media',
+            url: ''
         },
         {
             nameObj: 'likes',
             select: false,
-            name: 'Likes'
+            name: 'Likes',
+            url: `tweets/saved?filter=likes`
         },
     ]
 
@@ -58,12 +55,14 @@ export const BookmarksPage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={objFilter}/>
+                        <FilterPost filters={objFilter} setFilter={setDataTweets} />
 
                     </div>
 
-                    <ShowPosts tweets={dataTweets}/>
 
+                    <ShowPosts tweets={dataTweets} loading={loading}/>
+
+    
                 </main>
             </div>
 

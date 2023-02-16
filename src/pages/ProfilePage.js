@@ -7,54 +7,16 @@ import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
 
 import { ModalFollow } from '../components/profile/ModalFollow'
+import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { fetchGetApi } from '../helpers/fetch'
+import { useFetch } from '../hooks/useFetch'
 
 export const ContextShowModal = createContext();
 
 export const ProfilePage = () => {
 
     const params = useParams();
-    const user = useSelector(state => state.user);
-    const { token } = useSelector(state => state.auth);
-
-    const [showModal, setShowModal] = useState(false);
-    const [filterFollower, setFilterFollower] = useState(false);
-    const [dataTweets, setDataTweets] = useState([])
-    const [dataUser, setDataUser] = useState({})
-
-    useEffect(() => {
-        
-        if (params.id !== user.uid) {
-            const respDataUser = async () => {
-                const data = await fetchGetApi(`user/${params.id}`,token)
-                const resp = await data.json();
-                
-                console.log(resp);
-                if (resp.data) {
-                    setDataUser(resp.data)
-                }else{
-                    setDataUser(user)
-                }  
-            }
-            respDataUser()
-        }else{
-            setDataUser(user);
-        }
-
-        const respData = async () => {
-            const data = await fetchGetApi(`tweets/${params.id}?limit=5&start=1&end=5`,token)
-            const resp = await data.json();
-            setDataTweets(resp.data)
-        }
-
-        respData()
-
-    }, [params.id])
-
-    useEffect(() => {
-        setDataUser(user)
-    },[user])
 
     const objFilter = [
         {
@@ -82,15 +44,39 @@ export const ProfilePage = () => {
         },
     ]
 
-    const handleShowModalFollowing = () => {
-        setShowModal(true);
-        setFilterFollower(true)
-    }
+    const user = useSelector(state => state.user);
+    const { token } = useSelector(state => state.auth);
 
-    const handleShowModalFollowers = () => {
-        setShowModal(true);
-        setFilterFollower(false)
-    }
+    const [showModal, setShowModal] = useState(false);
+    const [filterFollower, setFilterFollower] = useState(false);
+    const [dataTweets, setDataTweets] = useState([])
+    const [filter, setFilter] = useState(objFilter)
+    const [dataUser, setDataUser] = useState({})
+
+    const [ data, loading, error, setLabelFetch ] = useFetch(`tweets/${params.id}?limit=5&start=1&end=5`,{},'GET',token)
+
+    const [ dataUs, loadingUser , errorUser , setLabelFetchUser ] = useFetch(`user/${params.id}`,{},'GET',token)
+
+    console.log(data.data, dataUs.data);
+
+    useEffect(() => {
+        
+        if (params.id !== user.uid) {
+
+            setLabelFetchUser(`user/${params.id}`)
+            setDataUser(dataUs.data);
+            console.log(dataUs.data,'-----------');
+
+        }else{
+            setDataUser(user);
+        }
+
+    }, [dataUs])
+
+    useEffect(()=>{
+        setDataTweets(data.data )
+        return() => setDataTweets([])
+    },[data])
 
     return (
         <>
@@ -104,84 +90,41 @@ export const ProfilePage = () => {
                     &&
                     (
                         <>
-                        <div className="profile_img_background">
-                            {
-                                dataUser
-                                && 
-                                (<img src={dataUser.imgUserBackground} alt={dataUser.name} />)
-                            }
-                            
-                            
-                        </div>
-        
+
                         <div className="profile__container_main">
         
-                            <div className="info_profile">
-        
-                            <div className="user_img_info">
-        
-                                    <div className="user_img">
-                                        <img src={dataUser.imgUser}  alt={dataUser.name}/>
-                                    </div>
-                                    <div className="user_info">
-                                        <div className="characteristics">
-                                            <div className="name_user" >
-                                                <span className=" gray1Color">
-                                                   {dataUser.name}
-                                                </span>
-                                            </div>
-                                            <div className="fwll"
-                                                 onClick={() => handleShowModalFollowing()}>
-                                                <span className="wBlack">
-                                                    {dataUser.nfollowing}
-                                                    {/* dataUser.following.length ||  */}
-                                                </span>
-                                                <span className="user_following ">
-                                                    Following                                    
-                                                </span>
-                                            </div>
-                                            <div className="fwll"
-                                                onClick={() => handleShowModalFollowers()}>
-                                                <span className="wBlack">
-                                                    { dataUser.nfollowers}
-                                                    {/* dataUser.followers.length || */}
-                                                </span>
-                                                <span className="user_following ">
-                                                    Followers                                    
-                                                </span>
-                                            </div >
-                                        </div>
-                                        <p className="description">
-                                            {dataUser.bio || 'Empty'}
-                                        </p>
-                                    </div>
-        
-                            </div>
-                           
-                               {
-                                    (dataUser.uid !== user.uid)
-                                        &&
-                                    <ComponentBtn big 
-                                                txtBtn={user.following?.includes(dataUser.uid) ? 'Unfollow': 'Follow'}
-                                                addicon={user.following?.includes(dataUser.uid) ? 'person_remove': 'person_add'}
+                            {
+                                loadingUser
+                                ? <span>Loading...</span>
+                                : 
+                                (
+                                    <>
+                                        <ProfileInfo dataUser={ dataUser } 
+                                            user = { user }
+                                            setFilterFollower={ setFilterFollower } 
+                                            setShowModal={ setShowModal }
+                                        /> 
 
-                                    />
-                                    
-                               } 
-        
-                            </div>
-                            <main className="container_main">
-        
-                                <div className="div_filter">
-        
-                                    <FilterPost filters={objFilter} setFilter={setDataTweets} />
-        
-                                </div>
-        
-                                <ShowPosts tweets={dataTweets} />
-        
-                            </main>
-        
+                                        <main className="container_main">
+            
+                                            <div className="div_filter">
+                    
+                                                <FilterPost 
+                                                    filters={objFilter} 
+                                                    setLabel={ setLabelFetch } 
+                                                    setFilter={ setFilter } 
+                                                />
+                    
+                                            </div>
+                    
+                                            <ShowPosts tweets={dataTweets} loading={ loading } />
+                    
+                                        </main>
+                                    </>
+                                )
+                                
+                            }
+
                         </div>
                         </>  
                     )
