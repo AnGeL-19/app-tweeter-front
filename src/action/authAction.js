@@ -58,6 +58,7 @@ const register = (data) => ({
 export const logoutUser = () => {
     return (dispatch) => {
         console.log("entra en logout");
+        Cookies.remove('token')
         dispatch(logout())
     }
 }

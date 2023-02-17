@@ -43,6 +43,8 @@ export const ExplorePage = () => {
     ]
 
     const query = useQuery()
+    const hashtag = query.get("hashtag");
+    // console.log(hashtag);
 
     const {token} = useSelector(state => state.auth);
 
@@ -52,23 +54,44 @@ export const ExplorePage = () => {
 
     const [ data, loading, error, setLabelFetch ] = useFetch(`tweets/populates?filter=top`,{},'GET',token)
 
-    useEffect(() => {
 
-            if (query.get("hashtag") ) {
-                setLabelFetch(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`)
-                // query.delete("hashtag")
-            }
+    // console.log(data, loading, error);
+    useEffect( () => {
 
-            if(filter.find(f => f.nameObj === 'people').select){
-                setDataPeople(data.data)
-                console.log("si entro");
-            }else{
-                setDataPeople([])
-            }
+        if(hashtag){
+            setLabelFetch(`tweets/hashtag/search?hashtag=%23${hashtag}`)
+            setDataPeople([])
+            // setDataResponse(data.data) 
+            query.delete("hashtag")
+        }
+
+        if(filter.find(f => f.nameObj === 'people').select){
+
+            setDataResponse([]) 
+            setDataPeople(data.data)
+            
+        }else{
+            // setDataPeople([])
+            // setDataResponse(data.data)
+        }
+
+          setDataResponse(data.data)   
                 
-            setDataResponse(data.data)
+        console.log('amonos 2', data.data);
+        
 
-    }, [data])
+    },[data,hashtag])
+
+
+    // useEffect(() => {
+
+         // if (query.get("hashtag") ) {
+        //     setLabelFetch(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`)
+        //     query.delete("hashtag")
+        //     setDataResponse(data.data)        
+        // }
+
+    // }, [loading])
 
     return (
         <div>
@@ -80,7 +103,7 @@ export const ExplorePage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={ objFilter } setLabel={ setLabelFetch } setFilter={ setFilter }/>
+                        <FilterPost filters={ filter } setLabel={ setLabelFetch } setFilter={ setFilter }/>
 
                     </div>
 
@@ -100,8 +123,8 @@ export const ExplorePage = () => {
 
                         {
                             (dataPeople.length !== 0)
-                            ? <ShowPoeple users={ dataPeople } loading={ loading } />
-                            : <ShowPosts tweets={ dataResponse } loading={ loading } />  
+                            ? <ShowPoeple users={ dataPeople } loading={ loading } error={error}/>
+                            : <ShowPosts tweets={ dataResponse } loading={ loading } error={error}/>  
                         }
                         
                       

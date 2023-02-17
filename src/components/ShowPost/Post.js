@@ -299,7 +299,7 @@ export const Post = ({tweet,tid}) => {
                         <div className="img__input_comment">
 
                             <div className="img__comment">
-                                <img src={userTweet.imgUser}  alt={userTweet.name}/>
+                                <img src={user.imgUser}  alt={user.name}/>
                             </div>
 
                             <form onSubmit={handleSubmit}>

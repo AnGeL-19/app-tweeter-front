@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-export const FilterPost = ({filters, setLabel, setFilter }) => {
-
+export const FilterPost = ({filters, setLabel, setFilter = () => {} }) => {
 
     const [selectF, setSelectFilter] = useState(filters);
 
-    const handleSelect = async (filter) => {
-
+    const handleSelect = async (e,filter) => {
+        e.preventDefault();
+        
         const updateObj = selectF.map(f => {
             if (f.nameObj === filter.nameObj) {
                 return {
@@ -20,11 +20,11 @@ export const FilterPost = ({filters, setLabel, setFilter }) => {
                 }
             }
         })
-        setFilter(updateObj) 
-        setSelectFilter(updateObj); 
-        
+
         setLabel(filter.url)  
- 
+        setFilter(updateObj) 
+        setSelectFilter(updateObj);       
+        
     }
 
 
@@ -34,7 +34,7 @@ export const FilterPost = ({filters, setLabel, setFilter }) => {
             {
 
                 selectF.map((filter) => (
-                    <div onClick={() => handleSelect(filter)} 
+                    <div onClick={(e) => handleSelect(e,filter)} 
                         className="filter" 
                         id={`${filter.nameObj}`}>
                         <div className={`line-left ${filter.select ? 'active-line' : ''}`} ></div>

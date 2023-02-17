@@ -48,6 +48,8 @@ export const useFetch = (label,dataInfo,method='',token) => {
             setLoading(true)
         })
 
+        console.log("amonos");
+
     }, [labelFetch])
 
     return [data,loading,error,setLabelFetch]

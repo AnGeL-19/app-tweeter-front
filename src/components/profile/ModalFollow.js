@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchGetApi } from '../../helpers/fetch';
+import { useFetch } from '../../hooks/useFetch';
 import { ItemUserModal } from './ItemUserModal'
 
 export const ModalFollow = ({isFollowers, setShowModal}) => {
@@ -14,22 +15,22 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
 
     const [data, setData] = useState({})
 
+    const [ dataUsers, loading, error, setLabelFetch ] = useFetch(
+        !isFollowers
+        ? `user/followers/${params.id}`
+        : `user/following/${params.id}`,
+        {},
+        'GET',
+        token)
+
+
+
     useEffect(() => {
 
-        console.log(token); 
-        const url = !isFollowers ? `user/followers/${params.id}`:`user/following/${params.id}`
-        const follow = async () => {
-            const rest = await fetchGetApi(url,token)
-            const restData = await rest.json()
-            console.log(restData);
-            setData(restData);
-        } 
-
-        follow()
-        return () => {
-            console.log("salir");
-        }
-    }, [isFollowers])
+        setData(dataUsers.data);
+        console.log(dataUsers.data);
+        
+    }, [dataUsers])
 
     return (
         <div className="container_modal">
@@ -52,16 +53,20 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
                 <div className="users_followers">
 
                     {
-                        (data.data?.length === 0 || !data.data) 
-                        ? <span>No hay followers</span>
-                        : 
-                        data.data.map((userf,index) => (
-                            <>
-                                <div className="line"></div>
-                                <ItemUserModal key={userf.uid+index} user={userf}  />
-                            </>
-                        ))
-                       
+                        
+                            (loading)
+                            ? <span>Loading...</span>
+                            :
+                                (data.length === 0 || !data) 
+                                ? <span>No hay followers</span>
+                                : 
+                                    data.map((userf,index) => (
+                                        <>
+                                            <div className="line"></div>
+                                            <ItemUserModal key={userf.uid+index} user={userf}  />
+                                        </>
+                                    ))
+   
                     }
                     
                 </div>                

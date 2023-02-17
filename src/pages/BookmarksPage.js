@@ -9,13 +9,18 @@ import { useFetch } from '../hooks/useFetch'
 export const BookmarksPage = () => {
 
     const {token} = useSelector(state => state.auth);
-    const [ data, loading, error ] = useFetch('tweets/saved',{},'GET',token)
+    
+    const [ data, loading, error, setLabelFetch ] = useFetch('tweets/saved',{},'GET',token)
     
     const [dataTweets, setDataTweets] = useState([])
 
+    console.log(data);
+
     useEffect(()=>{
+
         setDataTweets(data.data )
-        return() => setDataTweets([])
+
+        // return() => setDataTweets([])
     },[data])
 
     const objFilter = [
@@ -55,7 +60,7 @@ export const BookmarksPage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={objFilter} setFilter={setDataTweets} />
+                        <FilterPost filters={objFilter} setLabel={setLabelFetch}/>
 
                     </div>
 

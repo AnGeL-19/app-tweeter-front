@@ -2,7 +2,7 @@ import React from 'react'
 import { Post } from './Post'
 
 
-export const ShowPosts = ({tweets, loading}) => {
+export const ShowPosts = ({tweets, loading, error}) => {
 
     return (
         <div className="div__sohw_post">
@@ -10,7 +10,7 @@ export const ShowPosts = ({tweets, loading}) => {
             <section className="show_posts">
 
                 {
-                    loading
+                    (loading || error)
                     ? <samp>Loading...</samp>
                     :
                     tweets.map((tweet,index) => (

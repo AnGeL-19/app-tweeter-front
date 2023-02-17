@@ -1,7 +1,7 @@
 import React from 'react'
 import { ItemWTFollow } from '../home/ItemWTFollow'
 
-export const ShowPoeple = ({users, loading}) => {
+export const ShowPoeple = ({users, loading, error}) => {
 
     console.log(users, !!users);
 
@@ -12,7 +12,7 @@ export const ShowPoeple = ({users, loading}) => {
 
                 {
 
-                    (loading)
+                    (loading || error)
                     ? <samp>Loading...</samp>
                     : 
                     users.map((user,index) => (

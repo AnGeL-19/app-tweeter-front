@@ -50,7 +50,8 @@ export const ProfilePage = () => {
     const [showModal, setShowModal] = useState(false);
     const [filterFollower, setFilterFollower] = useState(false);
     const [dataTweets, setDataTweets] = useState([])
-    const [filter, setFilter] = useState(objFilter)
+    
+
     const [dataUser, setDataUser] = useState({})
 
     const [ data, loading, error, setLabelFetch ] = useFetch(`tweets/${params.id}?limit=5&start=1&end=5`,{},'GET',token)
@@ -112,7 +113,6 @@ export const ProfilePage = () => {
                                                 <FilterPost 
                                                     filters={objFilter} 
                                                     setLabel={ setLabelFetch } 
-                                                    setFilter={ setFilter } 
                                                 />
                     
                                             </div>
