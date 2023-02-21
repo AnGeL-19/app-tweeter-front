@@ -8,11 +8,14 @@ export const WhoToFollow = () => {
     const {token} = useSelector(state => state.auth);
     const [dataUser, setDataUser] = useState([])
 
-    const [ data, loading, error, setLabelFetch ] = useFetch('user/recomment',{},'GET',token)
+    const {doFetch, data, loading, error } = useFetch(token)
+
+    useEffect(()=>{
+        doFetch('user/recomment',{},'GET')
+    },[])
 
     useEffect(()=>{
         setDataUser(data.data )
-        return() => setDataUser([])
     },[data])
     
     return (

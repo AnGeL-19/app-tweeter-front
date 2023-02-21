@@ -13,24 +13,34 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
 
     const params = useParams();
 
-    const [data, setData] = useState({})
+    const { data, loading, doFetch } = useFetch(token)
 
-    const [ dataUsers, loading, error, setLabelFetch ] = useFetch(
-        !isFollowers
-        ? `user/followers/${params.id}`
-        : `user/following/${params.id}`,
-        {},
-        'GET',
-        token)
+    const [dataUsers, setDataUsers] = useState({})
 
+    // const [ dataUsers, loading, error, setLabelFetch ] = useFetch(
+    //     !isFollowers
+    //     ? `user/followers/${params.id}`
+    //     : `user/following/${params.id}`,
+    //     {},
+    //     'GET',
+    //     token)
+    useEffect(() => {
+
+        doFetch(!isFollowers
+                ? `user/followers/${params.id}`
+                : `user/following/${params.id}`,
+                {},
+                'GET');
+        
+    }, [])
 
 
     useEffect(() => {
 
-        setData(dataUsers.data);
-        console.log(dataUsers.data);
+        setDataUsers(data.data);
+        console.log(data.data);
         
-    }, [dataUsers])
+    }, [data])
 
     return (
         <div className="container_modal">
@@ -57,15 +67,15 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
                             (loading)
                             ? <span>Loading...</span>
                             :
-                                (data.length === 0 || !data) 
+                                (dataUsers.length === 0 || !dataUsers) 
                                 ? <span>No hay followers</span>
                                 : 
-                                    data.map((userf,index) => (
-                                        <>
-                                            <div className="line"></div>
-                                            <ItemUserModal key={userf.uid+index} user={userf}  />
-                                        </>
-                                    ))
+                                dataUsers.map((userf,index) => (
+                                    <>
+                                        <div className="line"></div>
+                                        <ItemUserModal key={userf.uid+index} user={userf}  />
+                                    </>
+                                ))
    
                     }
                     

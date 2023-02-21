@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { fetchApi } from '../../helpers/fetch';
 import { hashtagText } from '../../helpers/findHashtag';
 import { dateFormat } from '../../helpers/formatDate'
@@ -45,14 +46,19 @@ export const Comments = ({comment}) => {
         <div className="user_comment">
 
             <div className="img_user">
-                <img src={comment.userComment.imgUser} alt={comment.userComment.name}/>
+                <NavLink to={`/profile/${comment.userComment.uid}`}>
+                    <img src={comment.userComment.imgUser} alt={comment.userComment.name}/>
+                </NavLink>
             </div>
             <div className="comment_likes">
                 <div className="info_comment">
+
                     <div className="info_user">
-                        <span className="name_user">
-                            {comment.userComment.name}
-                        </span>
+                        <NavLink to={`/profile/${comment.userComment.uid}`}>
+                            <span className="name_user">
+                                {comment.userComment.name}
+                            </span>
+                        </NavLink>
                         <span className="date_comment">
                             {dateFormat(comment.date)}
                         </span>

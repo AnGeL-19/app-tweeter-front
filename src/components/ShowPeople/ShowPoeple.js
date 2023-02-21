@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { ItemWTFollow } from '../home/ItemWTFollow'
 
-export const ShowPoeple = ({users, loading, error}) => {
+export const ShowPoeple = memo(({users, loading, error}) => {
 
     console.log(users, !!users);
 
@@ -12,7 +12,7 @@ export const ShowPoeple = ({users, loading, error}) => {
 
                 {
 
-                    (loading || error)
+                    (!users || users.length === 0 || loading || error)
                     ? <samp>Loading...</samp>
                     : 
                     users.map((user,index) => (
@@ -25,4 +25,4 @@ export const ShowPoeple = ({users, loading, error}) => {
 
         </div>
   )
-}
+})

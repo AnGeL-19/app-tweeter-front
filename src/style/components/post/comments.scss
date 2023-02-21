@@ -6,18 +6,22 @@
         display: flex;
         flex-direction: row;
         
-
+        
         .img_user{
+
             width: 40px;
             height: 40px;
-            
+    
+            a{
 
-            img{
-                width: 40px;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 8px;
+                img{
+                    width: 40px;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 8px;
+                }
             }
+            
         }
 
         .comment_likes{
@@ -44,17 +48,23 @@
                     align-items: center;
                     margin-bottom: 10px;
 
-                    .name_user{
+                    a{
+                        text-decoration: none;
+                        overflow: hidden;
+                        text-overflow: ellipsis; 
 
-                        margin-right: 10px;
+                        .name_user{
 
-                        font-style: normal;
-                        font-weight: 500;
-                        font-size: 14px;
-                        line-height: 21px;
-                        letter-spacing: -0.035em;
-
-                        color: #000000;
+                            margin-right: 10px;
+    
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 14px;
+                            line-height: 21px;
+                            letter-spacing: -0.035em;
+    
+                            color: #000000;
+                        }
                     }
 
                     .date_comment{

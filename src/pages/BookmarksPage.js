@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
+import { Layout } from '../components/layout/Layout'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { useFetch } from '../hooks/useFetch'
@@ -10,17 +11,17 @@ export const BookmarksPage = () => {
 
     const {token} = useSelector(state => state.auth);
     
-    const [ data, loading, error, setLabelFetch ] = useFetch('tweets/saved',{},'GET',token)
-    
+    // const [ data, loading, error, setLabelFetch ] = useFetch('tweets/saved',{},'GET',token)
+    const { data, loading, doFetch } = useFetch(token)
     const [dataTweets, setDataTweets] = useState([])
 
-    console.log(data);
 
     useEffect(()=>{
+        doFetch('tweets/saved',{},'GET')
+    },[])
 
+    useEffect(()=>{
         setDataTweets(data.data )
-
-        // return() => setDataTweets([])
     },[data])
 
     const objFilter = [
@@ -50,9 +51,10 @@ export const BookmarksPage = () => {
         },
     ]
 
+    const [filter, setFilter] = useState(objFilter)
+
     return (
-        <div>
-            <HeaderTweeter />
+        <Layout>
             
             <div className="bookmarks_container_main">
 
@@ -60,7 +62,7 @@ export const BookmarksPage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={objFilter} setLabel={setLabelFetch}/>
+                    <FilterPost filters={ filter } setFetch={ doFetch } setFilter={ setFilter }/>
 
                     </div>
 
@@ -71,6 +73,6 @@ export const BookmarksPage = () => {
                 </main>
             </div>
 
-        </div>
+        </Layout>
     )
 }

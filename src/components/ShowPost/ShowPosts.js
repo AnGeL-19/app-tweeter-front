@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Post } from './Post'
 
 
-export const ShowPosts = ({tweets, loading, error}) => {
-
+export const ShowPosts = memo(({tweets, loading, error}) => {
+    // !tweets || tweets.length === 0 ||
     return (
         <div className="div__sohw_post">
 
             <section className="show_posts">
 
                 {
-                    (loading || error)
+                    ( loading || error)
                     ? <samp>Loading...</samp>
                     :
                     tweets.map((tweet,index) => (
@@ -22,4 +22,4 @@ export const ShowPosts = ({tweets, loading, error}) => {
 
         </div>
     )
-}
+})

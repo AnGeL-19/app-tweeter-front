@@ -6,24 +6,28 @@ import { WhoToFollow } from '../components/home/WhoToFollow';
 import { ShowPosts } from '../components/ShowPost/ShowPosts';
 import { useSelector } from 'react-redux';
 import { useFetch } from '../hooks/useFetch';
+import { Layout } from '../components/layout/Layout';
 
 
 
 export const HomePage = () => {
     
     const {token} = useSelector(state => state.auth);
-    const [ data, loading, error ] = useFetch('tweets/?limit=5&start=1&end=5',{},'GET',token)
+    const {doFetch, data, loading, error } = useFetch(token)
     
     const [dataTweets, setDataTweets] = useState([])
 
     useEffect(()=>{
-        setDataTweets(data.data )
-        return() => setDataTweets([])
-    },[data])
+
+        doFetch('tweets/?limit=5&start=1&end=5',{},'GET',)
+
+    },[])
     
+
+
     return (
-        <div>
-            <HeaderTweeter />
+        <Layout>
+            {/* <HeaderTweeter /> */}
             <div className="home_container__main">
 
                 <main className="main__posts__aside">
@@ -32,7 +36,7 @@ export const HomePage = () => {
 
                         <CreatePost />
                         
-                        <ShowPosts tweets={dataTweets} loading={loading}/>
+                        <ShowPosts tweets={data.data} loading={loading}/>
 
                     </div>
 
@@ -47,6 +51,6 @@ export const HomePage = () => {
           
             </div>
             
-        </div>
+        </Layout>
     )
 }

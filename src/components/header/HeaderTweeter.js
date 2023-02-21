@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -16,26 +17,27 @@ const PATHS = {
     profile: '/profile/:id',
 }
 
-export const HeaderTweeter = () => {
+export const HeaderTweeter = React.memo(() => {
 
     const match = useRouteMatch()
 
     const user = useSelector(state => state.user);
 
-    const [path, setPath] = useState('');
     const [showMenu, setShowMenu] = useState(false);
 
-    useEffect(() => {
-        setPath(match.path);
-    }, [match])
+    const showMenuHeader = useCallback(() => {
+        setShowMenu(!showMenu)
+    },[showMenu])
+    
+    console.log('Rederizado header');
 
     return (
         <div>
             <header className="header__nav">
                 <div className="header__nav__divs">
-                    <div>
+                    <NavLink to="/home" >
                         <img src={LogoTweeter} alt='Logo Tweeter'/>
-                    </div>
+                    </NavLink>
                     <div className="nav__list">
                         
                         <ul className="nav__list__ul">
@@ -45,7 +47,7 @@ export const HeaderTweeter = () => {
                                          className="nav_item"
                                          activeClassName="selected"
                                          >Home</NavLink>
-                                <div className={`underline__nav ${path === PATHS.home || path === PATHS.profile  ? 'active': ''}`}></div>
+                                <div className={`underline__nav ${match.path === PATHS.home || match.path === PATHS.profile  ? 'active': ''}`}></div>
                             </li>
 
                             <li className="item__li" >
@@ -53,7 +55,7 @@ export const HeaderTweeter = () => {
                                          className="nav_item"
                                          activeClassName="selected"
                                          >Explore</NavLink>
-                                <div className={`underline__nav ${path === PATHS.explore ? 'active': ''}`}></div>
+                                <div className={`underline__nav ${match.path === PATHS.explore ? 'active': ''}`}></div>
                             </li>
 
                             <li className="item__li">  
@@ -61,7 +63,7 @@ export const HeaderTweeter = () => {
                                          className="nav_item"
                                          activeClassName="selected"
                                          >Bookmarks</NavLink>
-                                <div className={`underline__nav ${path === PATHS.bookmarks ? 'active': ''}`}></div>
+                                <div className={`underline__nav ${match.path === PATHS.bookmarks ? 'active': ''}`}></div>
                             </li>
                         </ul>
                     </div>
@@ -71,7 +73,7 @@ export const HeaderTweeter = () => {
                         </div>
                         <span className="span__user_name">{user.name}</span>
                         <button className="menu"
-                                onClick={()=> setShowMenu(!showMenu)}>
+                                onClick={showMenuHeader}>
                             <span className={`material-icons ${showMenu ? 'menuActive' : ''} `}>
                                 {`arrow_drop_${!showMenu ? 'down' : 'up'}`}
                             </span>
@@ -88,4 +90,4 @@ export const HeaderTweeter = () => {
             </header>
         </div>
     )
-}
+})

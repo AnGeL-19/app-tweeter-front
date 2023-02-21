@@ -7,16 +7,18 @@ import { ItemTrend } from './ItemTrend'
 export const Trends = () => {
 
     const {token} = useSelector(state => state.auth);
-    const [dataTweets, setDataTweets] = useState([])
-    console.log(dataTweets);
 
-    const [ data, loading, error, setLabelFetch ] = useFetch('tweets/hashtags',{},'GET',token)
+    const [dataTrend, setDataTrend] = useState([])
+
+    const {doFetch, data, loading, error } = useFetch(token)
 
     useEffect(()=>{
-        setDataTweets(data.data )
-        return() => setDataTweets([])
-    },[data])
+        doFetch('tweets/hashtags', {}, 'GET') 
+    },[])
 
+    useEffect(()=>{
+        setDataTrend(data.data) 
+    },[data])
 
     return (
         <section className="section__trends">
@@ -28,16 +30,10 @@ export const Trends = () => {
                 loading
                 ? <span>Loading...</span>
                 :
-                dataTweets.map( trend => (
+                dataTrend.map( trend => (
                     <ItemTrend key={trend.hid} trend={trend} />
                 ))
             }
-            {/* <ItemTrend />
-            <ItemTrend />
-            <ItemTrend />
-            <ItemTrend />
-            <ItemTrend />
-            <ItemTrend />                       */}
 
         </section>
     )

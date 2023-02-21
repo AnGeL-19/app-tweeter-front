@@ -1,19 +1,28 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useState } from 'react'
+import { useCallback } from 'react'
+import { useLayoutEffect } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
+import { Layout } from '../components/layout/Layout'
 import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
-import { fetchGetApi } from '../helpers/fetch'
 import { useFetch } from '../hooks/useFetch'
 import { useQuery } from '../hooks/useQuery'
 
 export const ExplorePage = () => {
+
+    const query = useQuery()
+    const hashtag = query.get("hashtag");
+    const {token} = useSelector(state => state.auth);
+    const { data, loading, doFetch } = useFetch(token)
+    const [dataTweets, setDataTweets] = useState([])
+    const [dataPeople, setDataPeople] = useState([])
 
     const objFilter = [
         {
@@ -42,60 +51,40 @@ export const ExplorePage = () => {
         },
     ]
 
-    const query = useQuery()
-    const hashtag = query.get("hashtag");
-    // console.log(hashtag);
-
-    const {token} = useSelector(state => state.auth);
-
-    const [dataResponse, setDataResponse] = useState([])
     const [filter, setFilter] = useState(objFilter)
-    const [dataPeople, setDataPeople] = useState([])
 
-    const [ data, loading, error, setLabelFetch ] = useFetch(`tweets/populates?filter=top`,{},'GET',token)
-
-
-    // console.log(data, loading, error);
-    useEffect( () => {
-
+    useEffect(()=>{
+ 
         if(hashtag){
-            setLabelFetch(`tweets/hashtag/search?hashtag=%23${hashtag}`)
-            setDataPeople([])
-            // setDataResponse(data.data) 
-            query.delete("hashtag")
+            doFetch(`tweets/hashtag/search?hashtag=%23${hashtag}`,{},'GET') 
+            query.delete("hashtag");
+            return;
         }
+
+        doFetch(filter.filter(f => f.select)[0].url,{},'GET')
+
+    },[])
+
+    
+    useEffect(() => {
 
         if(filter.find(f => f.nameObj === 'people').select){
 
-            setDataResponse([]) 
             setDataPeople(data.data)
-            
-        }else{
-            // setDataPeople([])
-            // setDataResponse(data.data)
+            setDataTweets([])
+            return;
+
         }
 
-          setDataResponse(data.data)   
-                
-        console.log('amonos 2', data.data);
-        
+        setDataTweets(data.data)
+        console.log('a', data);
+    },[data])
 
-    },[data,hashtag])
-
-
-    // useEffect(() => {
-
-         // if (query.get("hashtag") ) {
-        //     setLabelFetch(`tweets/hashtag/search?hashtag=%23${query.get("hashtag")}`)
-        //     query.delete("hashtag")
-        //     setDataResponse(data.data)        
-        // }
-
-    // }, [loading])
+ 
+    console.log('Renderizado explore', dataTweets); 
 
     return (
-        <div>
-            <HeaderTweeter />
+        <Layout>
 
             <div className="explore_container_main">
 
@@ -103,7 +92,7 @@ export const ExplorePage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={ filter } setLabel={ setLabelFetch } setFilter={ setFilter }/>
+                        <FilterPost filters={ filter } setFetch={ doFetch } setFilter={ setFilter }/>
 
                     </div>
 
@@ -122,9 +111,9 @@ export const ExplorePage = () => {
                         </form>
 
                         {
-                            (dataPeople.length !== 0)
-                            ? <ShowPoeple users={ dataPeople } loading={ loading } error={error}/>
-                            : <ShowPosts tweets={ dataResponse } loading={ loading } error={error}/>  
+                            (filter.find(f => f.nameObj === 'people').select)
+                            ? <ShowPoeple users={ dataPeople } loading={ loading }/>
+                            : <ShowPosts tweets={ dataTweets } loading={ loading }/>  
                         }
                         
                       
@@ -134,6 +123,6 @@ export const ExplorePage = () => {
             </div>
 
 
-        </div>
+        </Layout>
     )
 }

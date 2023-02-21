@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export const FilterPost = ({filters, setLabel, setFilter = () => {} }) => {
+export const FilterPost = ({filters, setFetch, setFilter }) => {
 
     const [selectF, setSelectFilter] = useState(filters);
 
@@ -21,7 +21,7 @@ export const FilterPost = ({filters, setLabel, setFilter = () => {} }) => {
             }
         })
 
-        setLabel(filter.url)  
+        setFetch(filter.url,{},'GET')  
         setFilter(updateObj) 
         setSelectFilter(updateObj);       
         

@@ -1,22 +1,58 @@
-import React, { createContext, useState } from 'react'
+import React, {  useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
-import { ComponentBtn } from '../components/ComponentBtn'
+import { useParams } from 'react-router-dom'
+import { useFetch } from '../hooks/useFetch'
+
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
 
 import { ModalFollow } from '../components/profile/ModalFollow'
 import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
-import { fetchGetApi } from '../helpers/fetch'
-import { useFetch } from '../hooks/useFetch'
+import { Layout } from '../components/layout/Layout'
 
-export const ContextShowModal = createContext();
+
 
 export const ProfilePage = () => {
 
     const params = useParams();
+
+    const user = useSelector(state => state.user);
+    const { token } = useSelector(state => state.auth);
+
+    const { data: dataUser, loading: loadingUser, doFetch: doFetchUser } = useFetch(token)
+    
+    const { data: dataTweets, loading: loadingTweets , doFetch: doFetchTweets } = useFetch(token)
+
+    const [showModal, setShowModal] = useState(false);
+    const [filterFollower, setFilterFollower] = useState(false);
+
+    const [dataTweetsInfo, setDataTweetsInfo] = useState([])
+    const [dataUserInfo, setDataUserInfo] = useState({})
+
+    useEffect(() => {
+        
+        if (params.id === user.uid) {
+            setDataUserInfo(user);  
+        }else{
+            setDataUserInfo({})
+            doFetchUser(`user/${params.id}`,{},'GET')
+        }
+        doFetchTweets(`tweets/${params.id}?limit=5&start=1&end=5`,{},'GET')
+    }, [])
+
+
+    useEffect(() => {
+        if (params.id !== user.uid) {
+            setDataUserInfo(dataUser.data) 
+        }    
+    }, [dataUser])
+    
+
+    useEffect(()=>{
+        setDataTweetsInfo(dataTweets.data )
+    },[dataTweets])
 
     const objFilter = [
         {
@@ -44,50 +80,15 @@ export const ProfilePage = () => {
         },
     ]
 
-    const user = useSelector(state => state.user);
-    const { token } = useSelector(state => state.auth);
-
-    const [showModal, setShowModal] = useState(false);
-    const [filterFollower, setFilterFollower] = useState(false);
-    const [dataTweets, setDataTweets] = useState([])
-    
-
-    const [dataUser, setDataUser] = useState({})
-
-    const [ data, loading, error, setLabelFetch ] = useFetch(`tweets/${params.id}?limit=5&start=1&end=5`,{},'GET',token)
-
-    const [ dataUs, loadingUser , errorUser , setLabelFetchUser ] = useFetch(`user/${params.id}`,{},'GET',token)
-
-    console.log(data.data, dataUs.data);
-
-    useEffect(() => {
-        
-        if (params.id !== user.uid) {
-
-            setLabelFetchUser(`user/${params.id}`)
-            setDataUser(dataUs.data);
-            console.log(dataUs.data,'-----------');
-
-        }else{
-            setDataUser(user);
-        }
-
-    }, [dataUs])
-
-    useEffect(()=>{
-        setDataTweets(data.data )
-        return() => setDataTweets([])
-    },[data])
+    const [filter, setFilter] = useState(objFilter)
 
     return (
-        <>
+        <Layout>
 
             <div className="container_profile">
 
-                <HeaderTweeter />
-
                 {   
-                    dataUser
+                    dataUserInfo
                     &&
                     (
                         <>
@@ -95,12 +96,12 @@ export const ProfilePage = () => {
                         <div className="profile__container_main">
         
                             {
-                                loadingUser
+                                (!dataUserInfo && loadingUser)
                                 ? <span>Loading...</span>
                                 : 
                                 (
                                     <>
-                                        <ProfileInfo dataUser={ dataUser } 
+                                        <ProfileInfo dataUser={ dataUserInfo } 
                                             user = { user }
                                             setFilterFollower={ setFilterFollower } 
                                             setShowModal={ setShowModal }
@@ -110,14 +111,15 @@ export const ProfilePage = () => {
             
                                             <div className="div_filter">
                     
-                                                <FilterPost 
-                                                    filters={objFilter} 
-                                                    setLabel={ setLabelFetch } 
-                                                />
+                                            <FilterPost 
+                                                filters={ filter } 
+                                                setFetch={ doFetchTweets } 
+                                                setFilter={ setFilter }
+                                            />
                     
                                             </div>
                     
-                                            <ShowPosts tweets={dataTweets} loading={ loading } />
+                                            <ShowPosts tweets={dataTweetsInfo} loading={ loadingTweets } />
                     
                                         </main>
                                     </>
@@ -143,6 +145,6 @@ export const ProfilePage = () => {
             
 
         
-        </>
+        </Layout>
     )
 }

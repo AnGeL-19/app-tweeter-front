@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -7,7 +7,7 @@ import {
 import { logoutUser } from '../../action/authAction';
 
 
-export const MenuHeader = () => {
+export const MenuHeader = memo(() => {
 
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
@@ -62,4 +62,4 @@ export const MenuHeader = () => {
             </div>
         </div>
     )
-}
+})
