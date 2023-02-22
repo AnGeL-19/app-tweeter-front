@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useFetch } from '../../hooks/useFetch';
+import { LoadingComponent } from '../LoadingComponent';
 import { ItemWTFollow } from './ItemWTFollow'
 
 export const WhoToFollow = () => {
@@ -22,10 +23,10 @@ export const WhoToFollow = () => {
         <aside className="aside__follow">
 
             <h2 className="title">Who to follow</h2>
-
+            {/* (loading) */}
             {
-                loading
-                ? <span>Loading...</span>
+                (loading)
+                ? <LoadingComponent />
                 :
                 dataUser.map( (user, index) => (
                     <>

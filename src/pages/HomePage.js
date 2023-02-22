@@ -30,7 +30,7 @@ export const HomePage = () => {
             {/* <HeaderTweeter /> */}
             <div className="home_container__main">
 
-                <main className="main__posts__aside">
+                {/* <main className="main__posts__aside"> */}
 
                     <div className="div__create_post_show">
 
@@ -47,7 +47,7 @@ export const HomePage = () => {
                         <WhoToFollow />
 
                     </div>
-                </main>
+                {/* </main> */}
           
             </div>
             

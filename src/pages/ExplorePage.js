@@ -1,14 +1,10 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { useState } from 'react'
-import { useCallback } from 'react'
-import { useLayoutEffect } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
-import { ComponentBtn } from '../components/ComponentBtn'
 import { FilterPost } from '../components/FilterPost'
-import { HeaderTweeter } from '../components/header/HeaderTweeter'
 import { Layout } from '../components/layout/Layout'
+import { SearchComponent } from '../components/SearchComponent'
 import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
@@ -88,7 +84,7 @@ export const ExplorePage = () => {
 
             <div className="explore_container_main">
 
-                <main className="container_main">
+                {/* <main className="container_main"> */}
 
                     <div className="div_filter">
 
@@ -98,17 +94,7 @@ export const ExplorePage = () => {
 
                     <div className="div__input__post">
 
-                        <form className="form_icon_input_btn">
-
-                            <div className="icon_input_btn">
-                                <span className="material-icons gray3Color">
-                                    search
-                                </span>
-                                <input type="text" placeholder="Search"/>
-                                <ComponentBtn median txtBtn="Search" />
-                            </div>
-
-                        </form>
+                        <SearchComponent setFetch={doFetch} />
 
                         {
                             (filter.find(f => f.nameObj === 'people').select)
@@ -119,7 +105,7 @@ export const ExplorePage = () => {
                       
                     </div>
 
-                </main>
+                {/* </main> */}
             </div>
 
 

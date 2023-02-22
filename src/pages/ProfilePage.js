@@ -11,6 +11,7 @@ import { ModalFollow } from '../components/profile/ModalFollow'
 import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { Layout } from '../components/layout/Layout'
+import { LoadingComponent } from '../components/LoadingComponent'
 
 
 
@@ -83,7 +84,9 @@ export const ProfilePage = () => {
     const [filter, setFilter] = useState(objFilter)
 
     return (
-        <Layout>
+        <>
+
+            <HeaderTweeter />
 
             <div className="container_profile">
 
@@ -97,7 +100,7 @@ export const ProfilePage = () => {
         
                             {
                                 (!dataUserInfo && loadingUser)
-                                ? <span>Loading...</span>
+                                ? <LoadingComponent />
                                 : 
                                 (
                                     <>
@@ -145,6 +148,6 @@ export const ProfilePage = () => {
             
 
         
-        </Layout>
+        </>
     )
 }

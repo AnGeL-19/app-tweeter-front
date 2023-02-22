@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchGetApi } from '../../helpers/fetch';
 import { useFetch } from '../../hooks/useFetch';
+import { LoadingComponent } from '../LoadingComponent';
+import { NotDataComponent } from '../NotDataComponent';
 import { ItemUserModal } from './ItemUserModal'
 
 export const ModalFollow = ({isFollowers, setShowModal}) => {
@@ -17,13 +19,6 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
 
     const [dataUsers, setDataUsers] = useState({})
 
-    // const [ dataUsers, loading, error, setLabelFetch ] = useFetch(
-    //     !isFollowers
-    //     ? `user/followers/${params.id}`
-    //     : `user/following/${params.id}`,
-    //     {},
-    //     'GET',
-    //     token)
     useEffect(() => {
 
         doFetch(!isFollowers
@@ -65,10 +60,10 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
                     {
                         
                             (loading)
-                            ? <span>Loading...</span>
+                            ? <LoadingComponent />
                             :
                                 (dataUsers.length === 0 || !dataUsers) 
-                                ? <span>No hay followers</span>
+                                ? <NotDataComponent text={'No hay followers'} />
                                 : 
                                 dataUsers.map((userf,index) => (
                                     <>

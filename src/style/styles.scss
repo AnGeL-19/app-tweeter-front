@@ -2,12 +2,15 @@
 // base
 @import 'base/index.scss';
 @import 'base/base.scss';
+@import 'base/layout.scss';
 @import 'base/calendarCalis.scss';
 
 // Auth
 @import 'pages/auth/login.scss';
 
 // components
+@import 'components/notData.scss';
+@import 'components/loading.scss';
 @import 'components/header/headerTweeter.scss';
 @import 'components/header/menuHeader.scss';
 @import 'components/userInfoBasic.scss';

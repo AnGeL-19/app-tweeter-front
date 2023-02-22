@@ -1,12 +1,12 @@
-.explore_container_main{
+// .explore_container_main{
 
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    background-color: #E0E0E0;
+//     display: flex;
+//     justify-content: center;
+//     width: 100%;
+//     background-color: #E0E0E0;
     
 
-    .container_main{
+    .explore_container_main{
 
         display: flex;
         flex-direction: row;
@@ -20,6 +20,7 @@
 
             display: flex;
             flex-direction: column;
+            
 
             .form_icon_input_btn{
 
@@ -71,5 +72,5 @@
        
     }
 
-}
+// }
 

@@ -1,5 +1,7 @@
 import React, { memo } from 'react'
 import { ItemWTFollow } from '../home/ItemWTFollow'
+import { LoadingComponent } from '../LoadingComponent';
+import { NotDataComponent } from '../NotDataComponent';
 
 export const ShowPoeple = memo(({users, loading, error}) => {
 
@@ -11,16 +13,17 @@ export const ShowPoeple = memo(({users, loading, error}) => {
             <section className="show_people">
 
                 {
-
-                    (!users || users.length === 0 || loading || error)
-                    ? <samp>Loading...</samp>
+                    (loading || error)
+                    ? <LoadingComponent />
                     : 
+                    (!users || users.length === 0)
+                    ? <NotDataComponent text={'No hay Usuarios'} />
+                    :
                     users.map((user,index) => (
                         <ItemWTFollow key={user.uid+index} user={user}/>
                     ))
+                }        
 
-                }
-                
             </section>      
 
         </div>

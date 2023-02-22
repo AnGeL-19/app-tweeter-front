@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { fetchGetApi } from '../../helpers/fetch';
 import { useFetch } from '../../hooks/useFetch';
+import { LoadingComponent } from '../LoadingComponent';
 import { ItemTrend } from './ItemTrend'
 
 export const Trends = () => {
@@ -25,10 +26,10 @@ export const Trends = () => {
 
             <h2 className="title">Trends for you</h2>
             <div className="line"></div>
-
+            {/* (loading) */}
             {
-                loading
-                ? <span>Loading...</span>
+                (loading)
+                ? <LoadingComponent />
                 :
                 dataTrend.map( trend => (
                     <ItemTrend key={trend.hid} trend={trend} />

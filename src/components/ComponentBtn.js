@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const ComponentBtn = ({big,normal,median,full,addicon,txtBtn,functionBtn}) => {
+export const ComponentBtn = ({type,big,normal,median,full,addicon,txtBtn,functionBtn}) => {
 
 
 
@@ -8,6 +8,7 @@ export const ComponentBtn = ({big,normal,median,full,addicon,txtBtn,functionBtn}
     return (
             
         <button 
+        type={type || 'button'}
         onClick={functionBtn}
         className={
             `btn-icon 

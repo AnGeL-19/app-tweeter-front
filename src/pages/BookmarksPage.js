@@ -58,7 +58,7 @@ export const BookmarksPage = () => {
             
             <div className="bookmarks_container_main">
 
-                <main className="container_main">
+                {/* <main className="container_main"> */}
 
                     <div className="div_filter">
 
@@ -70,7 +70,7 @@ export const BookmarksPage = () => {
                     <ShowPosts tweets={dataTweets} loading={loading}/>
 
     
-                </main>
+                {/* </main> */}
             </div>
 
         </Layout>

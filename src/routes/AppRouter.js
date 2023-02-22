@@ -26,7 +26,7 @@ export const AppRouter = () => {
 
     return (
         <Router>
-            <div>
+            <div className='container_main_app'>
                 <Switch>
                     <PublicRoute isAuthenticated={auth} path="/auth" component={ AuthRoute } />
                     <PrivateRoute isAuthenticated={auth} path="/" component={ TweeterRouter } />

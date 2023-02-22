@@ -4,16 +4,16 @@ import { HeaderTweeter } from '../header/HeaderTweeter'
 export const Layout = ({children}) => {
 
   return (
-    <div>
+    <>
 
         <HeaderTweeter />
 
-        <main>
+        <main className="main_layout">
 
             {children}
 
         </main>
 
-    </div>
+    </>
   )
 }
