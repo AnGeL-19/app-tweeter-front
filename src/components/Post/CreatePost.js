@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { fetchApi } from '../../helpers/fetch';
-import { findHashtag, hashtagText } from '../../helpers/findHashtag';
+import { findHashtag } from '../../helpers/findHashtag';
+import { useFetch } from '../../hooks/useFetch';
+import { useForm } from '../../hooks/useForm';
 import { UserImg } from '../basic/UserImg';
 import { ComponentBtn } from '../ComponentBtn';
 import { FileImage } from '../FileImage';
@@ -13,6 +14,8 @@ export const CreatePost = () => {
     const user = useSelector(state => state.user);
     const {token} = useSelector(state => state.auth);
 
+    const { doFetch, loading } = useFetch(token);
+
     const [showMenuImage, setShowMenuImage] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [showInputUrl, setShowInputUrl] = useState(false);
@@ -20,31 +23,32 @@ export const CreatePost = () => {
     const [image, setImage] = useState(null);
     const [dataURL, setURL] = useState('');
 
-    const [values, setValues] = useState({
+    const [values, setValues, handleInputChange, reset] = useForm({
         description: "",
         url: "",
         privacity: 'public'
     });
 
     const handleEliminateImg = () => {
-        console.log("eliminar");
+
         setImage(null);
-        setValues({
-            ...values,
+        setValues((v) => ({
+            ...v,
             url: ''
-        })
+        }))
+
     }
 
     const handleAddUrl = (e) => {
         e.preventDefault();
 
-        console.log(dataURL);
-        setValues({
-            ...values,
+        setValues((v) => ({
+            ...v,
             url: dataURL.url
-        })
+        }))
         setImage(dataURL.url);
         setShowInputUrl(false);
+
     }
 
     const handleShowMenuPrivacity = () => {
@@ -55,14 +59,12 @@ export const CreatePost = () => {
 
     const handleShowMenuImage = () => {
         setShowMenu(false) 
-        setShowMenuImage(!showMenuImage)
-          
+        setShowMenuImage(!showMenuImage)    
     }
 
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        console.log(values);
         const hashtags = findHashtag(values.description)
 
         const newData = {
@@ -75,16 +77,9 @@ export const CreatePost = () => {
             newData.hashtags = hashtags;
         }
 
-        const respData = await fetchApi(newData,'tweet','POST',token)
-        const resp = await respData.json();
+        doFetch('tweet',newData,'POST')
 
-        console.log(resp);
-
-        setValues({
-            description: "",
-            url: "",
-            privacity: 'public'
-        })
+        reset()
 
         handleEliminateImg()
     }
@@ -104,10 +99,7 @@ export const CreatePost = () => {
                             placeholder='What’s happening?'
                             name='description'
                             value={values.description}
-                            onChange={ (e) => setValues( value => ({
-                                ...value,
-                                [e.target.name]: e.target.value
-                            })) }                            
+                            onChange={ (e) => handleInputChange(e) }                            
                             >                  
                             </textarea>
                         </div>
@@ -195,7 +187,7 @@ export const CreatePost = () => {
 
                             </div>
                             <div className="btn__right">
-                                <ComponentBtn txtBtn="Tweet" median />
+                                <ComponentBtn type={'submit'} txtBtn="Tweet" median />
                             </div>
                         </div>
                     </form>

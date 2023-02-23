@@ -58,25 +58,6 @@ export const useFetch = (token) => {
 
     }
 
-    // useEffect(() => {
-    
-        // setLoading(true)
-        // fetch(`${process.env.REACT_APP_URL_API}/${labelFetch}`, options).then((response) => {
-        //     response.json().then(resp => {
-        //         setData(resp)
-        //         setLoading(false)
-        //     })
-        // }).catch((err) => {
-        //     console.log(err)
-        //     setError(err)
-        //     setLoading(true)
-        // })
-
-    //     console.log("amonos");
-
-    // }, [labelFetch])
-    // ,loading,error,
-
     const fe = useCallback((label,dataInfo,method) => {
         doFetch(label,dataInfo,method)
     },[data])

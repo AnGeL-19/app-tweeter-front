@@ -25,13 +25,13 @@ export const WhoToFollow = () => {
             <h2 className="title">Who to follow</h2>
             {/* (loading) */}
             {
-                (loading)
+                (true)
                 ? <LoadingComponent />
                 :
                 dataUser.map( (user, index) => (
                     <>
-                        <div className="line"></div>
-                        <ItemWTFollow key={user.uid+index+'wh'} user={user}/>
+                        <div className="line" key={index}></div>
+                        <ItemWTFollow key={user.uid+'wh'} user={user}/>
                     </>
                 ))
             }

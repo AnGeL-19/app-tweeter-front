@@ -12,14 +12,14 @@ export const ShowPosts = memo(({tweets, loading, error}) => {
             <section className="show_posts">
 
                 {
-                    ( loading || error )
+                    ( true )
                     ? <LoadingComponent />
                     :
                     (!tweets || tweets.length === 0)
                     ? <NotDataComponent text={'No hay Tweets :('} />
                     :
                     tweets.map((tweet,index) => (
-                        <Post key={tweet.tid+index} tweet={tweet} tid={tweet.tid}/>
+                        <Post key={tweet.tid+'tw'} tweet={tweet} tid={tweet.tid}/>
                     ))
                     
                 }

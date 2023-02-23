@@ -1,28 +1,39 @@
-import React, { useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { followUnFollowFollowing } from '../../action/userAction';
-import { fetchApi } from '../../helpers/fetch';
+import { useFetch } from '../../hooks/useFetch';
 import { ComponentBtn } from '../ComponentBtn'
 import { UserInfoBasic } from '../UserInfoBasic'
 
-export const ItemWTFollow = ({user}) => {
+export const ItemWTFollow = memo(({user}) => {
 
     const dispatch = useDispatch();
     const usersF = useSelector(state => state.user);
     const { token } = useSelector(state => state.auth);
     const [follow, setFollow] = useState(usersF.following)
+    
+    const {data, doFetch, loading} = useFetch(token);
 
-    const followUnFollow = async() => {
-        const rest = await fetchApi({},`user/followUnfollow/${user.uid}`,'PUT',token)
-        const restData = await rest.json()
-        if(restData.ok){
+
+    useEffect(() => {
+
+        if(data.ok){
             dispatch(followUnFollowFollowing(user.uid, usersF.following))
         }
+        
+    }, [data])
+    
+
+    const followUnFollow = () => {
+        
+        doFetch(`user/followUnfollow/${user.uid}`,{},'PUT')
+
         if (follow.includes(user.uid)) {
             setFollow( follow.filter( f => f !== user.uid ) )
         }else{
             setFollow([...follow, user.uid])
         }
+
     }
 
     return (
@@ -35,7 +46,8 @@ export const ItemWTFollow = ({user}) => {
                                 followers={user.followers.length || 0} />
 
                 
-                <ComponentBtn normal 
+                <ComponentBtn   type={'button'}
+                                normal 
                                 txtBtn={`${(follow.includes(user.uid)) ? 'Unfollow': 'Follow'}`}
                                 addicon={(follow.includes(user.uid)) ? 'person_remove': 'person_add'}
                                 functionBtn={followUnFollow}
@@ -56,4 +68,4 @@ export const ItemWTFollow = ({user}) => {
           
         </div>
     )
-}
+})

@@ -44,25 +44,55 @@ export const HeaderTweeter = React.memo(() => {
 
                             <li className="item__li" >
                                 <NavLink to="/home" 
-                                         className="nav_item"
+                                         className="nav_item show"
                                          activeClassName="selected"
                                          >Home</NavLink>
+
+                                <NavLink to="/home" 
+                                         className="nav_item none"
+                                         activeClassName="selected"
+                                         >
+                                        <span class="material-icons">
+                                            home
+                                        </span>
+                                </NavLink>
+
                                 <div className={`underline__nav ${match.path === PATHS.home || match.path === PATHS.profile  ? 'active': ''}`}></div>
                             </li>
 
                             <li className="item__li" >
                                 <NavLink to="/explore" 
-                                         className="nav_item"
+                                         className="nav_item show"
                                          activeClassName="selected"
-                                         >Explore</NavLink>
+                                         >
+                                            Explore
+                                </NavLink>
+
+                                <NavLink to="/explore" 
+                                         className="nav_item none"
+                                         activeClassName="selected"
+                                         >
+                                        <span class="material-icons">
+                                            explore
+                                        </span>
+                                </NavLink>
                                 <div className={`underline__nav ${match.path === PATHS.explore ? 'active': ''}`}></div>
                             </li>
 
                             <li className="item__li">  
                                 <NavLink to="/bookmarks" 
-                                         className="nav_item"
+                                         className="nav_item show"
                                          activeClassName="selected"
                                          >Bookmarks</NavLink>
+
+                                <NavLink to="/bookmarks" 
+                                         className="nav_item none"
+                                         activeClassName="selected"
+                                         >
+                                        <span class="material-icons">
+                                            bookmarks
+                                        </span>
+                                </NavLink>
                                 <div className={`underline__nav ${match.path === PATHS.bookmarks ? 'active': ''}`}></div>
                             </li>
                         </ul>

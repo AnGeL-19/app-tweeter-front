@@ -20,7 +20,6 @@ export const AppRouter = () => {
 
     useEffect(() => {
         dispatch(startCheking());
-        console.log('hola', auth);
     }, [dispatch]);
 
 

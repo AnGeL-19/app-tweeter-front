@@ -10,7 +10,6 @@ import LogoTweeter from '../../static/tweeter.svg';
 export const RegisterPage = () => {
 
     const dispatch = useDispatch();
-    const [register, setRegister] = useState(false);
 
     const [values, handleInputChange, reset] = useForm({
         name: '',
@@ -102,7 +101,7 @@ export const RegisterPage = () => {
                             </span>
                         </div>
                         
-                        <ComponentBtn className txtBtn={register ? 'Register': 'Enter'} full />
+                        <ComponentBtn type={'submit'} className txtBtn={'Register'} full />
 
                     </form>
 

@@ -10,11 +10,6 @@ import LogoTweeter from '../../static/tweeter.svg';
 export const LoginPage = () => {
 
     const dispatch = useDispatch();
-    const [register, setRegister] = useState(false);
-
-    // useEffect(() => {
-    //     dispatch(postStartLoading());
-    // }, [dispatch]);
 
     const [values, handleInputChange, reset] = useForm({
         email: '',
@@ -74,7 +69,7 @@ export const LoginPage = () => {
                             </span>
                         </div>
                         
-                        <ComponentBtn className txtBtn={register ? 'Register': 'Enter'} full />
+                        <ComponentBtn type={'submit'} className txtBtn={'Enter'} full />
 
                     </form>
 
