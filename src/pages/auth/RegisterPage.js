@@ -11,7 +11,7 @@ export const RegisterPage = () => {
 
     const dispatch = useDispatch();
 
-    const [values, handleInputChange, reset] = useForm({
+    const {values, handleInputChange, reset} = useForm({
         name: '',
         email: '',
         password: '',

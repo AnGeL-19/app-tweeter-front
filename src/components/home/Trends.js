@@ -28,7 +28,7 @@ export const Trends = () => {
             <div className="line"></div>
             {/* (loading) */}
             {
-                (true)
+                (loading)
                 ? <LoadingComponent />
                 :
                 dataTrend.map( trend => (

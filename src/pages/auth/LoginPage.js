@@ -11,17 +11,16 @@ export const LoginPage = () => {
 
     const dispatch = useDispatch();
 
-    const [values, handleInputChange, reset] = useForm({
+    const {values, handleInputChange, reset} = useForm({
         email: '',
         password: '',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
 
         dispatch(loginUser(values))
-
+        reset()   
     }
 
     const handleGoogle = () => {
@@ -48,7 +47,7 @@ export const LoginPage = () => {
                             type="email" 
                             name="email"
                             value={values.email}
-                            onChange={handleInputChange}
+                            onChange={(e)=>handleInputChange(e)}
                             placeholder="Email" 
                             required/>
                             <span className="material-icons gray3Color" >
@@ -61,7 +60,7 @@ export const LoginPage = () => {
                             type="password" 
                             name="password"
                             value={values.password}
-                            onChange={handleInputChange}
+                            onChange={(e)=>handleInputChange(e)}
                             placeholder="Password" 
                             required />
                             <span className="material-icons gray3Color">

@@ -23,7 +23,7 @@ export const CreatePost = () => {
     const [image, setImage] = useState(null);
     const [dataURL, setURL] = useState('');
 
-    const [values, setValues, handleInputChange, reset] = useForm({
+    const {values, setValues, handleInputChange, reset} = useForm({
         description: "",
         url: "",
         privacity: 'public'

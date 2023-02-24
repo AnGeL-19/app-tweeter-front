@@ -4,6 +4,11 @@
     width: 100%;
     height: 68px;
     padding: 0 40px;
+    
+    position: fixed;
+    top: 0;
+    background-color: #fff;
+    z-index: 9999999;
 
     .header__nav__divs{
 

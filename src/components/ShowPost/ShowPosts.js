@@ -12,7 +12,7 @@ export const ShowPosts = memo(({tweets, loading, error}) => {
             <section className="show_posts">
 
                 {
-                    ( true )
+                    ( loading || error )
                     ? <LoadingComponent />
                     :
                     (!tweets || tweets.length === 0)

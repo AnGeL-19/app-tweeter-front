@@ -25,7 +25,7 @@ export const WhoToFollow = () => {
             <h2 className="title">Who to follow</h2>
             {/* (loading) */}
             {
-                (true)
+                (loading)
                 ? <LoadingComponent />
                 :
                 dataUser.map( (user, index) => (
