@@ -122,7 +122,10 @@ export const ProfilePage = () => {
                     
                                             </div>
                     
-                                            <ShowPosts tweets={dataTweetsInfo} loading={ loadingTweets } />
+                                            <div className="div__container_posts">
+                                                <ShowPosts tweets={dataTweetsInfo} loading={ loadingTweets } />
+                                            </div>
+                                            
                     
                                         </main>
                                     </>

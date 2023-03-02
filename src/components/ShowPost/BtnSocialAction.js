@@ -41,7 +41,7 @@ export const BtnSocialAction = ({user, tweet, setValuesStatus, btnSocialAction }
             <span className="material-icons">
                 {btnSocialAction.icon}
             </span>
-            <span>
+            <span className="textSocial">
                 {btnSocialAction.select ? btnSocialAction.textSelect: btnSocialAction.text}
             </span>
     </button>

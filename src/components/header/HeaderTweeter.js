@@ -8,6 +8,8 @@ import {
   } from "react-router-dom";
 
 import LogoTweeter from '../../static/tweeter.svg';
+import LogoTweeterSmall from '../../static/tweeter-small.svg';
+
 import { MenuHeader } from './MenuHeader';
 
 const PATHS = {
@@ -35,8 +37,15 @@ export const HeaderTweeter = React.memo(() => {
         <div>
             <header className="header__nav">
                 <div className="header__nav__divs">
-                    <NavLink to="/home" >
-                        <img src={LogoTweeter} alt='Logo Tweeter'/>
+                    <NavLink to="/home" 
+                             className='nav_logo'>
+                        {
+                            <>
+                                <img src={LogoTweeterSmall} className="logoSmall" alt='Logo Tweeter Small'/>
+                                <img src={LogoTweeter} className="logo" alt='Logo Tweeter'/>
+                            </>
+                        }
+                        
                     </NavLink>
                     <div className="nav__list">
                         

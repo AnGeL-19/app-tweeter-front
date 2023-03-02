@@ -131,6 +131,16 @@
     
                         color: #4F4F4F;
                         background-color: #fff;
+
+                        .material-icons{
+                            font-size: 17px;
+                            font-weight: 600;
+                        }
+
+                        .textSocial{
+                            display: flex;
+                        }
+
                     }
 
                     .btn__social_action:hover{
@@ -143,9 +153,7 @@
                     
                     
 
-                    .material-icons{
-                        font-size: 17px;
-                    }
+                    
 
 
                     .btn_saved:hover{
@@ -325,4 +333,59 @@
 
     }
 
+}
+
+@media only screen and (max-width: 620px) {
+
+    .div__sohw_post{
+
+        .show_posts{
+    
+            .div__post{
+        
+                .post{
+    
+                    .image_post{
+    
+                        width: 100%;
+                        min-height: 330px;
+                        // max-height: 360px;
+                        margin-bottom: 12px;
+    
+                        img{
+                            width: 100%;
+                            height: 100%;
+    
+                            object-fit: cover;
+                            border-radius: 8px
+                        }
+    
+                    }
+    
+    
+                    .btns_social_acations{
+    
+    
+                        .btn__social_action{
+    
+                            .material-icons{
+                                font-size: 18px;
+                                
+                            }
+    
+                            .textSocial{
+                                display: none;
+                            }
+                        }
+
+                    }
+                    
+                }
+       
+            }
+    
+        }
+    
+    }
+    
 }

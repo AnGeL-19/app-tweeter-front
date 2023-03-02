@@ -53,7 +53,7 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
             <span className="material-icons">
                 mode_comment
             </span>
-            <span>
+            <span className="textSocial">
                 Comment
             </span>
         </button>

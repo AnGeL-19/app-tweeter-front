@@ -66,10 +66,12 @@ export const BookmarksPage = () => {
 
                     </div>
 
+                    <div className="div__explore__posts">
 
-                    <ShowPosts tweets={dataTweets} loading={loading}/>
-
-    
+                        <ShowPosts tweets={dataTweets} loading={loading}/>
+                   
+                    </div>
+                    
                 {/* </main> */}
             </div>
 

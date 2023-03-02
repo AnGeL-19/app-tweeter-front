@@ -37,7 +37,7 @@ export const FilterPost = ({filters, setFetch, setFilter }) => {
                     <div onClick={(e) => handleSelect(e,filter)} 
                         className="filter" 
                         id={`${filter.nameObj}`}>
-                        <div className={`line-left ${filter.select ? 'active-line' : ''}`} ></div>
+                        <div className={`line ${filter.select ? 'active-line' : ''}`} ></div>
                         <span id={`${filter.nameObj}`} 
                             className={`nameFilter ${filter.select ? 'active-text': 'gray3Color'}`}>
                             {filter.name}

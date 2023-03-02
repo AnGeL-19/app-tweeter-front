@@ -88,6 +88,8 @@ export const CreatePost = () => {
         <div className="div__create_post">
             <h2 className="title">Tweet something</h2>
             <div className="line"></div>
+
+            
             <div className="img__inputs__post">
 
                 <UserImg url={user.imgUser}/>

@@ -1,6 +1,6 @@
 .div__sohw_people{
 
-    width: 745px;
+    // width: 745px;
     height: 100%;
 
     .show_people{
@@ -13,4 +13,15 @@
         gap: 10px;
     
     }
+}
+
+
+@media only screen and (max-width: 520px) {
+
+    .div__sohw_people{
+        .show_people{
+            grid-template-columns: auto;
+        }
+    }
+
 }

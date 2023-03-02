@@ -2,16 +2,17 @@
 
 .container_profile{
 
+    // height: 100vh;
     
     .profile__container_main{
 
 
         width: 100%;
-        // height: 100vh;
-        display: flex;
-        flex-direction: column;
+        height: 100vh;
+        // display: flex;
+        // flex-direction: column;
         background-color: #E0E0E0;
-        
+        overflow-y: overlay;        
     
         .info_profile{
 
@@ -38,6 +39,11 @@
             }
 
     
+        .container_userinfo{
+                
+            width: 100%;
+            padding: 0 40px;
+
             .user_img_info{
     
                 display: flex;
@@ -46,13 +52,12 @@
 
                 margin-top: -50px;
                 margin-bottom: 25px;
-        
+
                 padding: 24px;
 
                 width: 100%;
-                max-width: 1073px;
 
-                height: 163px;
+                min-height: 163px;
                 background-color: #fff;
         
                 box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
@@ -106,32 +111,40 @@
                             letter-spacing: -0.035em;
                             
                         }
+                        
+                        .div_followers{
+
+                            display: flex;
+                            flex-direction: row;
+
+                            .fwll{  
     
-                        .fwll{  
+                                margin-right: 25px;
+                                font-style: normal;
+                                font-weight: 800;
+                                font-size: 12px;
+                                line-height: 18px;
+                                color: #828282;
+        
+                                .wBlack{
+                                    
+                                    color: #333;
+                                    font-weight: bold;
+                                    margin-right: 5px;
+                                }
     
-                            margin-right: 25px;
-                            font-style: normal;
-                            font-weight: 800;
-                            font-size: 12px;
-                            line-height: 18px;
-                            color: #828282;
-    
-                            .wBlack{
+                            }
+        
+                            .fwll:hover{
+                                cursor: pointer;
+                                border-bottom-width: 1px;
+                                border-bottom-style: solid;
                                 
-                                color: #333;
-                                font-weight: bold;
-                                margin-right: 5px;
+                                border-bottom-color: #828282;
                             }
 
                         }
-    
-                        .fwll:hover{
-                            cursor: pointer;
-                            border-bottom-width: 1px;
-                            border-bottom-style: solid;
-                            
-                            border-bottom-color: #828282;
-                        }
+                        
 
     
                     }
@@ -156,6 +169,7 @@
             }
     
         }
+    }
     
         .container_main{
     
@@ -163,11 +177,15 @@
             flex-wrap: wrap;
             flex-direction: row;
             justify-content: center;
-            // width: 1073px;
-    
+            
+            padding: 0 40px;
+
             .div_filter{
                 margin-right: 20px;
-                margin-bottom: 20px;
+            }
+
+            .div__container_posts{
+                width: 745px;
             }
     
         }
@@ -176,3 +194,273 @@
 
 }
 
+@media only screen and (max-width: 1115px) {
+
+    
+.container_profile{
+ 
+    .profile__container_main{
+    
+        .container_main{
+
+            .div_filter{
+                margin-right: 18px;
+            }
+
+            .div__container_posts{
+                width: 640px;
+            }
+    
+        }
+    
+    }
+
+    }
+
+}
+
+@media only screen and (max-width: 995px) {
+
+    
+    .container_profile{
+    
+        
+        .profile__container_main{
+    
+        
+            .container_main{  
+    
+                .div_filter{
+                    margin-right: 16px;
+                }
+    
+                .div__container_posts{
+                    width: 550px;
+                }
+        
+            }
+        
+        }
+    
+        }
+    
+    }
+
+@media only screen and (max-width: 900px) {
+
+    
+        .container_profile{
+        
+            
+            .profile__container_main{
+        
+                
+            
+                .info_profile{
+        
+                    .profile_img_background{
+        
+                    
+                        img{
+        
+                    
+                        }
+                    
+                    }
+        
+            
+                .container_userinfo{
+                        
+                    padding: 0 20px;
+                    .user_img_info{
+            
+                        
+        
+                        .userprofile_img_info{
+        
+        
+                            .user_img{
+            
+                            
+                                img{
+                
+                
+                                }
+            
+                            }
+            
+                            .user_info{
+                
+        
+                
+                                .characteristics{
+        
+                
+                                    .name_user{
+        
+                                        
+                                    }
+                                    
+                                    .div_followers{
+        
+                                        .fwll{  
+                
+        
+                                            .wBlack{
+        
+                                            }
+                
+                                        }
+                    
+                                        .fwll:hover{
+        
+                                        }
+        
+                                    }
+                                    
+        
+                
+                                }
+                
+                                .description{
+                
+        
+                                }
+                
+                            }
+        
+                        }
+            
+                    }
+            
+                }
+                }
+            
+                .container_main{
+            
+                    width: 100%;
+                    padding: 0 20px;
+
+                    .div_filter{
+                        width: 100%;
+                        margin-right: 0;
+                        margin-bottom: 16px;
+                    }
+        
+                    .div__container_posts{
+                        width: 100%;
+                    }
+            
+                }
+            
+            }
+        
+    }
+        
+}
+
+@media only screen and (max-width: 730px) {
+
+    
+    .container_profile{
+    
+        
+        .profile__container_main{
+    
+          
+        
+            .info_profile{
+    
+                .profile_img_background{
+    
+                
+                    img{
+    
+                
+                    }
+                
+                }
+    
+        
+            .container_userinfo{
+                    
+               
+                .user_img_info{
+        
+                    flex-direction: column;
+                    align-items: center;
+                    // height: 100%;
+    
+                    .userprofile_img_info{
+                    
+                        margin-bottom: 10px;
+                        flex-direction: column;
+                        align-items: center;
+                        
+                        .user_img{
+        
+                            height: 163px;
+                            img{
+            
+            
+                            }
+        
+                        }
+        
+                        .user_info{
+            
+                            display: flex;
+                            align-items: center;
+                            flex-direction: column;
+                            margin-left: 0;
+
+                            .characteristics{
+    
+                                flex-direction: column;
+
+                                .name_user{
+    
+                                    
+                                }
+                                
+                                .div_followers{
+    
+                                    .fwll{  
+            
+    
+                                        .wBlack{
+    
+                                        }
+            
+                                    }
+                
+                                    .fwll:hover{
+    
+                                    }
+    
+                                }
+                                
+    
+            
+                            }
+            
+                            .description{
+            
+    
+                            }
+            
+                        }
+    
+                    }
+        
+                }
+        
+            }
+            }
+        
+            
+        }
+    
+}
+    
+}
