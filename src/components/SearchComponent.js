@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ComponentBtn } from './ComponentBtn'
 
-export const SearchComponent = ({setFetch}) => {
+export const SearchComponent = ({setFetch, people}) => {
 
     const [valueSearch, setValueSearch] = useState({
         search: ''
@@ -9,8 +9,13 @@ export const SearchComponent = ({setFetch}) => {
 
     const handlePost = (e) => {
         e.preventDefault()
+        console.log(`user/people?search=${valueSearch.search}`);
+        if (people) {
+            setFetch(`user/people?search=${valueSearch.search}`,{}, 'GET')
+        }else{
+            setFetch(`tweets/search?find=${valueSearch.search}`,{}, 'GET')
+        }
         
-        setFetch(`tweets/search?find=${valueSearch.search}`,{}, 'GET')
         console.log(valueSearch);
 
     }

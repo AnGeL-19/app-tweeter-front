@@ -47,7 +47,7 @@ export const BookmarksPage = () => {
             nameObj: 'likes',
             select: false,
             name: 'Likes',
-            url: `tweets/saved?filter=likes`
+            url: `tweets/liked`
         },
     ]
 

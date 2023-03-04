@@ -37,7 +37,7 @@ export const ExplorePage = () => {
             nameObj: 'people',
             select: false,
             name: 'People',
-            url: 'user/people'
+            url: `user/people`
         },
         {
             nameObj: 'media',
@@ -65,19 +65,13 @@ export const ExplorePage = () => {
     useEffect(() => {
 
         if(filter.find(f => f.nameObj === 'people').select){
-
             setDataPeople(data.data)
             setDataTweets([])
             return;
-
         }
 
         setDataTweets(data.data)
-        console.log('a', data);
     },[data])
-
- 
-    console.log('Renderizado explore', dataTweets); 
 
     return (
         <Layout>
@@ -94,7 +88,7 @@ export const ExplorePage = () => {
 
                     <div className="div__input__post">
 
-                        <SearchComponent setFetch={doFetch} />
+                        <SearchComponent setFetch={doFetch} people={filter.find(f => f.nameObj === 'people').select} />
 
                         {
                             (filter.find(f => f.nameObj === 'people').select)
