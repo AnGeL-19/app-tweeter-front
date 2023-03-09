@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import { ComponentBtn } from './ComponentBtn'
 
-export const SearchComponent = ({setFetch, people}) => {
+export const SearchComponent = ({setParam}) => {
 
     const [valueSearch, setValueSearch] = useState({
         search: ''
     })
 
-    const handlePost = (e) => {
+    const handleValue = (e) => {
         e.preventDefault()
-        console.log(`user/people?search=${valueSearch.search}`);
-        if (people) {
-            setFetch(`user/people?search=${valueSearch.search}`,{}, 'GET')
-        }else{
-            setFetch(`tweets/search?find=${valueSearch.search}`,{}, 'GET')
-        }
-        
+        setParam(prev => ({
+            ...prev,
+            ...valueSearch
+        }))
+       
         console.log(valueSearch);
-
+        setValueSearch({
+            search: ''
+        })
     }
 
   return (
-    <form className="form_icon_input_btn" onSubmit={handlePost}>
+    <form className="form_icon_input_btn" onSubmit={handleValue}>
 
         <div className="icon_input_btn">
             <span className="material-icons gray3Color">

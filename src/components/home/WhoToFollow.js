@@ -1,41 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { useFetch } from '../../hooks/useFetch';
+import React, {  Suspense, lazy} from 'react'
+import useSWR from 'swr'
+import { fetcher } from '../../helpers/fetch'
 import { LoadingComponent } from '../LoadingComponent';
-import { ItemWTFollow } from './ItemWTFollow'
+import { NotDataComponent } from '../NotDataComponent';
+import ItemWTFollow  from './ItemWTFollow'
 
 export const WhoToFollow = () => {
 
-    const {token} = useSelector(state => state.auth);
-    const [dataUser, setDataUser] = useState([])
-
-    const {doFetch, data, loading, error } = useFetch(token)
-
-    useEffect(()=>{
-        doFetch('user/recomment',{},'GET')
-    },[])
-
-    useEffect(()=>{
-        setDataUser(data.data )
-    },[data])
+    const { data: users , isLoading, error } = useSWR(`user/recomment`, fetcher)
     
     return (
         <aside className="aside__follow">
 
             <h2 className="title">Who to follow</h2>
-            {/* (loading) */}
-            {
-                (loading)
-                ? <LoadingComponent />
-                :
-                dataUser.map( (user, index) => (
-                    <>
-                        <div className="line" key={index}></div>
-                        <ItemWTFollow key={user.uid+'wh'} user={user}/>
-                    </>
-                ))
-            }
+            <Suspense  fallback={<LoadingComponent />} > 
+                {
+                    (users)
+                    &&
+                    users.data.map( (user, index) => (
+                        <>
+                            <div className="line" key={index}></div>
+                            <ItemWTFollow key={user.uid+'wh'} user={user}/> 
+                        </>
+                    ))
+                }
+            </Suspense>
 
+            {
+                (isLoading)
+                ?
+                <LoadingComponent />
+                : 
+                (users.data.length === 0)
+                    &&
+                <NotDataComponent text={'No hay Usuarios :('} />   
+            }
         </aside>
     )
 }

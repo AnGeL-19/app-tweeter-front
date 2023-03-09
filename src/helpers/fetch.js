@@ -2,6 +2,8 @@
 
 // login/new
 
+import Cookies from "js-cookie";
+
 export const fetchApi = (data, label, method,token) => {
 
     return fetch(`${process.env.REACT_APP_URL_API}/${label}`, {
@@ -27,3 +29,12 @@ export const fetchGetApi = (label,token) => {
     });
 
 }
+
+
+export const fetcher = url => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{
+    method: 'GET',
+    headers: {
+            'x-token': Cookies.get('token'),
+    }
+}).then(r => r.json())
+

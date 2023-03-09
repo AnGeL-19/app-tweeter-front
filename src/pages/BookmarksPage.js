@@ -7,51 +7,49 @@ import { Layout } from '../components/layout/Layout'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { useFetch } from '../hooks/useFetch'
 
+const objFilter = [
+    {
+        nameObj: 'tweets',
+        select: true,
+        name: 'Tweets',
+        url: `tweets/saved`,
+        params: {}
+    },
+    {
+        nameObj: 'TweetsReplies',
+        select: false,
+        name: 'Tweets & replies',
+        url: '',
+        params: {}
+    },
+    {
+        nameObj: 'media',
+        select: false,
+        name: 'Media',
+        url: '',
+        params: {}
+    },
+    {
+        nameObj: 'likes',
+        select: false,
+        name: 'Likes',
+        url: `tweets/liked`,
+        params: {}
+    },
+]
+
 export const BookmarksPage = () => {
 
-    const {token} = useSelector(state => state.auth);
-    
-    // const [ data, loading, error, setLabelFetch ] = useFetch('tweets/saved',{},'GET',token)
-    const { data, loading, doFetch } = useFetch(token)
-    const [dataTweets, setDataTweets] = useState([])
-
-
-    useEffect(()=>{
-        doFetch('tweets/saved',{},'GET')
-    },[])
-
-    useEffect(()=>{
-        setDataTweets(data.data )
-    },[data])
-
-    const objFilter = [
-        {
-            nameObj: 'tweets',
-            select: true,
-            name: 'Tweets',
-            url: `tweets/saved`
-        },
-        {
-            nameObj: 'TweetsReplies',
-            select: false,
-            name: 'Tweets & replies',
-            url: ''
-        },
-        {
-            nameObj: 'media',
-            select: false,
-            name: 'Media',
-            url: ''
-        },
-        {
-            nameObj: 'likes',
-            select: false,
-            name: 'Likes',
-            url: `tweets/liked`
-        },
-    ]
 
     const [filter, setFilter] = useState(objFilter)
+    const [queryData, setQueryData] = useState(filter.filter(f => f.select)[0].url)
+    const [queryDataParams, setQueryDataParams] = useState(filter.filter(f => f.select)[0].params)
+
+    useEffect(() => {
+        setQueryData(filter.filter(f => f.select)[0].url)
+        setQueryDataParams(filter.filter(f => f.select)[0].params)
+    },[filter])
+    
 
     return (
         <Layout>
@@ -62,13 +60,20 @@ export const BookmarksPage = () => {
 
                     <div className="div_filter">
 
-                    <FilterPost filters={ filter } setFetch={ doFetch } setFilter={ setFilter }/>
+                    <FilterPost filters={ filter }  setFilter={ setFilter }/>
 
                     </div>
 
                     <div className="div__explore__posts">
 
-                        <ShowPosts tweets={dataTweets} loading={loading}/>
+                    <ShowPosts 
+                        query={
+                            queryData
+                        } 
+                        params={
+                            queryDataParams
+                        }
+                    /> 
                    
                     </div>
                     

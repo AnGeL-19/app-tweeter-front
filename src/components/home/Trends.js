@@ -1,41 +1,38 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { fetchGetApi } from '../../helpers/fetch';
-import { useFetch } from '../../hooks/useFetch';
+import React, { lazy, Suspense } from 'react'
+import useSWR from 'swr'
 import { LoadingComponent } from '../LoadingComponent';
-import { ItemTrend } from './ItemTrend'
+import { fetcher } from '../../helpers/fetch'
+import ItemTrend  from './ItemTrend'
+import { NotDataComponent } from '../NotDataComponent';
 
 export const Trends = () => {
-
-    const {token} = useSelector(state => state.auth);
-
-    const [dataTrend, setDataTrend] = useState([])
-
-    const {doFetch, data, loading, error } = useFetch(token)
-
-    useEffect(()=>{
-        doFetch('tweets/hashtags', {}, 'GET') 
-    },[])
-
-    useEffect(()=>{
-        setDataTrend(data.data) 
-    },[data])
+    
+    const { data: trends , isLoading, error } = useSWR(`tweets/hashtags`, fetcher)
 
     return (
         <section className="section__trends">
 
             <h2 className="title">Trends for you</h2>
             <div className="line"></div>
-            {/* (loading) */}
-            {
-                (loading)
-                ? <LoadingComponent />
-                :
-                dataTrend.map( trend => (
-                    <ItemTrend key={trend.hid} trend={trend} />
-                ))
-            }
+            <Suspense fallback={<LoadingComponent />} > 
+                {
+                    (trends)
+                    &&
+                    trends.data.map( trend => (
+                        <ItemTrend key={trend.hid} trend={trend} />
+                    ))
+                }
+            </Suspense>
 
+            {
+                (isLoading)
+                ?
+                <LoadingComponent />
+                : 
+                (trends.data.length === 0)
+                    &&
+                <NotDataComponent text={'No hay Trends :('} />   
+            }
         </section>
     )
 }

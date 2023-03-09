@@ -1,21 +1,28 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useEffect, useState } from "react";
 
 
 export const useFetch = (token) => {
 
     const [data, setData] = useState([]);
+    const [hasMore, setHasMore] = useState(false)
+    
 
     const [fetchToken, setToken] = useState(token)
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const loa = useCallback((value) => {
-        setLoading(value);
-    },[loading])
 
-    const doFetch = async (label,dataInfo,method) => {
+    // const loa = useCallback((value) => {
+    //     setLoading(value);
+    // },[loading])
+
+    // const more = useCallback((value) => {
+    //     setHasMore(value);
+    // },[hasMore])
+
+    const doFetch = async (query,dataInfo,method) => {
 
         let options = {}
         switch (method.toUpperCase().trim()) {
@@ -40,29 +47,79 @@ export const useFetch = (token) => {
         }
 
         try{
-            loa(true)
+            setLoading(true)
 
-            const response = await fetch(`${process.env.REACT_APP_URL_API}/${label}`, options);
+
+            const response = await fetch(`${process.env.REACT_APP_URL_API}/${query}`, options);
             const respData = await response.json();
-            
-           
-            setData(respData)
-            loa(false)
+
+
+            setData(prev => {
+                return [...prev, ...respData.data]
+            })
+
+            setHasMore(respData.data.length > 0)
+
+            setLoading(false)
             // setError(null)
         }catch(err){
             console.log(err)
             // setError(err)
-            loa(true)
+            setLoading(true)
         }
         
 
     }
 
-    const fe = useCallback((label,dataInfo,method) => {
-        doFetch(label,dataInfo,method)
-    },[data])
+    const fe = useCallback((query,dataInfo,method) => {
+        doFetch(query,dataInfo,method)
+        console.log('entra fetch');
+    },[])
 
 
-    return {data, loading, error, doFetch: fe}
+    const cleanData = () => {
+        setData([])
+    }
+
+
+    return {data, loading, hasMore, error, doFetch , cleanData}
 
 }
+
+
+export const useFetch2 = (token) => {
+
+
+    const getDataFetch = async (query) => {
+
+        try{
+
+
+            const response = await fetch(`${process.env.REACT_APP_URL_API}/${query}`, {
+                    method: 'GET',
+                    headers: {
+                                'x-token': token
+                    }
+                }
+            );
+            const respData = await response.json();
+
+            return respData.data
+            
+
+        }catch(err){
+            console.log(err)
+            return []
+        }
+        
+
+    }
+
+    // const cleanData = () => {
+    //     setData([])
+    // }
+
+    return {getDataFetch}
+
+}
+

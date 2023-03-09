@@ -11,67 +11,64 @@ import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { useFetch } from '../hooks/useFetch'
 import { useQuery } from '../hooks/useQuery'
 
+const objFilter = [
+    {
+        nameObj: 'top',
+        select: true,
+        name: 'Top',
+        url: 'tweets/populates',
+        params: {
+            filter: 'top'
+        }
+    },
+    {
+        nameObj: 'lastest',
+        select: false,
+        name: 'Lastest',
+        url: 'tweets/populates',
+        params: {
+            filter: 'lastest'
+        }
+    },
+    {
+        nameObj: 'people',
+        select: false,
+        name: 'People',
+        url: `user/people`,
+        params: {}
+    },
+    {
+        nameObj: 'media',
+        select: false,
+        name: 'Media',
+        url: '',
+        params: {}
+    },
+]
+
 export const ExplorePage = () => {
 
     const query = useQuery()
     const hashtag = query.get("hashtag");
-    const {token} = useSelector(state => state.auth);
-    const { data, loading, doFetch } = useFetch(token)
-    const [dataTweets, setDataTweets] = useState([])
-    const [dataPeople, setDataPeople] = useState([])
 
-    const objFilter = [
-        {
-            nameObj: 'top',
-            select: true,
-            name: 'Top',
-            url: 'tweets/populates?filter=top'
-        },
-        {
-            nameObj: 'lastest',
-            select: false,
-            name: 'Lastest',
-            url: 'tweets/populates?filter=lastest'
-        },
-        {
-            nameObj: 'people',
-            select: false,
-            name: 'People',
-            url: `user/people`
-        },
-        {
-            nameObj: 'media',
-            select: false,
-            name: 'Media',
-            url: ''
-        },
-    ]
+    const [showPeople, setShowPeople] = useState(false)
 
     const [filter, setFilter] = useState(objFilter)
-
-    useEffect(()=>{
- 
-        if(hashtag){
-            doFetch(`tweets/hashtag/search?hashtag=%23${hashtag}`,{},'GET') 
-            query.delete("hashtag");
-            return;
-        }
-
-        doFetch(filter.filter(f => f.select)[0].url,{},'GET')
-
-    },[])
-
+    const [queryData, setQueryData] = useState('')
+    const [queryDataParams, setQueryDataParams] = useState({})
     
     useEffect(() => {
 
         if(filter.find(f => f.nameObj === 'people').select){
-            setDataPeople(data.data)
-            setDataTweets([])
-            return;
+            setShowPeople(true)
+        }else{
+            setShowPeople(false)
         }
+        
+        setQueryData(hashtag ? `tweets/hashtag/search` : filter.filter(f => f.select)[0].url)
+        setQueryDataParams(hashtag ? {hashtag: `#${hashtag}`}: filter.filter(f => f.select)[0].params)
 
-        setDataTweets(data.data)
-    },[data])
+    },[filter,hashtag])
 
     return (
         <Layout>
@@ -82,18 +79,30 @@ export const ExplorePage = () => {
 
                     <div className="div_filter">
 
-                        <FilterPost filters={ filter } setFetch={ doFetch } setFilter={ setFilter }/>
+                        <FilterPost filters={ filter }  setFilter={ setFilter }/>
 
                     </div>
 
                     <div className="div__input__post">
 
-                        <SearchComponent setFetch={doFetch} people={filter.find(f => f.nameObj === 'people').select} />
+                        <SearchComponent setParam={setQueryDataParams} />
 
                         {
-                            (filter.find(f => f.nameObj === 'people').select)
-                            ? <ShowPoeple users={ dataPeople } loading={ loading }/>
-                            : <ShowPosts tweets={ dataTweets } loading={ loading }/>  
+                            (showPeople)
+                            ? <ShowPoeple query={
+                                queryData
+                            } 
+                            params={
+                                queryDataParams
+                            }/>
+                            : 
+                            <ShowPosts query={
+                                queryData
+                            } 
+                            params={
+                                queryDataParams
+                            }
+                            />  
                         }
                         
                       

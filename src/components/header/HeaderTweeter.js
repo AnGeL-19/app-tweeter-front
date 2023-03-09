@@ -61,7 +61,7 @@ export const HeaderTweeter = React.memo(() => {
                                          className="nav_item none"
                                          activeClassName="selected"
                                          >
-                                        <span class="material-icons">
+                                        <span className="material-icons">
                                             home
                                         </span>
                                 </NavLink>
@@ -81,7 +81,7 @@ export const HeaderTweeter = React.memo(() => {
                                          className="nav_item none"
                                          activeClassName="selected"
                                          >
-                                        <span class="material-icons">
+                                        <span className="material-icons">
                                             explore
                                         </span>
                                 </NavLink>
@@ -98,7 +98,7 @@ export const HeaderTweeter = React.memo(() => {
                                          className="nav_item none"
                                          activeClassName="selected"
                                          >
-                                        <span class="material-icons">
+                                        <span className="material-icons">
                                             bookmarks
                                         </span>
                                 </NavLink>

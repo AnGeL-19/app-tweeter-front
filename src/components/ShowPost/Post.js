@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { fetchApi, fetchGetApi } from '../../helpers/fetch'
 import { hashtagText } from '../../helpers/findHashtag'
-import { useForm } from '../../hooks/useForm'
 
 import { UserInfoBasic } from '../UserInfoBasic'
 import { AddComment } from './AddComment'
 import { Comments } from './Comments'
 import { SocialActions } from './SocialActions'
 
-export const Post = ({tweet,tid}) => {
+const Post =  React.forwardRef(({tweet,tid}, ref) => {
 
     const {userTweet} = tweet;
     
     const user = useSelector(state => state.user);
     
+
     const [showAddComment, setShowAddComment] = useState(false);
     
     const [valuesStatus, setValuesStatus] = useState({
@@ -25,7 +24,8 @@ export const Post = ({tweet,tid}) => {
     })
 
     return (
-        <div className="div__post">
+        <div    ref={ref}
+                className="div__post">
 
             {
                 tweet.userRetweet
@@ -85,57 +85,6 @@ export const Post = ({tweet,tid}) => {
                 setValuesStatus={setValuesStatus}
                 />
 
-                {/* <div className="btns_social_acations">
-
-                    <button 
-                    onClick={handleAddComment}
-                    className= {`btn_comments btn-icon btn__social_action`}>
-                        <span className="material-icons">
-                            mode_comment
-                        </span>
-                        <span>
-                            Comment
-                        </span>
-                    </button>
-                    <button
-                    onClick={handleRetweet} 
-                    className={`btn_retweets btn-icon btn__social_action ${
-                        valuesStatus.retweets.includes(user.uid) ? 'btn_retweets_retweeted': ''
-                    }`}>
-                        <span className="material-icons">
-                            cached
-                        </span>
-                        <span>
-                            {valuesStatus.retweets.includes(user.uid) ? 'Retweeted': 'Retweet'}
-                        </span>
-                    </button>
-                    <button 
-                    onClick={handleLike}
-                    className={`btn_likes btn-icon btn__social_action ${
-                        valuesStatus.likes.includes(user.uid) ? 'btn_likes_liked': ''
-                    }`}>
-                        <span className="material-icons">
-                            favorite_border
-                        </span>
-                        <span>
-                            {valuesStatus.likes.includes(user.uid) ? 'Liked': 'Like'}
-                        </span>
-                    </button>
-                    <button 
-                    onClick={handleSaved}
-                    className={`btn_saved btn-icon btn__social_action ${
-                        valuesStatus.saved.includes(user.uid) ? 'btn_save_saved': ''
-                    }`}>
-                        <span className="material-icons">
-                            bookmark_border
-                        </span>
-                        <span> 
-                            {valuesStatus.saved.includes(user.uid) ? 'Saved': 'Save'}
-                        </span>
-                    </button>
-
-                </div> */}
-
                 {
 
                     showAddComment
@@ -145,7 +94,6 @@ export const Post = ({tweet,tid}) => {
                 }
                 
 
-                {/* crear componente */}
                 <div className="people_comments">
                     
                     {
@@ -155,8 +103,11 @@ export const Post = ({tweet,tid}) => {
                     }
 
                 </div>
-            </div>
+            </div> 
+           
 
         </div>
     )
-}
+})
+
+export default Post;

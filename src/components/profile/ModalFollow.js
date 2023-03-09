@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import useSWR from 'swr'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchGetApi } from '../../helpers/fetch';
-import { useFetch } from '../../hooks/useFetch';
+import { fetcher } from '../../helpers/fetch';
 import { LoadingComponent } from '../LoadingComponent';
 import { NotDataComponent } from '../NotDataComponent';
 import { ItemUserModal } from './ItemUserModal'
@@ -11,31 +11,12 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
 
     const user = useSelector(state => state.user);
 
-    const {token} = useSelector(state => state.auth);
+    const param = useParams();
 
-    const params = useParams();
-
-    const { data, loading, doFetch } = useFetch(token)
-
-    const [dataUsers, setDataUsers] = useState({})
-
-    useEffect(() => {
-
-        doFetch(!isFollowers
-                ? `user/followers/${params.id}`
-                : `user/following/${params.id}`,
-                {},
-                'GET');
-        
-    }, [])
-
-
-    useEffect(() => {
-
-        setDataUsers(data.data);
-        console.log(data.data);
-        
-    }, [data])
+    const { data: usersF, isLoading, error } = useSWR(!isFollowers ? 
+                                                        `user/followers/${param.id}`:
+                                                        `user/following/${param.id}`, 
+                                                        fetcher)
 
     return (
         <div className="container_modal">
@@ -59,13 +40,13 @@ export const ModalFollow = ({isFollowers, setShowModal}) => {
 
                     {
                         
-                            (loading)
+                            (isLoading)
                             ? <LoadingComponent />
                             :
-                                (dataUsers.length === 0 || !dataUsers) 
+                                (usersF.data.length === 0) 
                                 ? <NotDataComponent text={'No hay followers'} />
                                 : 
-                                dataUsers.map((userf,index) => (
+                                usersF.data.map((userf,index) => (
                                     <>
                                         <div className="line"></div>
                                         <ItemUserModal key={userf.uid+index} user={userf}  />

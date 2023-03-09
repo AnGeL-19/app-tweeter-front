@@ -59,8 +59,9 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
         </button>
 
         {
-            optionsActions.map( btnAction => (
+            optionsActions.map( (btnAction,index) => (
                 <BtnSocialAction 
+                    key={index}
                     user={user} 
                     tweet={tweet}
                     setValuesStatus={setValuesStatus} 

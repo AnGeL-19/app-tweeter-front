@@ -1,11 +1,11 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { followUnFollowFollowing } from '../../action/userAction';
 import { useFetch } from '../../hooks/useFetch';
 import { ComponentBtn } from '../ComponentBtn'
 import { UserInfoBasic } from '../UserInfoBasic'
 
-export const ItemWTFollow = memo(({user}) => {
+const ItemWTFollow = React.forwardRef(({user}, ref) => {
 
     const dispatch = useDispatch();
     const usersF = useSelector(state => state.user);
@@ -37,7 +37,8 @@ export const ItemWTFollow = memo(({user}) => {
     }
 
     return (
-        <div className="populate__user">
+        <div className="populate__user"
+             ref={ref}>
 
             <div className="div__user_btn">
                 <UserInfoBasic  uid={user.uid}
@@ -69,3 +70,5 @@ export const ItemWTFollow = memo(({user}) => {
         </div>
     )
 })
+
+export default ItemWTFollow

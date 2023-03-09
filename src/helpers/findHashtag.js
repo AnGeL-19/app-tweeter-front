@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 
@@ -19,7 +20,7 @@ export const hashtagText = (value='') => {
     const regex = new RegExp(/#+([a-zA-Z0-9_]+)/ig);
 
     const text = (
-        <>
+        <React.Fragment>
         {
             value.split(' ').map(value => {
                 if (!regex.test(value)) {
@@ -36,7 +37,7 @@ export const hashtagText = (value='') => {
 
             })
         }
-        </>
+        </React.Fragment>
     )
 
     return text;

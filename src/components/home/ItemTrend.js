@@ -1,10 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router-dom'
 
-export const ItemTrend = ({trend}) => {
+ const ItemTrend = memo(({trend}) => {
 
-
-    
     return (
         <div className="trends___tweets">
             <NavLink to={`/explore?hashtag=${trend.nameHashtag.slice(1,trend.nameHashtag.length)}`} 
@@ -19,4 +17,6 @@ export const ItemTrend = ({trend}) => {
             </span>
         </div>
     )
-}
+})
+
+export default ItemTrend
