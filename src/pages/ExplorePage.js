@@ -54,8 +54,8 @@ export const ExplorePage = () => {
     const [showPeople, setShowPeople] = useState(false)
 
     const [filter, setFilter] = useState(objFilter)
-    const [queryData, setQueryData] = useState('')
-    const [queryDataParams, setQueryDataParams] = useState({})
+    const [queryData, setQueryData] = useState(filter.filter(f => f.select)[0].url)
+    const [queryDataParams, setQueryDataParams] = useState(filter.filter(f => f.select)[0].params)
     
     useEffect(() => {
 

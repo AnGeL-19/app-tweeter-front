@@ -6,6 +6,7 @@ import { fetcher } from '../../helpers/fetch'
 
 const Post = lazy(() => import("./Post"))
 
+
 export const ShowPosts = ({query, params}) => {
 
     const [optionPage, setOptionPage] = useState({
@@ -16,7 +17,14 @@ export const ShowPosts = ({query, params}) => {
 
     const [hasMore, setHasMore] = useState(false);
     const [tweets, setTweets] = useState([])
-    const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher)
+    const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,{
+        // revalidateOnFocus: false,
+        // revalidateOnMount:false -,
+        // revalidateOnReconnect: false,
+        // refreshWhenOffline: false,
+        // refreshWhenHidden: false,
+        refreshInterval: 0
+    })
    
     useEffect(() => {
         setTweets([])
@@ -47,7 +55,7 @@ export const ShowPosts = ({query, params}) => {
             setOptionPage( opt => ({
                 ...opt,
                 start: opt.end,
-                end: opt.end + opt.end
+                end: opt.end + opt.limit
             }))  
         }
       })

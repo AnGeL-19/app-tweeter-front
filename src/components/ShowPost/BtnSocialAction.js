@@ -1,22 +1,21 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { useFetch } from '../../hooks/useFetch';
+import useSWRMutation from 'swr/mutation'
+import { fetcherPut } from '../../helpers/fetch';
 
 export const BtnSocialAction = ({user, tweet, setValuesStatus, btnSocialAction }) => {
 
-    const {token} = useSelector(state => state.auth);
 
-    const { doFetch } = useFetch(token);
+    const { trigger, isMutating } = useSWRMutation(`${btnSocialAction.url}`, fetcherPut)
 
     const handleAction = async () => {
 
-        console.log('amonos', btnSocialAction.name);
-
-        doFetch(btnSocialAction.url,{
+        
+        const result = await trigger({
             idTweet: tweet.tid
-        },
-        'PUT')
+        }, /* options */)
+        console.log(result);
 
+        if (!result.ok) throw new Error('Error', result)
 
         if (btnSocialAction.select) {
             setValuesStatus(status => ({
@@ -34,6 +33,7 @@ export const BtnSocialAction = ({user, tweet, setValuesStatus, btnSocialAction }
 
   return (
     <button
+        disabled={isMutating}
         onClick={handleAction} 
         className={`${btnSocialAction.class} btn-icon btn__social_action ${
             btnSocialAction.select ? btnSocialAction.classSelect: ''

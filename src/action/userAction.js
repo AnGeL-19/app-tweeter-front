@@ -31,9 +31,28 @@ export const followUnFollowFollowing = (userId, following) => {
 
 }
 
+export const updateUserInfo = (userInfo) => {
+
+    return async(dispatch) => {
+
+        try{
+            dispatch(updateUser( userInfo ));
+        }catch(err){
+            console.log(err);
+        }
+        
+    }
+
+}
+
 const userAddData = (data) => ({
     type: types.userAddData,
     payload: data
+});
+
+const updateUser = (user) => ({
+    type: types.userUpdateData,
+    payload: user
 });
 
 const userFollowUnFollowFollowing = (updateFollowing) => ({

@@ -17,6 +17,7 @@ button{
 button:hover{
     color: #dbdbdb;
     background: #2266be;
+    cursor: pointer;
 }
 
 .btn-icon{
@@ -51,6 +52,25 @@ button:hover{
 .btn-full{
     width: 100%;
     height: 38px;
+}
+
+.green-1{
+    color: #a5a5a5;
+    background: #75e7a1;
+}
+
+.green-1-h:hover{
+    color: #727272;
+    background: #a3f1c1;
+}
+
+.grey-1{
+    background: #a7a7a7;
+}
+
+.grey-1-h:hover{
+    color: #ffffff;
+    background: #7e7e7e;
 }
 
 .btn__social_action{

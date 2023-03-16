@@ -38,3 +38,22 @@ export const fetcher = url => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{
     }
 }).then(r => r.json())
 
+
+export const fetcherPost = (url,{arg}) => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{
+    method: 'POST',
+    headers: {
+        'Content-type': 'application/json',
+        'x-token': Cookies.get('token')
+    },
+    body: JSON.stringify({arg})
+}).then(r => r.json())
+
+export const fetcherPut = (url,{ arg }) => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{
+    method: 'PUT',
+    headers: {
+        'Content-type': 'application/json',
+        'x-token': Cookies.get('token')
+    },
+    body: JSON.stringify(arg ? arg:{})
+}).then(r => r.json())
+

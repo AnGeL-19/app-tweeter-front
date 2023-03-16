@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import useSWR from 'swr'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { useFetch } from '../hooks/useFetch'
 
 import { FilterPost } from '../components/FilterPost'
 import { HeaderTweeter } from '../components/header/HeaderTweeter'
@@ -11,9 +10,10 @@ import { HeaderTweeter } from '../components/header/HeaderTweeter'
 import { ModalFollow } from '../components/profile/ModalFollow'
 import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
-import { Layout } from '../components/layout/Layout'
 import { LoadingComponent } from '../components/LoadingComponent'
 import { fetcher } from '../helpers/fetch'
+import { EditProfile, EditProfileModal } from '../components/profile/EditProfile'
+import { Modal } from '../modal/Modal'
 
 
 
@@ -51,12 +51,15 @@ export const ProfilePage = () => {
             }
         },
     ]
+
     const user = useSelector(state => state.user);
 
     const { data: userInfo, isLoading, error } = useSWR(`user/${param.id}`, fetcher)
 
 
-    const [showModal, setShowModal] = useState(false);
+    const [showModalFollowers, setShowModalFollowers] = useState(false);
+    const [showModalEditInfo, setShowModalEditInfo] = useState(false);
+
     const [filterFollower, setFilterFollower] = useState(false);
 
     const [filter, setFilter] = useState(objFilter)
@@ -94,7 +97,8 @@ export const ProfilePage = () => {
                                         <ProfileInfo dataUser={ userInfo.data } 
                                             user = { user }
                                             setFilterFollower={ setFilterFollower } 
-                                            setShowModal={ setShowModal }
+                                            setShowModal={ setShowModalFollowers }
+                                            setShowModalEdit={ setShowModalEditInfo }
                                         /> 
 
                                         <main className="container_main">
@@ -126,13 +130,23 @@ export const ProfilePage = () => {
             </div>
 
             {
-                showModal
+                showModalFollowers
                     && 
-                <ModalFollow  isFollowers={filterFollower} setShowModal={setShowModal} />
+                <Modal  title={filterFollower ? 'Following':'Followers'} setShowModal={setShowModalFollowers}>
+                    <ModalFollow userName={ userInfo.data.name } isFollowers={filterFollower} />
+                </Modal>  
            
             }
-            
 
+            {
+                
+                showModalEditInfo
+                    && 
+                <Modal title={'Edit Profile'} setShowModal={setShowModalEditInfo}>
+                    <EditProfile />
+                </Modal>
+           
+            }
         
         </>
     )

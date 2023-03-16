@@ -1,42 +1,43 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
+
 import { useDispatch, useSelector } from 'react-redux';
 import { followUnFollowFollowing } from '../../action/userAction';
-import { fetchApi, fetchGetApi } from '../../helpers/fetch';
-import { useFetch } from '../../hooks/useFetch';
 import { ComponentBtn } from '../ComponentBtn'
 import { UserInfoBasic } from '../UserInfoBasic'
+import { fetcherPut } from '../../helpers/fetch';
 
-export const ItemUserModal = ({user, isFollowers}) => {
+
+export const ItemUserModal = ({user}) => {
 
     const dispatch = useDispatch();
 
+    const { trigger, isMutating } = useSWRMutation(`user/followUnfollow/${user.uid}`, fetcherPut)
     const usersF = useSelector(state => state.user);
-    const { token } = useSelector(state => state.auth);
-
-    const { data, doFetch } = useFetch(token);
 
     const [follow, setFollow] = useState(usersF.following)
 
-    useEffect(() => {
-
-        if(data.ok){
-            dispatch(followUnFollowFollowing(user.uid, usersF.following))
-        }
-        
-    }, [data])
-
-    // REALIZAR TAREA DE SEGUIR Y NO SEGUIR
-    // /followUnfollow/:id data, label, method,token
-
     const followUnFollow = async() => {
 
-        doFetch(`user/followUnfollow/${user.uid}`,{},'PUT')
+        try {
 
-        if (follow.includes(user.uid)) {
-            setFollow( follow.filter( f => f !== user.uid ) )
-        }else{
-            setFollow([...follow, user.uid])
-        }
+            const result = await trigger({}, /* options */)
+
+            if (!result.ok) throw new Error('Error', result)
+
+            dispatch(followUnFollowFollowing(user.uid, usersF.following))
+
+            console.log(result);
+            if (follow.includes(user.uid)) {
+                setFollow( follow.filter( f => f !== user.uid ) )
+            }else{
+                setFollow([...follow, user.uid])
+            }
+
+          } catch (e) {
+            console.log(e);
+          }
+  
     }
 
     return (
@@ -51,6 +52,7 @@ export const ItemUserModal = ({user, isFollowers}) => {
 
                 {
                     <ComponentBtn
+                        disabled={isMutating}
                         normal 
                         txtBtn={`${(follow.includes(user.uid)) ? 'Unfollow': 'Follow'}`}
                         addicon={(follow.includes(user.uid)) ? 'person_remove': 'person_add'}

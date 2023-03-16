@@ -70,45 +70,6 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
             ))
         }
 
-        {/* <button
-        onClick={handleRetweet} 
-        className={`btn_retweets btn-icon btn__social_action ${
-            valuesStatus.retweets.includes(user.uid) ? 'btn_retweets_retweeted': ''
-        }`}>
-            <span className="material-icons">
-                cached
-            </span>
-            <span>
-                {valuesStatus.retweets.includes(user.uid) ? 'Retweeted': 'Retweet'}
-            </span>
-        </button>
-
-        <button 
-        onClick={handleLike}
-        className={`btn_likes btn-icon btn__social_action ${
-            valuesStatus.likes.includes(user.uid) ? 'btn_likes_liked': ''
-        }`}>
-            <span className="material-icons">
-                favorite_border
-            </span>
-            <span>
-                {valuesStatus.likes.includes(user.uid) ? 'Liked': 'Like'}
-            </span>
-        </button>
-
-        <button 
-        onClick={handleSaved}
-        className={`btn_saved btn-icon btn__social_action ${
-            valuesStatus.saved.includes(user.uid) ? 'btn_save_saved': ''
-        }`}>
-            <span className="material-icons">
-                bookmark_border
-            </span>
-            <span> 
-                {valuesStatus.saved.includes(user.uid) ? 'Saved': 'Save'}
-            </span>
-        </button> */}
-
     </div>
   )
 }

@@ -9,6 +9,7 @@
 @import 'pages/auth/login.scss';
 
 // components
+@import 'components/modal/modal.scss';
 @import 'components/notData.scss';
 @import 'components/loading.scss';
 @import 'components/header/headerTweeter.scss';
@@ -32,6 +33,7 @@
 // Profile Page
 @import 'pages/profile/profile.scss';
 @import 'pages/profile/modalFollow.scss';
+@import 'pages/profile/modalEditProfile.scss';
 @import 'pages/profile/itemUserModal.scss';
 
 // Explore Page

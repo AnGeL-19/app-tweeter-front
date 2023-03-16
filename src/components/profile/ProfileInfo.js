@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import useSWRMutation from 'swr/mutation'
+import { followUnFollowFollowing } from '../../action/userAction';
+import { fetcherPut } from '../../helpers/fetch';
 import { ComponentBtn } from '../ComponentBtn';
 
-export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal }) => {
+export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , setShowModalEdit}) => {
 
+    const usersF = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    const { trigger, isMutating } = useSWRMutation(`user/followUnfollow/${user.uid}`, fetcherPut)
+    
+    const [follow, setFollow] = useState(usersF.following)
 
     const handleShowModalFollowing = () => {
         setShowModal(true);
@@ -12,6 +21,31 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal })
     const handleShowModalFollowers = () => {
         setShowModal(true);
         setFilterFollower(false)
+    }
+
+
+
+    const followUnFollow = async() => {
+
+        try {
+
+            const result = await trigger({}, /* options */)
+
+            if (!result.ok) throw new Error('Error', result)
+
+            dispatch(followUnFollowFollowing(user.uid, usersF.following))
+
+            console.log(result);
+            if (follow.includes(user.uid)) {
+                setFollow( follow.filter( f => f !== user.uid ) )
+            }else{
+                setFollow([...follow, user.uid])
+            }
+
+          } catch (e) {
+            console.log(e);
+          }
+  
     }
 
 
@@ -74,12 +108,24 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal })
 
             {
                     (dataUser.uid !== user.uid)
-                        &&
-                    <ComponentBtn big 
-                                txtBtn={user.following?.includes(dataUser.uid) ? 'Unfollow': 'Follow'}
-                                addicon={user.following?.includes(dataUser.uid) ? 'person_remove': 'person_add'}
+                    ?
+                    <ComponentBtn 
+                                functionBtn={followUnFollow}
+                                disabled={isMutating}
+                                big 
+                                txtBtn={`${!(follow.includes(user.uid)) ? 'Unfollow': 'Follow'}`}
+                                addicon={!(follow.includes(user.uid)) ? 'person_remove': 'person_add'}
 
-                    />         
+                    />    
+                    :
+                    <ComponentBtn 
+                                functionBtn={() => setShowModalEdit(pre => !pre)}
+                                disabled={isMutating}
+                                big 
+                                txtBtn={`Edit profile`}
+                                addicon={'edit'}
+
+                    />       
             } 
             </div>
         </div>

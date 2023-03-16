@@ -6,26 +6,8 @@ import { WhoToFollow } from '../components/home/WhoToFollow';
 import { ShowPosts } from '../components/ShowPost/ShowPosts';
 import { Layout } from '../components/layout/Layout';
 
-
-
-
 export const HomePage = () => {
-    
-    // const amonos = [
-    //     { name: 'angel'},
-    //     { name: 'pepe'},
-    //     { name: 'pipi'},
-    //     { name: 'popo'},
-    //     { name: 'pupu'},
-    // ]
 
-    // const na = [
-    //     { name: 'jesus'},
-    //     { name: 'nene'},
-    //     { name: 'rubi'},
-    // ]
-
-    // console.log([...amonos,...na]);
 
     return (
         <Layout>

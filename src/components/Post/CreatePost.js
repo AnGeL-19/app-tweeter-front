@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
 import { useSelector } from 'react-redux';
+import { fetcherPost } from '../../helpers/fetch';
 import { findHashtag } from '../../helpers/findHashtag';
-import { useFetch } from '../../hooks/useFetch';
 import { useForm } from '../../hooks/useForm';
 import { UserImg } from '../basic/UserImg';
 import { ComponentBtn } from '../ComponentBtn';
@@ -12,9 +13,7 @@ import { MenuPrivacity } from './MenuPrivacity';
 export const CreatePost = () => {
 
     const user = useSelector(state => state.user);
-    const {token} = useSelector(state => state.auth);
-
-    const { doFetch, loading } = useFetch(token);
+    const { trigger, isMutating } = useSWRMutation(`tweet`, fetcherPost)
 
     const [showMenuImage, setShowMenuImage] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -65,23 +64,40 @@ export const CreatePost = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        const hashtags = findHashtag(values.description)
+        try {
 
-        const newData = {
-            description: values.description,
-            img: values.url,
-            privacity: values.privacity === 'public' ? true : false
-        }
+            const hashtags = findHashtag(values.description)
 
-        if (hashtags.length !== 0) {
-            newData.hashtags = hashtags;
-        }
+            const newData = {
+                description: values.description,
+                img: values.url,
+                privacity: values.privacity === 'public' ? true : false
+            }
+    
+            if (hashtags.length !== 0) {
+                newData.hashtags = hashtags;
+            }
+    
 
-        doFetch('tweet',newData,'POST')
+            const result = await trigger({}, /* options */)
 
-        reset()
+            if (!result.ok) throw new Error('Error', result)
 
-        handleEliminateImg()
+            // dispatch(followUnFollowFollowing(user.uid, usersF.following))
+            reset()
+
+            handleEliminateImg()
+
+            console.log(result);
+
+
+          } catch (e) {
+            console.log(e);
+          }
+     
+        // doFetch('tweet',newData,'POST')
+
+        
     }
 
     return (
@@ -98,10 +114,10 @@ export const CreatePost = () => {
                     <form className="txt__image__icons__btn" onSubmit={handleSubmit}>
                         <div className="div__txt">
                             <textarea id="txtTweeter" 
-                            placeholder='What’s happening?'
-                            name='description'
-                            value={values.description}
-                            onChange={ (e) => handleInputChange(e) }                            
+                                placeholder='What’s happening?'
+                                name='description'
+                                value={values.description}
+                                onChange={ (e) => handleInputChange(e) }                            
                             >                  
                             </textarea>
                         </div>

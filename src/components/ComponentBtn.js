@@ -1,13 +1,11 @@
 import React from 'react'
 
-export const ComponentBtn = ({type,big,normal,median,full,addicon,txtBtn,functionBtn}) => {
-
-
-
+export const ComponentBtn = ({type,className,big,normal,median,full,addicon,txtBtn,functionBtn,disabled}) => {
 
     return (
             
-        <button 
+        <button
+        disabled={disabled} 
         type={type || 'button'}
         onClick={functionBtn}
         className={
@@ -15,7 +13,8 @@ export const ComponentBtn = ({type,big,normal,median,full,addicon,txtBtn,functio
             ${normal ? 'btn-normal':''} 
             ${big ? 'btn-big' : ''}
             ${median ? 'btn-median' : ''}
-            ${full ? 'btn-full' : ''}`}>
+            ${full ? 'btn-full' : ''}
+            ${className}`}>
 
             {
                 addicon

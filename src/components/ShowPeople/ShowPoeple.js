@@ -11,14 +11,22 @@ export const ShowPoeple = memo(({query, params}) => {
 
   const [optionPage, setOptionPage] = useState({
     start: 0, 
-    end: 5,
+    end: 10,
     limit: 10
 })
 
 const [hasMore, setHasMore] = useState(false);
 const [users, setUsers] = useState([])
 
-const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher)
+const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,
+{
+    revalidateOnFocus: false,
+    // revalidateOnMount:false,
+    // revalidateOnReconnect: false,
+    refreshWhenOffline: false,
+    refreshWhenHidden: false,
+    refreshInterval: 0
+})
 console.log('cambio');
 
 useEffect(() => {
@@ -26,7 +34,7 @@ useEffect(() => {
     setOptionPage( opt => ({
         ...opt,
         start: 0,
-        end: 5
+        end: 10
     }))  
 }, [query, params])
 
@@ -34,6 +42,7 @@ useEffect(() => {
 useEffect(() => {
     
     if(data){
+        console.log(data, data.data.length > 0);
         setHasMore(data.data.length > 0)
         setUsers(prev => [...prev, ...data.data])
     }
@@ -50,7 +59,7 @@ const lastTweetElementRef = useCallback(node => {
         setOptionPage( opt => ({
             ...opt,
             start: opt.end,
-            end: opt.end + opt.end
+            end: opt.end + opt.limit
         }))  
     }
   })

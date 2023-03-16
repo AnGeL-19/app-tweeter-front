@@ -34,6 +34,14 @@ export const userReducer = (state = initialState, action) => {
                 following: action.payload.following,
                 nfollowing: action.payload.nfollowing,
             } 
+        case types.userUpdateData:
+
+            return{
+                ...state,
+                ...action.payload
+            } 
+        case types.userLogout:
+            return initialState
         default: 
             return state;
     }

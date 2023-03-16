@@ -10,18 +10,23 @@ export const loginUser = (data) => {
     return async(dispatch) => {
 
         try{
-
+            dispatch(loading(true))
             const resp = await fetchApi(data, 'login/', 'POST');
             const body = await resp.json();
 
-            console.log(body);
+            console.log(body,"-----------");
             if(body.ok){   
                 Cookies.set('token', body.token);        
                 dispatch(login({ok:body.ok, user: body.data, token: body.token}));
                 dispatch(userData(body.data));
+                dispatch(loading(false))
+                
+            }else{
+                dispatch(loading(false)) 
             }
             
         }catch(err){
+            dispatch(loading(false)) 
             console.log(err);
         }
         
@@ -37,13 +42,17 @@ const login = (data) => ({
 export const registerUser = (data) => {
     return async (dispatch) => {
         try{
+            dispatch(loading(true))
             const resp = await fetchApi(data ,'login/new/', 'POST');
             const body = await resp.json();
 
             console.log(body);
             Cookies.set('token', body.token);
-            dispatch(login({ok:body.ok, user: body.user, token: body.token}));
+            dispatch(login({ok:body.ok, user: body.data, token: body.token}));
+            dispatch(userData(body.data));
+            dispatch(loading(false))
         }catch(err){
+            dispatch(loading(false)) 
             console.log(err);
         }
     }
@@ -60,6 +69,8 @@ export const logoutUser = () => {
         console.log("entra en logout");
         Cookies.remove('token')
         dispatch(logout())
+        dispatch(userLogout())
+        dispatch(loading(false))
     }
 }
 
@@ -69,26 +80,47 @@ const logout = () => ({
     payload: false
 })
 
+const userLogout = () => ({
+    type: types.userLogout
+})
+
+const loading = (value) => ({
+    type: types.authLoading,
+    payload: value
+})
+
 export const startCheking = () => {
     return async (dispatch) => {
 
-        if(!Cookies.get('token')) return;
+
+        console.log('amonos');
+        // dispatch(loading(true))
+
+        if(!Cookies.get('token')) return dispatch(loading(false));
         
-        // const {token} = useSelector(state => state.auth);
-        const token = Cookies.get('token');
-        console.log(token);
-
-        const resp = await fetchGetApi('login/renew', token);
-        const body = await resp.json();
-        Cookies.remove('token');
-
-        console.log(body);
-
-        if(body.ok){
-            Cookies.set('token', body.token);        
-            dispatch(login({ok:body.ok, token: body.token}));
-            dispatch(userData(body.data));
+        try {
+            dispatch(loading(true));
+            const token = Cookies.get('token');
+            console.log(token);
+    
+            const resp = await fetchGetApi('login/renew', token);
+            const body = await resp.json();
+            Cookies.remove('token');
+    
+            console.log(body);
+    
+            if(body.ok){
+                Cookies.set('token', body.token);      
+                dispatch(login({ok:body.ok, token: body.token}));  
+                dispatch(userData(body.data));
+                dispatch(loading(false))
+            }else{
+                dispatch(loading(false)) 
+            }
+        } catch (error) {
+            dispatch(loading(false)) 
         }
+       
     }
 }
 

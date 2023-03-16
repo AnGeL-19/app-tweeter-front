@@ -7,7 +7,14 @@ import ItemWTFollow  from './ItemWTFollow'
 
 export const WhoToFollow = () => {
 
-    const { data: users , isLoading, error } = useSWR(`user/recomment`, fetcher)
+    const { data: users , isLoading, error } = useSWR(`user/recomment`, fetcher,{
+        revalidateOnFocus: false,
+        // revalidateOnMount:false,
+        // revalidateOnReconnect: false,
+        refreshWhenOffline: false,
+        refreshWhenHidden: false,
+        refreshInterval: 0
+    })
     
     return (
         <aside className="aside__follow">

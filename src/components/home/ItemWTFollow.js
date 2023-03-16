@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
+import useSWRMutation from 'swr/mutation'
 import { useDispatch, useSelector } from 'react-redux';
 import { followUnFollowFollowing } from '../../action/userAction';
-import { useFetch } from '../../hooks/useFetch';
 import { ComponentBtn } from '../ComponentBtn'
 import { UserInfoBasic } from '../UserInfoBasic'
+import { fetcherPut } from '../../helpers/fetch';
 
 const ItemWTFollow = React.forwardRef(({user}, ref) => {
 
     const dispatch = useDispatch();
+
+    const { trigger, isMutating } = useSWRMutation(`user/followUnfollow/${user.uid}`, fetcherPut)
     const usersF = useSelector(state => state.user);
-    const { token } = useSelector(state => state.auth);
+
     const [follow, setFollow] = useState(usersF.following)
-    
-    const {data, doFetch, loading} = useFetch(token);
 
+    const followUnFollow = async() => {
 
-    useEffect(() => {
+        try {
 
-        if(data.ok){
+            const result = await trigger({}, /* options */)
+
+            if (!result.ok) throw new Error('Error', result)
+
             dispatch(followUnFollowFollowing(user.uid, usersF.following))
-        }
-        
-    }, [data])
-    
 
-    const followUnFollow = () => {
-        
-        doFetch(`user/followUnfollow/${user.uid}`,{},'PUT')
+            console.log(result);
+            if (follow.includes(user.uid)) {
+                setFollow( follow.filter( f => f !== user.uid ) )
+            }else{
+                setFollow([...follow, user.uid])
+            }
 
-        if (follow.includes(user.uid)) {
-            setFollow( follow.filter( f => f !== user.uid ) )
-        }else{
-            setFollow([...follow, user.uid])
-        }
-
+          } catch (e) {
+            console.log(e);
+          }
+  
     }
 
     return (

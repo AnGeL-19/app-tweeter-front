@@ -7,6 +7,20 @@
 
     align-items: center;
 
+    .div__img__logo{
+      
+      height: 100px;
+      width: 100px;
+      
+      .logoBig{        
+
+        height: 100%;
+        width: 100%;
+
+      }
+
+    }
+
     .spinner {
         animation: rotate 2s linear infinite;
         z-index: 2;

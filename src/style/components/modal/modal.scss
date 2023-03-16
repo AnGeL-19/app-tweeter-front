@@ -1,0 +1,110 @@
+.container_modal{
+
+    display: flex;
+    
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-color: rgba(0, 0, 0, .1);
+
+    z-index: 999999;
+
+    .modal_main{
+
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+
+        .modal{
+
+        display: flex;
+        flex-direction: column;
+
+        width: 636px;
+        max-height: 644px;
+
+        overflow: auto;
+
+        .btn__title{
+
+            position: sticky;
+            top: 0;
+            z-index: 9999999999;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+
+            .btn_exit{
+
+                margin-right: 50px;
+
+                button{
+
+                    display: flex;
+                    align-items: center;
+                    background-color: #fff;
+                    border-radius: 50%;
+
+                    .material-icons{
+                        color: #333333;
+                    }
+
+                }
+
+                button:hover{
+                    background-color: rgb(209, 209, 209);
+                    cursor: pointer;
+                }
+            }
+    
+            .title_modal{
+                font-size: 20px;
+            }
+        }
+        }
+
+        // position: relative;
+        
+        
+       
+
+        .container_main{
+            padding: 10px;
+        }
+     
+    }
+
+    // .modal_main::-webkit-scrollbar{
+    //     width: 10px;
+        
+    // }
+
+    // .modal_main::-webkit-scrollbar-corner{
+    //     border-radius: 10px;
+        
+    // }
+
+    // .modal_main::-webkit-scrollbar-thumb {
+    //     background-color: blue;    /* color of the scroll thumb */
+    //     // border-radius: 20px;       /* roundness of the scroll thumb */
+    //     // border: 3px ;
+    //     // border-radius: 0 10px 10px 0;
+    // }
+
+    // .modal_main::-webkit-scrollbar-track {
+    //     box-shadow: inset 0 0 5px grey;
+    //     border-radius: 10px;
+    //   }
+
+    
+
+}

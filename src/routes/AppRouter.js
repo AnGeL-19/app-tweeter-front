@@ -11,17 +11,27 @@ import { AuthRoute } from './AuthRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 import { TweeterRouter } from './TweeterRoute';
+import { LoadingComponent } from '../components/LoadingComponent'
 
 
 export const AppRouter = () => {
 
     const dispatch = useDispatch();
-    const {auth} = useSelector(state => state.auth);
+    const {auth, loading} = useSelector(state => state.auth);
 
     useEffect(() => {
         dispatch(startCheking());
     }, [dispatch]);
+    
+    console.log(loading, auth);
 
+    if (loading) {
+        return (
+            <div className="container__loading">
+                <LoadingComponent logo />
+            </div>  
+        )
+    }
 
     return (
         <Router>
