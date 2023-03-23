@@ -60,13 +60,25 @@ export const ExplorePage = () => {
     useEffect(() => {
 
         if(filter.find(f => f.nameObj === 'people').select){
+            query.delete(hashtag)
             setShowPeople(true)
-        }else{
-            setShowPeople(false)
+            setQueryData(filter.filter(f => f.select)[0].url)
+            setQueryDataParams(filter.filter(f => f.select)[0].params)  
+            return
         }
         
-        setQueryData(hashtag ? `tweets/hashtag/search` : filter.filter(f => f.select)[0].url)
-        setQueryDataParams(hashtag ? {hashtag: `#${hashtag}`}: filter.filter(f => f.select)[0].params)
+        if (hashtag) {
+            console.log('entra 1');
+            setQueryData(`tweets/hashtag/search`)
+            setQueryDataParams({hashtag: `#${hashtag}`})  
+            return;
+        }
+        
+        
+        setQueryData(filter.filter(f => f.select)[0].url)
+        setQueryDataParams(filter.filter(f => f.select)[0].params)  
+        setShowPeople(false)
+        
 
     },[filter,hashtag])
 

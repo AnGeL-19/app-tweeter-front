@@ -10,6 +10,16 @@ body{
 
 }
 
+.aviso{
+    position: absolute;
+    top: 0;
+    left: 1%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #525252;
+    z-index: 9999999999;
+}
+
 .container_main_app{
     height: 100vh;
     // overflow-y: auto;

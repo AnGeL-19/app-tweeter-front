@@ -10,11 +10,12 @@ export const ComponentBtn = ({type,className,big,normal,median,full,addicon,txtB
         onClick={functionBtn}
         className={
             `btn-icon 
-            ${normal ? 'btn-normal':''} 
-            ${big ? 'btn-big' : ''}
-            ${median ? 'btn-median' : ''}
-            ${full ? 'btn-full' : ''}
-            ${className}`}>
+            ${normal && 'btn-normal'} 
+            ${big && 'btn-big' }
+            ${median && 'btn-median' }
+            ${full && 'btn-full' }
+            ${className}
+            ${disabled && 'disabled'}`}>
 
             {
                 addicon

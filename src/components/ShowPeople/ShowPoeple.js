@@ -15,6 +15,8 @@ export const ShowPoeple = memo(({query, params}) => {
     limit: 10
 })
 
+console.log({query, params});
+
 const [hasMore, setHasMore] = useState(false);
 const [users, setUsers] = useState([])
 
@@ -27,7 +29,7 @@ const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...op
     refreshWhenHidden: false,
     refreshInterval: 0
 })
-console.log('cambio');
+
 
 useEffect(() => {
     setUsers([])
@@ -40,12 +42,12 @@ useEffect(() => {
 
 
 useEffect(() => {
-    
+   
     if(data){
-        console.log(data, data.data.length > 0);
         setHasMore(data.data.length > 0)
         setUsers(prev => [...prev, ...data.data])
     }
+
 }, [data])
 
 
@@ -74,8 +76,8 @@ const lastTweetElementRef = useCallback(node => {
 
                 <Suspense fallback={<LoadingComponent />}>
                     {
-                        (users)
-                            &&
+                        (users && users.length > 0)
+                            ?
                         users.map((user,index) => {
                             if (users.length === index+1 ) {
                                 return <ItemWTFollow
@@ -90,6 +92,8 @@ const lastTweetElementRef = useCallback(node => {
                                 />
                             }
                         })
+                        :
+                        <NotDataComponent text={'No hay users :('} />  
                          
                     }  
                 </Suspense>    
@@ -97,12 +101,12 @@ const lastTweetElementRef = useCallback(node => {
 
                 {
                     (isLoading)
-                    ?
+                    &&
                     <LoadingComponent />
-                    : 
-                    (users.length === 0)
-                        &&
-                    <NotDataComponent text={'No hay users :('} />   
+                    // : 
+                    // (!users || users.length === 0)
+                    //     &&
+                     
                 }
             </section>      
 

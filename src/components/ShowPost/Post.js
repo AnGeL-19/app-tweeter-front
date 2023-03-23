@@ -89,7 +89,7 @@ const Post =  React.forwardRef(({tweet,tid}, ref) => {
 
                     showAddComment
                     &&
-                    <AddComment tid={tid} user={user}  />
+                    <AddComment tid={tid} user={user} valuesStatus={valuesStatus} setValuesStatus={setValuesStatus} />
 
                 }
                 

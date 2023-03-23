@@ -18,7 +18,7 @@ export const ShowPosts = ({query, params}) => {
     const [hasMore, setHasMore] = useState(false);
     const [tweets, setTweets] = useState([])
     const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,{
-        // revalidateOnFocus: false,
+        revalidateOnFocus: false,
         // revalidateOnMount:false -,
         // revalidateOnReconnect: false,
         // refreshWhenOffline: false,

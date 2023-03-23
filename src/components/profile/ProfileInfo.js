@@ -7,11 +7,11 @@ import { ComponentBtn } from '../ComponentBtn';
 
 export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , setShowModalEdit}) => {
 
-    const usersF = useSelector(state => state.user);
+    // const usersF = useSelector(state => state.user);
     const dispatch = useDispatch();
-    const { trigger, isMutating } = useSWRMutation(`user/followUnfollow/${user.uid}`, fetcherPut)
+    const { trigger, isMutating } = useSWRMutation(`user/followUnfollow/${dataUser.uid}`, fetcherPut)
     
-    const [follow, setFollow] = useState(usersF.following)
+    const [follow, setFollow] = useState(user.following)
 
     const handleShowModalFollowing = () => {
         setShowModal(true);
@@ -33,13 +33,13 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , 
 
             if (!result.ok) throw new Error('Error', result)
 
-            dispatch(followUnFollowFollowing(user.uid, usersF.following))
+            dispatch(followUnFollowFollowing(dataUser.uid, user.following))
 
             console.log(result);
             if (follow.includes(user.uid)) {
-                setFollow( follow.filter( f => f !== user.uid ) )
+                setFollow( follow.filter( f => f !== dataUser.uid ) )
             }else{
-                setFollow([...follow, user.uid])
+                setFollow([...follow, dataUser.uid])
             }
 
           } catch (e) {
@@ -113,8 +113,8 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , 
                                 functionBtn={followUnFollow}
                                 disabled={isMutating}
                                 big 
-                                txtBtn={`${!(follow.includes(user.uid)) ? 'Unfollow': 'Follow'}`}
-                                addicon={!(follow.includes(user.uid)) ? 'person_remove': 'person_add'}
+                                txtBtn={`${(follow.includes(dataUser.uid)) ? 'Unfollow': 'Follow'}`}
+                                addicon={(follow.includes(dataUser.uid)) ? 'person_remove': 'person_add'}
 
                     />    
                     :

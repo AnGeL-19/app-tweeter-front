@@ -68,7 +68,14 @@ export const LoginPage = () => {
                             </span>
                         </div>
                         
-                        <ComponentBtn type={'submit'} className txtBtn={'Enter'} full />
+                        <ComponentBtn 
+                        type={'submit'} 
+                        disabled={
+                            (!(values.email.length > 0) || !(values.password.length > 0))
+                        }
+                        className 
+                        txtBtn={'Enter'} 
+                        full />
 
                     </form>
 
@@ -114,7 +121,7 @@ export const LoginPage = () => {
                     
 
                 </div>
-
+                <span className="aviso">This application is under development, do not put real data.</span>
             </div>
         </div>
     )

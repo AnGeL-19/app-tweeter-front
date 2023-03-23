@@ -17,7 +17,7 @@ export const loginUser = (data) => {
             console.log(body,"-----------");
             if(body.ok){   
                 Cookies.set('token', body.token);        
-                dispatch(login({ok:body.ok, user: body.data, token: body.token}));
+                dispatch(login({ok:body.ok, token: body.token}));
                 dispatch(userData(body.data));
                 dispatch(loading(false))
                 
@@ -48,7 +48,7 @@ export const registerUser = (data) => {
 
             console.log(body);
             Cookies.set('token', body.token);
-            dispatch(login({ok:body.ok, user: body.data, token: body.token}));
+            dispatch(login({ok:body.ok, token: body.token}));
             dispatch(userData(body.data));
             dispatch(loading(false))
         }catch(err){
@@ -115,9 +115,11 @@ export const startCheking = () => {
                 dispatch(userData(body.data));
                 dispatch(loading(false))
             }else{
+                Cookies.remove('token');
                 dispatch(loading(false)) 
             }
         } catch (error) {
+            Cookies.remove('token');
             dispatch(loading(false)) 
         }
        

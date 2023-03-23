@@ -7,14 +7,7 @@ import { NotDataComponent } from '../NotDataComponent';
 
 export const Trends = () => {
     
-    const { data: trends , isLoading, error } = useSWR(`tweets/hashtags`, fetcher,{
-        revalidateOnFocus: false,
-        // revalidateOnMount:false,
-        // revalidateOnReconnect: false,
-        refreshWhenOffline: false,
-        refreshWhenHidden: false,
-        refreshInterval: 0
-    })
+    const { data: trends , isLoading, error } = useSWR(`tweets/hashtags`, fetcher)
 
     return (
         <section className="section__trends">

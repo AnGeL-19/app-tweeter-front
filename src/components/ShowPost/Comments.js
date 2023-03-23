@@ -1,30 +1,31 @@
 import React, { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchApi } from '../../helpers/fetch';
+
+import { fetchApi, fetcherPut } from '../../helpers/fetch';
 import { hashtagText } from '../../helpers/findHashtag';
 import { dateFormat } from '../../helpers/formatDate'
 
 export const Comments = ({comment}) => {
 
     const user = useSelector(state => state.user);
-    const {token} = useSelector(state => state.auth);
-    
+    // const {token} = useSelector(state => state.auth);
+    const { trigger, isMutating } = useSWRMutation(`tweet/likeCmmt`, fetcherPut)
+
     const [valuesStatus, setValuesStatus] = useState({
         likes: comment.likes || [],
     })
 
     const handleLike = async () => {
         
-        console.log(token,user.uid);
-        const respt = await fetchApi({
+        const result = await trigger({
             idComment: comment.cid
-        },
-        'tweet/likeCmmt', 
-        'PUT',
-        token)
-        const info = await respt.json();
-        if(info.ok){
+        }, /* options */)
+
+        if (!result.ok) throw new Error('Error', result)
+
+        if(result.ok){
             if (valuesStatus.likes.includes(user.uid)) {
                 setValuesStatus(status => ({
                     ...status,
@@ -36,8 +37,6 @@ export const Comments = ({comment}) => {
                     likes: [...valuesStatus.likes, user.uid]
                 }))
             }
-        }else{
-            console.log(info);
         }
     }
 

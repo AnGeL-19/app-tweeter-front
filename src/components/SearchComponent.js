@@ -37,7 +37,11 @@ export const SearchComponent = ({setParam}) => {
                     [e.target.name]: e.target.value
                 }))}
             />
-            <ComponentBtn type={'submit'} median txtBtn="Search" />
+            <ComponentBtn type={'submit'} 
+            median 
+            disabled={ !(valueSearch.search.length > 0) }
+            txtBtn="Search" 
+            />
         </div>
 
     </form>

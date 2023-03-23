@@ -101,7 +101,14 @@ export const RegisterPage = () => {
                             </span>
                         </div>
                         
-                        <ComponentBtn type={'submit'} className txtBtn={'Register'} full />
+                        <ComponentBtn 
+                        type={'submit'} 
+                        disabled={
+                            (!(values.name.length > 0) || !(values.email.length > 0) || !(values.password.length > 0))
+                        }
+                        className 
+                        txtBtn={'Register'} 
+                        full />
 
                     </form>
 
@@ -145,7 +152,7 @@ export const RegisterPage = () => {
                     
 
                 </div>
-
+                <span className="aviso">This application is under development, do not put real data.</span>
             </div>
         </div>
     )

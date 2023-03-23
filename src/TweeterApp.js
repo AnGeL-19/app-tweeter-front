@@ -15,6 +15,7 @@ export const TweeterApp = () => {
           }}
         >
               <AppRouter />  
+              
         </SWRConfig>
       </Provider>   
     )

@@ -13,7 +13,7 @@ import { MenuPrivacity } from './MenuPrivacity';
 export const CreatePost = () => {
 
     const user = useSelector(state => state.user);
-    const { trigger, isMutating } = useSWRMutation(`tweet`, fetcherPost)
+    const { trigger, isMutating } = useSWRMutation(`tweet/`, fetcherPost)
 
     const [showMenuImage, setShowMenuImage] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -77,25 +77,15 @@ export const CreatePost = () => {
             if (hashtags.length !== 0) {
                 newData.hashtags = hashtags;
             }
-    
 
-            const result = await trigger({}, /* options */)
+            const result = await trigger(newData, /* options */)
 
-            if (!result.ok) throw new Error('Error', result)
-
-            // dispatch(followUnFollowFollowing(user.uid, usersF.following))
             reset()
 
             handleEliminateImg()
-
-            console.log(result);
-
-
           } catch (e) {
             console.log(e);
           }
-     
-        // doFetch('tweet',newData,'POST')
 
         
     }
@@ -138,12 +128,17 @@ export const CreatePost = () => {
                                 className='input_basic mrg_r_7' 
                                 type="text" 
                                 name='url'
+                                value={dataURL.url}
                                 onChange={(e) => setURL({
                                     [e.target.name]: e.target.value
                                 }) }
                                 placeholder='Insert URL...'
                                  />
-                                <ComponentBtn txtBtn="Add" median functionBtn={handleAddUrl} />
+                                <ComponentBtn txtBtn="Add" 
+                                    disabled={ !(dataURL.url.length > 0) } 
+                                    median 
+                                    functionBtn={handleAddUrl} 
+                                />
                             </div>
                             )
                             
@@ -205,7 +200,10 @@ export const CreatePost = () => {
 
                             </div>
                             <div className="btn__right">
-                                <ComponentBtn type={'submit'} txtBtn="Tweet" median />
+                                <ComponentBtn type={'submit'}
+                                disabled={ !(values.description.length > 0) }  
+                                txtBtn="Tweet" 
+                                median />
                             </div>
                         </div>
                     </form>

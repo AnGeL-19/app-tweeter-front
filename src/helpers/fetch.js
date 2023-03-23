@@ -45,7 +45,7 @@ export const fetcherPost = (url,{arg}) => fetch(`${process.env.REACT_APP_URL_API
         'Content-type': 'application/json',
         'x-token': Cookies.get('token')
     },
-    body: JSON.stringify({arg})
+    body: JSON.stringify(arg)
 }).then(r => r.json())
 
 export const fetcherPut = (url,{ arg }) => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{

@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import useSWRMutation from 'swr/mutation'
 import { useForm } from '../../hooks/useForm';
 import { FileImage } from '../FileImage'
+import { fetcherPost } from '../../helpers/fetch';
 
-export const AddComment = ({user,tid}) => {
+export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
+ 
+    const { trigger, isMutating } = useSWRMutation('tweet/msg', fetcherPost)
 
-    const {token} = useSelector(state => state.auth);
-    
     const extensions = ["jpg","png","gif","svg"];
 
     const [imageCmt, setImageCmt] = useState(null);
@@ -58,37 +59,32 @@ export const AddComment = ({user,tid}) => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
-        console.log(values);
-        // console.log("holis",valuesCmt);
-        // const respt = await fetchApi({
-        //     idTweet: tweet.tid,
-        //     comment : valuesCmt       
-        // },
-        // 'tweet/msg', 
-        // 'POST',
-        // token)
-        // const info = await respt.json();
+        const result = await trigger({
+            idTweet: tid,
+            comment : values.comment 
+        }, /* options */)
 
-        // if (info.ok) {
+        if (!result.ok) throw new Error('Error', result)
 
-        //     const { userComment, ...rest } = info.newCommet
-        //     const newCmmt = {
-        //         ...rest,
-        //         userComment: {
-        //             uid: user.uid,
-        //             name: user.name,
-        //             imgUser: user.imgUser
-        //         }
-        //     }
-        //     setValuesStatus(status => ({
-        //         ...status,
-        //         comments: [...valuesStatus.comments, newCmmt]
-        //     }))
-        //     setAddComment(!addComment);
-        //     setValuesCmt('')
-        // }else{
-        //     console.log(info);
-        // }
+        if (result.ok) {
+
+            const { userComment, ...rest } = result.newCommet
+            const newCmmt = {
+                ...rest,
+                userComment: {
+                    uid: user.uid,
+                    name: user.name,
+                    imgUser: user.imgUser
+                }
+            }
+            setValuesStatus(status => ({
+                ...status,
+                comments: [...valuesStatus.comments, newCmmt]
+            }))
+            reset()
+        }else{
+            console.log(result);
+        }
  
     }
 
