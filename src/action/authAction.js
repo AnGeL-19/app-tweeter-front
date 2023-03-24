@@ -14,7 +14,6 @@ export const loginUser = (data) => {
             const resp = await fetchApi(data, 'login/', 'POST');
             const body = await resp.json();
 
-            console.log(body,"-----------");
             if(body.ok){   
                 Cookies.set('token', body.token);        
                 dispatch(login({ok:body.ok, token: body.token}));
@@ -27,7 +26,6 @@ export const loginUser = (data) => {
             
         }catch(err){
             dispatch(loading(false)) 
-            console.log(err);
         }
         
     }
@@ -46,14 +44,12 @@ export const registerUser = (data) => {
             const resp = await fetchApi(data ,'login/new/', 'POST');
             const body = await resp.json();
 
-            console.log(body);
             Cookies.set('token', body.token);
             dispatch(login({ok:body.ok, token: body.token}));
             dispatch(userData(body.data));
             dispatch(loading(false))
         }catch(err){
             dispatch(loading(false)) 
-            console.log(err);
         }
     }
 }
@@ -66,7 +62,6 @@ const register = (data) => ({
 
 export const logoutUser = () => {
     return (dispatch) => {
-        console.log("entra en logout");
         Cookies.remove('token')
         dispatch(logout())
         dispatch(userLogout())
@@ -92,22 +87,15 @@ const loading = (value) => ({
 export const startCheking = () => {
     return async (dispatch) => {
 
-
-        console.log('amonos');
-        // dispatch(loading(true))
-
         if(!Cookies.get('token')) return dispatch(loading(false));
         
         try {
             dispatch(loading(true));
             const token = Cookies.get('token');
-            console.log(token);
     
             const resp = await fetchGetApi('login/renew', token);
             const body = await resp.json();
             Cookies.remove('token');
-    
-            console.log(body);
     
             if(body.ok){
                 Cookies.set('token', body.token);      
@@ -126,65 +114,3 @@ export const startCheking = () => {
     }
 }
 
-// export const postStartDelete = () => {
-//     return async (dispatch, getState) => {
-        
-//         const {id} = getState().post.postActive;
-
-//         try {
-
-//             const resp = await fetchDeletePostImg(id);
-//             const body = await resp.json();
-//             console.log(body);
-    
-//             if(body.ok){
-//                 dispatch(postDelete());
-//             }
-//         } catch (error) {
-//             console.log(error);
-//         }
-        
-
-//     }
-// }
-
-// const postDelete = () => ({
-//     type: types.deltePostImg
-// });
-
-// export const setActivePost = (data) => ({
-
-//     type: types.activePostImg,
-//     payload: data
-
-// });
-
-// export const desactivePost = () => ({
-//     type: types.desactivePostImg,
-// });
-
-// export const searchStartPost = (label) => {
-//     return async (dispach) => {
-
-//         try{
-
-//             const resp = await fetchSearchPostImg(label);
-//             const body = await resp.json();
-
-//             if(body.ok){
-//                 dispach(searchPost(body.postImgs));
-//             }else{
-//                 Swal.fire('Error',body.msg, 'error') ;  
-//             }
-
-//         }catch(error){
-//             console.log(error);
-//         }
-
-//     }
-// }
-
-// const searchPost = (data) => ({
-//     type: types.searchPost,
-//     payload: data
-// });
