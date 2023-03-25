@@ -1,14 +1,10 @@
-import React from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 import { FilterPost } from '../components/FilterPost'
 import { Layout } from '../components/layout/Layout'
 import { SearchComponent } from '../components/SearchComponent'
 import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
-import { useFetch } from '../hooks/useFetch'
 import { useQuery } from '../hooks/useQuery'
 
 const objFilter = [

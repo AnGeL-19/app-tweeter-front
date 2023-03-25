@@ -3,12 +3,21 @@
 .div_container_notData{
 
     width: 100%;
-    padding: 20px 30%;
+    max-height: 50px;
+
+    display: flex;
+    justify-content:center;
+    align-items:center;
+
+    background-color: #afafaf;
+    border-radius: 8px;
+
+    padding: 10px;
 
     .span_text{
 
         font-weight: 500;
-        font-size: 24px;
+        font-size: 20px;
         line-height: 24px;
         
         letter-spacing: -0.035em;

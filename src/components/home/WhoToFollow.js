@@ -40,7 +40,7 @@ export const WhoToFollow = () => {
                 : 
                 (users.data.length === 0)
                     &&
-                <NotDataComponent text={'No hay Usuarios :('} />   
+                <NotDataComponent text={'No users'} />   
             }
         </aside>
     )

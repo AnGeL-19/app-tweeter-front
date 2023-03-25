@@ -1,4 +1,4 @@
-import React, { createRef, lazy, memo, Suspense, useCallback, useEffect, useState } from 'react'
+import React, { createRef, lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { LoadingComponent } from '../LoadingComponent'
 import { NotDataComponent } from '../NotDataComponent'
@@ -17,7 +17,7 @@ export const ShowPosts = ({query, params}) => {
 
     const [hasMore, setHasMore] = useState(false);
     const [tweets, setTweets] = useState([])
-    const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,{
+    const { data, isLoading } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,{
         revalidateOnFocus: false,
         refreshInterval: 0
     })
@@ -98,7 +98,7 @@ export const ShowPosts = ({query, params}) => {
                     : 
                     (tweets.length === 0)
                         &&
-                    <NotDataComponent text={'No hay Tweets :('} />   
+                    <NotDataComponent text={'No Tweets'} />   
                 }
 
             </section>      

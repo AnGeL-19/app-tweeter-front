@@ -31,7 +31,7 @@ export const Trends = () => {
                 : 
                 (trends.data.length === 0)
                     &&
-                <NotDataComponent text={'No hay Trends :('} />   
+                <NotDataComponent text={'No Trends'} />   
             }
         </section>
     )

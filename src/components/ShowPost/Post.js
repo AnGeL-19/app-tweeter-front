@@ -94,15 +94,8 @@ const Post =  React.forwardRef(({tweet,tid}, ref) => {
                 }
                 
 
-                <div className="people_comments">
-                    
-                    {
-                        valuesStatus.comments.map((comment) => (
-                            <Comments key={comment.cid} comment={comment} />
-                        ))
-                    }
-
-                </div>
+                <Comments comments={valuesStatus.comments} lengthComments={4} />
+                
             </div> 
            
 

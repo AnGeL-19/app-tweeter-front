@@ -1,6 +1,5 @@
 import React from 'react'
 import useSWR from 'swr'
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetcher } from '../../helpers/fetch';
 import { LoadingComponent } from '../LoadingComponent';
@@ -9,7 +8,6 @@ import { ItemUserModal } from './ItemUserModal'
 
 export const ModalFollow = ({userName, isFollowers}) => {
 
-    // const user = useSelector(state => state.user);
 
     const param = useParams();
 
@@ -17,7 +15,7 @@ export const ModalFollow = ({userName, isFollowers}) => {
         `user/followers/${param.id}`:
         `user/following/${param.id}`);
 
-    const { data: usersF, isLoading, error } = useSWR(!isFollowers ? 
+    const { data: usersF, isLoading } = useSWR(!isFollowers ? 
                                                         `user/followers/${param.id}`:
                                                         `user/following/${param.id}`, 
                                                         fetcher)
@@ -38,7 +36,7 @@ export const ModalFollow = ({userName, isFollowers}) => {
                         ? <LoadingComponent />
                         :
                             (!usersF || usersF.data.length === 0) 
-                            ? <NotDataComponent text={'No hay followers'} />
+                            ? <NotDataComponent text={'No Followers'} />
                             : 
                             usersF.data.map((userf,index) => (
                                 <>

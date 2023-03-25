@@ -77,7 +77,7 @@ const lastTweetElementRef = useCallback(node => {
                 <Suspense fallback={<LoadingComponent />}>
                     {
                         (users && users.length > 0)
-                            ?
+                        &&
                         users.map((user,index) => {
                             if (users.length === index+1 ) {
                                 return <ItemWTFollow
@@ -91,22 +91,19 @@ const lastTweetElementRef = useCallback(node => {
                                   user={user}
                                 />
                             }
-                        })
-                        :
-                        <NotDataComponent text={'No hay users :('} />  
-                         
+                        })       
                     }  
                 </Suspense>    
 
 
                 {
                     (isLoading)
-                    &&
+                    ?
                     <LoadingComponent />
-                    // : 
-                    // (!users || users.length === 0)
-                    //     &&
-                     
+                    : 
+                    (!users || users.length === 0)
+                        &&
+                    <NotDataComponent text={'No users'} />  
                 }
             </section>      
 

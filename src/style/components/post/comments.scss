@@ -1,5 +1,9 @@
 .people_comments{
 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     .user_comment{
 
         margin-top: 20px;
@@ -186,5 +190,29 @@
         }
 
     }
+
+    .moreComments{
+        
+        display: flex;
+        justify-content:center;
+        align-items:center;
+
+        .span_moreCommments{
+
+            color: #4F4F4F;
+            font-size: 12px;
+            font-weight: 600;
+
+        }
+
+        .span_moreCommments:hover{
+
+            cursor: pointer;
+            color:  darken($color: #4F4F4F, $amount: 2);
+            text-decoration: underline;
+
+        }
+    }
+    
 
 }

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import useSWRMutation from 'swr/mutation'
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { fetchApi, fetcherPut } from '../../helpers/fetch';
+import { fetcherPut } from '../../helpers/fetch';
 import { hashtagText } from '../../helpers/findHashtag';
 import { dateFormat } from '../../helpers/formatDate'
 
-export const Comments = ({comment}) => {
+export const Comment = ({comment}) => {
 
     const user = useSelector(state => state.user);
     // const {token} = useSelector(state => state.auth);
@@ -109,4 +110,9 @@ export const Comments = ({comment}) => {
         </div>
   
     )
+}
+
+
+Comment.propTypes = {
+    comment: PropTypes.object.isRequired
 }
