@@ -12,8 +12,8 @@ import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { LoadingComponent } from '../components/LoadingComponent'
 import { fetcher } from '../helpers/fetch'
-import { EditProfile, EditProfileModal } from '../components/profile/EditProfile'
-import { Modal } from '../modal/Modal'
+import { EditProfile } from '../components/profile/EditProfile'
+import { Modal } from '../components/modal/Modal'
 
 
 

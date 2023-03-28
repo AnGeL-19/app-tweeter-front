@@ -6,6 +6,7 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
     const optionsActions = [
         {
             name: 'retweets',
+            nCount: 'nRetweets',
             icon: 'cached',
             text: 'Retweet',
             textSelect: 'Retweeted',
@@ -17,6 +18,7 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
         },
         {
             name: 'likes',
+            nCount: 'nLikes',
             icon: 'favorite_border',
             text: 'Like',
             textSelect: 'Liked',
@@ -28,6 +30,7 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
         },
         {
             name: 'saved',
+            nCount: 'nSaved',
             icon: 'bookmark_border',
             text: 'Save',
             textSelect: 'Saved',

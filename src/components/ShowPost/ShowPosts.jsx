@@ -76,13 +76,11 @@ export const ShowPosts = ({query, params}) => {
                                         ref={lastTweetElementRef}  
                                         key={tweet.tid+index+'t'} 
                                         tweet={tweet} 
-                                        tid={tweet.tid}
                                     />
                             } else {
                                 return <Post  
                                         key={tweet.tid+index+'t'} 
                                         tweet={tweet} 
-                                        tid={tweet.tid} 
                                     />
                             }
                         })

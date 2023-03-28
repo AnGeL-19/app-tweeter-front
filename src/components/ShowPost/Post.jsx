@@ -1,26 +1,30 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux'
 import { hashtagText } from '../../helpers/findHashtag'
 
 import { UserInfoBasic } from '../UserInfoBasic'
-import { AddComment } from './AddComment'
 import { Comments } from './Comments'
+import { AddComment } from '../ShowPost/AddComment'
 import { SocialActions } from './SocialActions'
+import { Caracteristics } from './Caracteristics'
 
-const Post =  React.forwardRef(({tweet,tid}, ref) => {
+const Post =  React.forwardRef(({tweet}, ref) => {
 
     const {userTweet} = tweet;
-    
     const user = useSelector(state => state.user);
-    
 
     const [showAddComment, setShowAddComment] = useState(false);
     
     const [valuesStatus, setValuesStatus] = useState({
         likes: tweet.likes || [],
+        nLikes: tweet.nLikes || 0,
         retweets: tweet.retweets || [],
+        nRetweets: tweet.nRetweets || 0,
         saved: tweet.saved || [],
-        comments: tweet.comentPeople || []
+        nSaved: tweet.nSaved || 0,
+        comments: tweet.comentPeople || [],
+        nComments: tweet.nComentPeople || 0
     })
 
     return (
@@ -69,12 +73,7 @@ const Post =  React.forwardRef(({tweet,tid}, ref) => {
                 }
                 
 
-                <div className="post__characteristics">
-                    <span className="characteristics">{valuesStatus.comments.length || 0} Comments</span>
-                    <span className="characteristics">{valuesStatus.retweets.length || 0} Retweets</span>
-                    <span className="characteristics">{valuesStatus.likes.length || 0} Likes</span>
-                    <span className="characteristics">{valuesStatus.saved.length || 0} Saved</span>
-                </div>
+                <Caracteristics valueCaracteristics={valuesStatus} />
 
                 <SocialActions 
                 user={user} 
@@ -89,12 +88,21 @@ const Post =  React.forwardRef(({tweet,tid}, ref) => {
 
                     showAddComment
                     &&
-                    <AddComment tid={tid} user={user} valuesStatus={valuesStatus} setValuesStatus={setValuesStatus} />
+                    <AddComment 
+                        tid={tweet.tid} 
+                        user={user} 
+                        valuesStatus={valuesStatus} 
+                        setValuesStatus={setValuesStatus}
+                    />
 
                 }
                 
 
-                <Comments comments={valuesStatus.comments} lengthComments={4} />
+                <Comments 
+                    tid={tweet.tid} 
+                    comments={valuesStatus.comments} 
+                    lengthComments={tweet.nComentPeople} 
+                />
                 
             </div> 
            
@@ -102,5 +110,9 @@ const Post =  React.forwardRef(({tweet,tid}, ref) => {
         </div>
     )
 })
+
+Comment.Post = {
+    tweet: PropTypes.object.isRequired
+}
 
 export default Post;

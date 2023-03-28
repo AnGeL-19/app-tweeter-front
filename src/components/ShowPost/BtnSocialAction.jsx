@@ -20,11 +20,13 @@ export const BtnSocialAction = ({user, tweet, setValuesStatus, btnSocialAction }
         if (btnSocialAction.select) {
             setValuesStatus(status => ({
                 ...status,
+                [btnSocialAction.nCount]: btnSocialAction.values.length-1,
                 [btnSocialAction.name]: btnSocialAction.values.filter(idUser => idUser !== user.uid)
             }))
         }else{
             setValuesStatus(status => ({
                 ...status,
+                [btnSocialAction.nCount]: btnSocialAction.values.length+1,
                 [btnSocialAction.name]: [...btnSocialAction.values, user.uid]
             }))
         }
