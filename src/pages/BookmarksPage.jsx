@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { FilterPost } from '../components/FilterPost'
-import { HeaderTweeter } from '../components/header/HeaderTweeter'
 import { Layout } from '../components/layout/Layout'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
-import { useFetch } from '../hooks/useFetch'
 
 const objFilter = [
     {
@@ -56,8 +53,6 @@ export const BookmarksPage = () => {
             
             <div className="bookmarks_container_main">
 
-                {/* <main className="container_main"> */}
-
                     <div className="div_filter">
 
                     <FilterPost filters={ filter }  setFilter={ setFilter }/>
@@ -77,7 +72,6 @@ export const BookmarksPage = () => {
                    
                     </div>
                     
-                {/* </main> */}
             </div>
 
         </Layout>
