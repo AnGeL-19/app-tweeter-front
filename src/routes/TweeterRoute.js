@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch } from 'react-router'
 import { Route, Redirect } from 'react-router-dom';
 import { BookmarksPage } from '../pages/BookmarksPage';
-import { CalisQRPage } from '../pages/CalisQRPage';
 import { ExplorePage } from '../pages/ExplorePage';
 import { HomePage } from '../pages/HomePage';
 import { ProfilePage } from '../pages/ProfilePage';
@@ -15,7 +14,6 @@ export const TweeterRouter = () => {
                 <Route exact path="/explore" component={ExplorePage} />
                 <Route exact path="/bookmarks" component={BookmarksPage} />
                 <Route exact path="/profile/:id" component={ProfilePage} />
-                <Route exact path="/calisQR" component={CalisQRPage} />
                 <Redirect to="/home" />
             </Switch>
         </>
