@@ -6,10 +6,26 @@ import { ComponentBtn } from '../../components/ComponentBtn';
 import { useForm } from '../../hooks/useForm';
 
 import LogoTweeter from '../../static/tweeter.svg';
+import { Form } from '../../components/form/Form';
+import { Input } from '../../components/form/Input';
 
 export const LoginPage = () => {
 
     const dispatch = useDispatch();
+    
+    // const a = {
+    //     name: 'name',
+    //     type: 'text',
+    //     label: 'Name',
+    //     placeholder: 'Insert you name',
+    //     icon: 'lock',
+    //     positionIcon: 'right',
+    //     validators: {
+    //         min: 10,
+    //         max: 10,
+    //         select: true
+    //     }
+    // }
 
     const {values, handleInputChange, reset} = useForm({
         email: '',
@@ -37,47 +53,38 @@ export const LoginPage = () => {
                         <img src={LogoTweeter} alt='Logo Tweeter'/>
                     </div>
                     
-                    <span className="title_login">Login</span>
+                    <h2 className="title_login">Login</h2>
 
-                    <form   onSubmit={handleSubmit}
-                            className="inputs__icon_login">                       
-
-                        <div className="form_icon">
-                            <input 
-                            type="email" 
-                            name="email"
+                    <Form onSubmit={handleSubmit}>
+                        <Input 
+                            type='email' 
+                            name='email'
+                            placeholder='Insert email...'
+                            icon='email' 
+                            iconPosition='left'
                             value={values.email}
-                            onChange={(e)=>handleInputChange(e)}
-                            placeholder="Email" 
-                            required/>
-                            <span className="material-icons gray3Color" >
-                                email
-                            </span>
-                        </div>
-
-                        <div className="form_icon">
-                            <input 
-                            type="password" 
-                            name="password"
+                            setValueForm={handleInputChange}
+                        />
+                        <Input 
+                            type='password' 
+                            name='password'
+                            placeholder='Insert password...'
+                            icon='lock' 
+                            iconPosition='left'
                             value={values.password}
-                            onChange={(e)=>handleInputChange(e)}
-                            placeholder="Password" 
-                            required />
-                            <span className="material-icons gray3Color">
-                                lock
-                            </span>
-                        </div>
-                        
-                        <ComponentBtn 
-                        type={'submit'} 
-                        disabled={
-                            (!(values.email.length > 0) || !(values.password.length > 0))
-                        }
-                        className 
-                        txtBtn={'Enter'} 
-                        full />
+                            setValueForm={handleInputChange}
+                        />
 
-                    </form>
+                        <ComponentBtn 
+                            type={'submit'} 
+                            disabled={
+                                (!(values.email.length > 0) || !(values.password.length > 0))
+                            }
+                            className 
+                            txtBtn={'Enter'} 
+                            full
+                        />
+                    </Form>
 
                     <div className="div_text">
                         <p className="text_login">or continue with these social profile</p>

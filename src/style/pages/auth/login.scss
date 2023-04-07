@@ -41,56 +41,7 @@
             color: #333333;
         }
 
-        .inputs__icon_login{
-
-            width: 100%;
-            margin-bottom: 10px;
-
-            .form_icon{
-                width: 100%;
-                height: 48px;
-                margin-bottom: 10px;
-
-                position: relative;
-
-                input{
-                    width: 100%;
-                    height: 100%;
-
-                    padding: 10px 10px 10px 46px;
-
-                    border: 1px solid #BDBDBD;
-                    border-radius: 8px;
-                    outline: none;  
-
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 22px;
-                    /* identical to box height */
-
-                    letter-spacing: -0.035em;
-
-                    color: #828282;
-                }
-
-                input:hover{
-                    border: 1px solid #39b2f8;
-                }
-
-                input:focus{
-                    border: 1px solid #39b2f8;
-                }
-
-                span{
-                    position: absolute;
-                    top: 12px;
-                    left: 12px;
-                }
-
-            }
-
-        }
+      
 
         .div_text{
 

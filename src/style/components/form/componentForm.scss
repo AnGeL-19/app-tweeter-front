@@ -1,0 +1,73 @@
+
+%inputs {
+
+    padding: 10px;                    
+
+    width: 100%;
+    background: #F2F2F2;
+    
+    color: #9e9e9e;
+    border: none;
+    outline: none;
+
+    
+}
+
+
+form {
+    width: 100%;
+    min-height: auto;
+    margin-bottom: 10px;
+
+    .container_input{
+
+        width: 100%;
+        margin-bottom: 10px;
+
+        .icons_input{
+            
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5px;
+            width: 100%;
+            height: 48px;
+
+            input{
+                @extend %inputs;
+                
+            }
+
+            textarea{
+                @extend %inputs;
+                
+                resize: none;
+            }
+
+        
+            &:hover{
+                border-radius: 8px;
+                overflow: hidden;
+                border: 1px solid #39b2f8;
+                color: #39b2f8;
+            }
+
+        }
+
+        
+        .notice{
+            font-size: 12px;
+            font-weight: 500;
+            color: rgb(231, 1, 1);
+        }
+
+        
+    }
+    
+
+}
+
+
+
+

@@ -6,6 +6,8 @@ import { ComponentBtn } from '../../components/ComponentBtn';
 import { useForm } from '../../hooks/useForm';
 
 import LogoTweeter from '../../static/tweeter.svg';
+import { Form } from '../../components/form/Form';
+import { Input } from '../../components/form/Input';
 
 export const RegisterPage = () => {
 
@@ -44,73 +46,56 @@ export const RegisterPage = () => {
                         <img src={LogoTweeter} alt='Logo Tweeter'/>
                     </div>
                     
-                    <span className="title_login">Register</span>
+                    <h2 className="title_login">Register</h2>
 
-                    <form   onSubmit={handleSubmit}
-                            className="inputs__icon_login">
-                        
-                        <div className="form_icon">
-                            <input 
-                            type="text" 
-                            name= "name"
-                            placeholder="Username" 
+                    <Form onSubmit={handleSubmit}>
+                        <Input 
+                            type='text' 
+                            name='name'
+                            placeholder='Insert email...'
+                            icon='person' 
+                            iconPosition='left'
                             value={values.name}
-                            onChange={handleInputChange}
-                            required/>
-                            <span className="material-icons gray3Color" >
-                                person
-                            </span>
-                        </div>
-                        
-                        <div className="form_icon">
-                            <input 
-                            type="email" 
-                            name="email"
+                            setValueForm={handleInputChange}
+                        />
+                        <Input 
+                            type='email' 
+                            name='email'
+                            placeholder='Insert email...'
+                            icon='email' 
+                            iconPosition='left'
                             value={values.email}
-                            onChange={handleInputChange}
-                            placeholder="Email" 
-                            required/>
-                            <span className="material-icons gray3Color" >
-                                email
-                            </span>
-                        </div>
-
-                        <div className="form_icon">
-                            <input 
-                            type="password" 
-                            name="password"
+                            setValueForm={handleInputChange}
+                        />
+                        <Input 
+                            type='password' 
+                            name='password'
+                            placeholder='Insert password...'
+                            icon='lock' 
+                            iconPosition='left'
                             value={values.password}
-                            onChange={handleInputChange}
-                            placeholder="Password" 
-                            required />
-                            <span className="material-icons gray3Color">
-                                lock
-                            </span>
-                        </div>
-
-                        <div className="form_icon">
-                            <input 
-                            type="password" 
-                            name="passwordConfirmation"
+                            setValueForm={handleInputChange}
+                        />
+                        <Input 
+                            type='password' 
+                            name='passwordConfirmation'
+                            placeholder='Validate password...'
+                            icon='lock' 
+                            iconPosition='left'
                             value={values.passwordConfirmation}
-                            onChange={handleInputChange}
-                            placeholder="Confirm password" 
-                            required />
-                            <span className="material-icons gray3Color">
-                                lock
-                            </span>
-                        </div>
-                        
-                        <ComponentBtn 
-                        type={'submit'} 
-                        disabled={
-                            (!(values.name.length > 0) || !(values.email.length > 0) || !(values.password.length > 0))
-                        }
-                        className 
-                        txtBtn={'Register'} 
-                        full />
+                            setValueForm={handleInputChange}
+                        />
 
-                    </form>
+                        <ComponentBtn 
+                            type={'submit'} 
+                            disabled={
+                                (!(values.name.length > 0) || !(values.email.length > 0) || !(values.password.length > 0))
+                            }
+                            className 
+                            txtBtn={'Register'} 
+                            full
+                        />
+                    </Form>
 
                     <div className="div_text">
                         <p className="text_login">or continue with these social profile</p>

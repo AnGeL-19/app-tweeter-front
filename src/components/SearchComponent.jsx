@@ -27,6 +27,7 @@ export const SearchComponent = ({setParam}) => {
             <span className="material-icons gray3Color">
                 search
             </span>
+            
             <input 
                 type="text" 
                 placeholder="Search"
@@ -37,6 +38,7 @@ export const SearchComponent = ({setParam}) => {
                     [e.target.name]: e.target.value
                 }))}
             />
+
             <ComponentBtn type={'submit'} 
             median 
             disabled={ !(valueSearch.search.length > 0) }
