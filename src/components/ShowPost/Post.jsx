@@ -8,6 +8,7 @@ import { Comments } from './Comments'
 import { AddComment } from '../ShowPost/AddComment'
 import { SocialActions } from './SocialActions'
 import { Caracteristics } from './Caracteristics'
+import { HeaderReweet } from './HeaderReweet';
 
 const Post =  React.forwardRef(({tweet}, ref) => {
 
@@ -35,14 +36,7 @@ const Post =  React.forwardRef(({tweet}, ref) => {
                 tweet.userRetweet
                 &&
                 (
-                <div className="div__retweet">
-                    <span className="material-icons gray3Color">
-                    cached
-                    </span>
-                    <span className="user_retweet gray3Color">
-                        {tweet.userRetweet}
-                    </span>
-                </div>
+                <HeaderReweet userRetweet={tweet.userRetweet} />
                 )
             }
             
