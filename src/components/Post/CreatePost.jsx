@@ -9,18 +9,20 @@ import { ComponentBtn } from '../ComponentBtn';
 import { FileImage } from '../FileImage';
 import { MenuImage } from './MenuImage';
 import { MenuPrivacity } from './MenuPrivacity';
+import { Form } from '../form/Form';
+import { Input } from '../form/Input';
+
 
 export const CreatePost = () => {
 
     const user = useSelector(state => state.user);
-    const { trigger, isMutating } = useSWRMutation(`tweet/`, fetcherPost)
+    const { trigger } = useSWRMutation(`tweet/`, fetcherPost)
 
+    const [showInputUrl, setShowInputUrl] = useState(false);
+    const [image, setImage] = useState(null);
     const [showMenuImage, setShowMenuImage] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
-    const [showInputUrl, setShowInputUrl] = useState(false);
-    
-    const [image, setImage] = useState(null);
-    const [dataURL, setURL] = useState('');
+
 
     const {values, setValues, handleInputChange, reset} = useForm({
         description: "",
@@ -38,18 +40,6 @@ export const CreatePost = () => {
 
     }
 
-    const handleAddUrl = (e) => {
-        e.preventDefault();
-
-        setValues((v) => ({
-            ...v,
-            url: dataURL.url
-        }))
-        setImage(dataURL.url);
-        setShowInputUrl(false);
-
-    }
-
     const handleShowMenuPrivacity = () => {
         setShowMenuImage(false)
         setShowMenu(!showMenu);
@@ -59,6 +49,14 @@ export const CreatePost = () => {
     const handleShowMenuImage = () => {
         setShowMenu(false) 
         setShowMenuImage(!showMenuImage)    
+    }
+
+    const handleAddUrl = (e) => {
+        e.preventDefault();
+
+        setImage(values.url);
+        setShowInputUrl(false);
+
     }
 
     const handleSubmit = async(e) => {
@@ -78,11 +76,17 @@ export const CreatePost = () => {
                 newData.hashtags = hashtags;
             }
 
+            console.log(newData);
             const result = await trigger(newData, /* options */)
+            if (result.ok) {
+                reset()
 
-            reset()
+                handleEliminateImg()
+            }else {
+                console.log(result);
+            }
 
-            handleEliminateImg()
+            
           } catch (e) {
             console.log(e);
           }
@@ -101,15 +105,17 @@ export const CreatePost = () => {
                 <UserImg url={user.imgUser}/>
 
                 <div className="form__img__btn">
-                    <form className="txt__image__icons__btn" onSubmit={handleSubmit}>
+                    <Form 
+                        className={'txt__image__icons__btn'}
+                        onSubmit={handleSubmit}>
                         <div className="div__txt">
-                            <textarea id="txtTweeter" 
-                                placeholder='What’s happening?'
+                            <Input 
+                                type='textarea' 
                                 name='description'
-                                value={values.description}
-                                onChange={ (e) => handleInputChange(e) }                            
-                            >                  
-                            </textarea>
+                                placeholder='What’s happening?'
+                                valueForm={values.description}
+                                setValueForm={handleInputChange}
+                            />
                         </div>
 
                         {
@@ -123,19 +129,18 @@ export const CreatePost = () => {
                             showInputUrl
                             &&
                             (
-                            <div className="div_add_url mrg_b_9">
-                                <input 
-                                className='input_basic mrg_r_7' 
-                                type="text" 
-                                name='url'
-                                value={dataURL.url}
-                                onChange={(e) => setURL({
-                                    [e.target.name]: e.target.value
-                                }) }
-                                placeholder='Insert URL...'
-                                 />
+                            <div className="div_add_url mrg_b_9 mrg_r_9">
+                                <Input 
+                                    type="text"
+                                    placeholder='Insert URL...'
+                                    name='url'
+                                    classNameInput={'txtTweeter'}
+                                    valueForm={values.url}
+                                    setValueForm={ handleInputChange } 
+                                />
+
                                 <ComponentBtn txtBtn="Add" 
-                                    disabled={ !(dataURL.url.length > 0) } 
+                                    disabled={ !(values.url.length > 0) } 
                                     median 
                                     functionBtn={handleAddUrl} 
                                 />
@@ -143,70 +148,62 @@ export const CreatePost = () => {
                             )
                             
                         }
-                        
+
                         <div className="div__icons__btn">
-                            <div className="div__img__privacity"> 
+                            <div className="div__img__privacity">
 
-                            {/* hacer componente de opciones de posts */}
-                                    <div className="div__menu_select">
-                                        {/* <div className="icons_select hover_reply"> */}
+                            <div className="div__menu_select">
 
-                                            {/* <div onClick={() => setShowMenuImage(!showMenuImage)} >
-                                                
-                                            </div> */}
-                                            <div onClick={() => handleShowMenuImage()}
-                                                className={`icons_select hover_reply ${ showMenuImage ? 'hover_reply_b': ''}`} >  
-                                            <span className="material-icons  primaryColor">
-                                                    collections
-                                            </span>
+                                <div onClick={() => handleShowMenuImage()}
+                                        className={`icons_select hover_reply ${ showMenuImage ? 'hover_reply_b': ''}`} >  
+                                    <span className="material-icons primaryColor">
+                                            collections
+                                    </span>
 
-                                            </div>
-                                            {
-                                                showMenuImage
-                                                &&
-                                                (
-                                                    <MenuImage values={values} 
-                                                                setImage={setImage} 
-                                                                showMenuImage={setShowMenuImage}
-                                                                showInputUrl={setShowInputUrl}
-                                                                showMenu={setShowMenu}
-                                                    />
-                                                )
-                                            }
-                                        {/* </div> */}
                                     </div>
-                                    <div className="div__menu_select">
-                                        <div    onClick={() => handleShowMenuPrivacity()}
-                                                className={`icons_select hover_reply ${ showMenu ? 'hover_reply_b': ''}`} >  
-                                            <span className="material-icons mrg_r_7 primaryColor"  >
-                                                {values.privacity}
-                                            </span>
-                                            <span className="txtIcon">{values.privacity} can reply</span>
-                                        </div>
-                                        
-                                        {
-                                        showMenu
+                                    {
+                                        showMenuImage
                                         &&
                                         (
-                                            <MenuPrivacity setValue={setValues}
-                                                            showPrivacity={setShowMenu}
-                                                            showMenuImage={setShowMenuImage}
+                                            <MenuImage 
+                                                values={values} 
+                                                setImage={setImage}
+                                                showMenuImage={setShowMenuImage}
+                                                showInputUrl={setShowInputUrl}
                                             />
                                         )
-                                        }
+                                    }
+                                </div>
+                                
+                                <div className="div__menu_select">
+                                    <div
+                                        onClick={() => handleShowMenuPrivacity()}
+                                        className={`icons_select hover_reply ${
+                                            showMenu ? "hover_reply_b" : ""
+                                        }`}
+                                        >
+                                        <span className="material-icons mrg_r_7 primaryColor">
+                                            {values.privacity}
+                                        </span>
+                                        <span className="txtIcon">{values.privacity} can reply</span>
+                                        </div>
 
-                                    </div>
-                                    
+                                        {showMenu && (
+                                        <MenuPrivacity
+                                            setValue={setValues}
+                                            showPrivacity={setShowMenu}
+                                        />
+                                        )}
+                                </div>
 
                             </div>
-                            <div className="btn__right">
-                                <ComponentBtn type={'submit'}
-                                disabled={ !(values.description.length > 0) }  
-                                txtBtn="Tweet" 
-                                median />
-                            </div>
+                            
                         </div>
-                    </form>
+
+
+
+                    </Form>
+                    
                 </div>
             </div>
         </div>

@@ -61,35 +61,21 @@
                 flex-direction: column;
 
                 .div__txt{
-                    // width: 100%;
 
                     width: 100%;
-                    height: 70px;
-                    max-height: 70px;
-                    background-color: #4F4F4F;
+                    // height: 70px;
+                    height: 80px;
                     margin-bottom: 10px;
-                    
-                    #txtTweeter{
+                    // overflow: hidden;
+
+                    .txtTweeter{
                         width: 100%;
                         height: 100%;
-                        max-height: 80px;
-                        padding-top: 8px;
-                        // max-height: 70px;
+                        padding: 8px ;
 
-                        font-style: normal;
-                        font-weight: 500;
-                        font-size: 16px;
-                        line-height: 22px;
-                        /* identical to box height */
 
                         letter-spacing: -0.035em;
-
-                        /* Gray 4 */
-
                         color: #BDBDBD;
-                        resize: none;
-                        border-style: none;
-                        outline: none;
 
                     }
 

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { loginUser, registerUser } from '../../action/authAction';
+import { loginUser,  } from '../../action/authAction';
 import { ComponentBtn } from '../../components/ComponentBtn';
 import { useForm } from '../../hooks/useForm';
 
@@ -13,20 +13,6 @@ export const LoginPage = () => {
 
     const dispatch = useDispatch();
     
-    // const a = {
-    //     name: 'name',
-    //     type: 'text',
-    //     label: 'Name',
-    //     placeholder: 'Insert you name',
-    //     icon: 'lock',
-    //     positionIcon: 'right',
-    //     validators: {
-    //         min: 10,
-    //         max: 10,
-    //         select: true
-    //     }
-    // }
-
     const {values, handleInputChange, reset} = useForm({
         email: '',
         password: '',
@@ -62,7 +48,7 @@ export const LoginPage = () => {
                             placeholder='Insert email...'
                             icon='email' 
                             iconPosition='left'
-                            value={values.email}
+                            valueForm={values.email}
                             setValueForm={handleInputChange}
                         />
                         <Input 
@@ -71,7 +57,7 @@ export const LoginPage = () => {
                             placeholder='Insert password...'
                             icon='lock' 
                             iconPosition='left'
-                            value={values.password}
+                            valueForm={values.password}
                             setValueForm={handleInputChange}
                         />
 
@@ -80,7 +66,6 @@ export const LoginPage = () => {
                             disabled={
                                 (!(values.email.length > 0) || !(values.password.length > 0))
                             }
-                            className 
                             txtBtn={'Enter'} 
                             full
                         />

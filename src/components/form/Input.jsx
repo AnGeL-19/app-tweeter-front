@@ -9,7 +9,8 @@ export const Input = ({type = 'text',
                         iconPosition,
                         validators,
                         valueForm,
-                        setValueForm
+                        setValueForm,
+                        classNameInput
                     }) => {
   
     // FULL WITH
@@ -35,6 +36,7 @@ export const Input = ({type = 'text',
                     placeholder={placeholder}
                     name={name}
                     value={valueForm}
+                    className={classNameInput}
                     onChange={ (e)=> setValueForm(e) }                          
                 >                  
                 </textarea>
@@ -44,6 +46,7 @@ export const Input = ({type = 'text',
                     placeholder={placeholder}
                     name={name}
                     value={valueForm}
+                    className={classNameInput}
                     onChange={ (e)=> setValueForm(e)}
                 />
             }

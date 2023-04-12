@@ -10,36 +10,24 @@ export const MenuImage = ({values,setImage,showMenuImage,showInputUrl}) => {
 
     console.log(file);
     if(file){
-
-        
+   
         values.photo = file;
 
-        console.log(values.photo);
-
         const extension = values.photo.name.split(".");
-        console.log(extension);
 
         const ext = extension[extension.length-1];
-        console.log(ext);
 
         if(extensions.includes(ext.toLowerCase())){
-
-            console.log( URL.createObjectURL(values.photo) );
-
             setImage( URL.createObjectURL(values.photo) );
-        //     setSucces(true);
-        //     setError(false);
-        //     dispatch(changeImgUser(file));
-        }else{
-        //     setSucces(false);
-        //     setError(true);
         }
     }
     showMenuImage(false)
   }
 
   const handleShowInput = () => {
+    console.log('se');
     showInputUrl(true)
+    
     showMenuImage(false)
   }
 

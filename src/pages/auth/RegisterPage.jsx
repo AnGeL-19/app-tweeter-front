@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { loginUser, registerUser } from '../../action/authAction';
+import {  registerUser } from '../../action/authAction';
 import { ComponentBtn } from '../../components/ComponentBtn';
 import { useForm } from '../../hooks/useForm';
 
@@ -29,7 +29,7 @@ export const RegisterPage = () => {
             return;
         }
         dispatch(registerUser(values))
-        
+        reset()
     }
 
     const handleGoogle = () => {
@@ -55,7 +55,7 @@ export const RegisterPage = () => {
                             placeholder='Insert email...'
                             icon='person' 
                             iconPosition='left'
-                            value={values.name}
+                            valueForm={values.name}
                             setValueForm={handleInputChange}
                         />
                         <Input 
@@ -64,7 +64,7 @@ export const RegisterPage = () => {
                             placeholder='Insert email...'
                             icon='email' 
                             iconPosition='left'
-                            value={values.email}
+                            valueForm={values.email}
                             setValueForm={handleInputChange}
                         />
                         <Input 
@@ -73,7 +73,7 @@ export const RegisterPage = () => {
                             placeholder='Insert password...'
                             icon='lock' 
                             iconPosition='left'
-                            value={values.password}
+                            valueForm={values.password}
                             setValueForm={handleInputChange}
                         />
                         <Input 
@@ -82,7 +82,7 @@ export const RegisterPage = () => {
                             placeholder='Validate password...'
                             icon='lock' 
                             iconPosition='left'
-                            value={values.passwordConfirmation}
+                            valueForm={values.passwordConfirmation}
                             setValueForm={handleInputChange}
                         />
 
