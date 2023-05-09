@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { FilterPost } from '../components/FilterPost'
-import { Layout } from '../components/layout/Layout'
 
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 
@@ -49,7 +48,6 @@ export const BookmarksPage = () => {
     
 
     return (
-        <Layout>
             
             <div className="bookmarks_container_main">
 
@@ -74,6 +72,5 @@ export const BookmarksPage = () => {
                     
             </div>
 
-        </Layout>
     )
 }

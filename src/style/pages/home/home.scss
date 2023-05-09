@@ -2,17 +2,17 @@
 
 .home_container__main{
 
+    width: 100%;
+    padding-top: 25px; 
     display: flex;
     flex-direction: row;
-    width: 100%;
     justify-content: center;
-    // padding-top: 24px;
+    gap: 25px;
 
     .div__create_post_show{
 
         display: flex;
         flex-direction: column;
-        margin-right: 25px;
         width: 745px;
 
     }

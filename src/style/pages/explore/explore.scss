@@ -1,20 +1,12 @@
-// .explore_container_main{
-
-//     display: flex;
-//     justify-content: center;
-//     width: 100%;
-//     background-color: #E0E0E0;
-    
 
 .explore_container_main{
 
+        padding-top: 25px; 
         display: flex;
         flex-direction: row;
+        justify-content: center;
         flex-wrap: wrap;
-
-        .div_filter{
-            margin-right: 24px;
-        }
+        gap: 25px;
 
         .div__input__post{
 
@@ -70,16 +62,12 @@
 
         }
        
-    }
+}
 
-// }
+
 @media only screen and (max-width: 1115px) {
 
     .explore_container_main{
-
-        .div_filter{
-            margin-right: 18px;
-        }
 
         .div__input__post{
 
@@ -96,12 +84,8 @@
 
     .explore_container_main{
 
-        
         align-content: flex-start;
-
-        .div_filter{
-            margin-right: 16px;
-        }
+        gap: 10px;
 
         .div__input__post{
 
@@ -121,10 +105,7 @@
         width: 100%;
 
         .div_filter{
-
             width: 100%;
-            margin-right: 0;
-            margin-bottom: 16px;
         }
 
         .div__input__post{

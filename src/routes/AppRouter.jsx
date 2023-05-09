@@ -22,8 +22,6 @@ export const AppRouter = () => {
     useEffect(() => {
         dispatch(startCheking());
     }, [dispatch]);
-    
-    console.log(loading, auth);
 
     if (loading) {
         return (
@@ -34,15 +32,17 @@ export const AppRouter = () => {
     }
 
     return (
-        <Router>
-            <div className='container_main_app'>
+        <div className="container_main_app">
+            <Router>
+                
                 <Switch>
                     <PublicRoute isAuthenticated={auth} path="/auth" component={ AuthRoute } />
                     <PrivateRoute isAuthenticated={auth} path="/" component={ TweeterRouter } />
 
                     <Redirect to="/" />
                 </Switch>
-            </div>
-        </Router>
+                
+            </Router>
+        </div>
     )
 }

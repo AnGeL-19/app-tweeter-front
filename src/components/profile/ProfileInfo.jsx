@@ -82,7 +82,6 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , 
                                     onClick={() => handleShowModalFollowing()}>
                                     <span className="wBlack">
                                         {dataUser.nfollowing}
-                                        {/* dataUser.following.length ||  */}
                                     </span>
                                     <span className="user_following ">
                                         Following                                    
@@ -92,7 +91,6 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , 
                                     onClick={() => handleShowModalFollowers()}>
                                     <span className="wBlack">
                                         { dataUser.nfollowers}
-                                        {/* dataUser.followers.length || */}
                                     </span>
                                     <span className="user_following ">
                                         Followers                                    

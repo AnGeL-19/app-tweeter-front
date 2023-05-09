@@ -25,10 +25,10 @@ export const Comments = ({tid,comments,lengthComments}) => {
 
             if (result.ok) {
                
-                console.log([
-                    ...valueComments,
-                    ...result.comments.filter(cc => valueComments.find(c => c.cid !== cc.cid))
-                ]);
+                // console.log([
+                //     ...valueComments,
+                //     ...result.comments.filter(cc => valueComments.find(c => c.cid !== cc.cid))
+                // ]);
 
                 setValueComments(prev => [
                     ...prev,
@@ -85,7 +85,7 @@ export const Comments = ({tid,comments,lengthComments}) => {
 }
 
 Comments.propTypes = {
-    tid: PropTypes.number,
+    tid: PropTypes.string,
     comments: PropTypes.array.isRequired,
     lengthComments: PropTypes.number
 }

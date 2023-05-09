@@ -8,10 +8,9 @@ import { Layout } from '../components/layout/Layout';
 
 export const HomePage = () => {
 
-
     return (
-        <Layout>
-            {/* <HeaderTweeter /> */}
+        // <Layout>
+            
             <div className="home_container__main">
 
 
@@ -37,6 +36,6 @@ export const HomePage = () => {
           
             </div>
             
-        </Layout>
+        // </Layout>
     )
 }

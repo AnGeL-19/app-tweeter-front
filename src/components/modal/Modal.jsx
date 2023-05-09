@@ -2,11 +2,17 @@ import React from 'react'
 
 export const Modal = ({children,setShowModal,title}) => {
   return (
+    <>
+    <div className="blur-modal"
+        onClick={() => setShowModal(false)}>
+    </div>
+
     <div className="container_modal">
 
-        <div className="modal_main">
+ 
+        <div className="modal">
 
-            <div className='modal'>
+            <div className='modal_main'>
 
                 <div className="btn__title">
                     <div className="btn_exit">
@@ -26,11 +32,9 @@ export const Modal = ({children,setShowModal,title}) => {
                 </div>
 
             </div>
-            
-      
-
+    
         </div>
-        
-    </div>
+    </div>   
+    </>
   )
 }

@@ -1,8 +1,9 @@
-import React, { createRef, lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import { LoadingComponent } from '../LoadingComponent'
 import { NotDataComponent } from '../NotDataComponent'
 import { fetcher } from '../../helpers/fetch'
+import useIntersectionObserver from '../../hooks/useIntersectionObserver'
 
 const Post = lazy(() => import("./Post"))
 
@@ -21,7 +22,13 @@ export const ShowPosts = ({query, params}) => {
         revalidateOnFocus: false,
         refreshInterval: 0
     })
-   
+
+    const ref = useRef(null)
+    
+    const entry = useIntersectionObserver(ref, { rootMargin: '10%' })
+    const isVisible = !!entry?.isIntersecting
+  
+
     useEffect(() => {
         setTweets([])
         setOptionPage( opt => ({
@@ -38,56 +45,42 @@ export const ShowPosts = ({query, params}) => {
             setHasMore(data.data.length > 0)
             setTweets(prev => [...prev, ...data.data])
         }
+
     }, [data])
     
 
-    const observer = createRef();
-    const lastTweetElementRef = useCallback(node => {
+    useEffect(() => {
 
-      if (isLoading) return
-      if (observer.current) observer.current.disconnect() 
-      observer.current = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasMore) {
+        if (isVisible && hasMore) {
             setOptionPage( opt => ({
                 ...opt,
                 start: opt.end,
                 end: opt.end + opt.limit
             }))  
         }
-      })
-      if (node) observer.current.observe(node)
-    }, [isLoading,hasMore])
 
-
-    
+    },[isVisible,hasMore])
 
     return (
-        <div className="div__sohw_post">
+        <div className="div__sohw_post" >
 
             <section className="show_posts">
 
                 <Suspense fallback={<LoadingComponent />}>
+
                     {
                         (tweets)
                             &&
-                        tweets.map((tweet,index) => {
-                            if (tweets.length === index+1 ) {
-                                return <Post 
-                                        ref={lastTweetElementRef}  
-                                        key={tweet.tid+index+'t'} 
-                                        tweet={tweet} 
-                                    />
-                            } else {
-                                return <Post  
-                                        key={tweet.tid+index+'t'} 
-                                        tweet={tweet} 
-                                    />
-                            }
-                        })
-                         
+                        tweets.map((tweet,index) => (
+                            <Post 
+                                key={tweet.tid+index}                                      
+                                tweet={tweet} 
+                            />
+                        ))
+                        
                     }  
-                </Suspense>    
 
+                </Suspense>
 
                 {
                     (isLoading)
@@ -98,9 +91,14 @@ export const ShowPosts = ({query, params}) => {
                         &&
                     <NotDataComponent text={'No Tweets'} />   
                 }
+                   
+            </section>   
 
-            </section>      
-
+            {
+                !isLoading
+                &&
+                <div ref={ref}></div>
+            } 
         </div>
     )
 }

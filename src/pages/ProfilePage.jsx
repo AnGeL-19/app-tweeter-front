@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import { FilterPost } from '../components/FilterPost'
-import { HeaderTweeter } from '../components/header/HeaderTweeter'
 
 import { ModalFollow } from '../components/profile/ModalFollow'
 import { ProfileInfo } from '../components/profile/ProfileInfo'
@@ -76,8 +75,6 @@ export const ProfilePage = () => {
     return (
         <>
 
-            <HeaderTweeter />
-
             <div className="container_profile">
 
                 {   
@@ -139,8 +136,7 @@ export const ProfilePage = () => {
             }
 
             {
-                
-                showModalEditInfo
+                showModalEditInfo 
                     && 
                 <Modal title={'Edit Profile'} setShowModal={setShowModalEditInfo}>
                     <EditProfile />

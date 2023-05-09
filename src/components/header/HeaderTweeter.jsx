@@ -26,13 +26,8 @@ export const HeaderTweeter = React.memo(() => {
     const user = useSelector(state => state.user);
 
     const [showMenu, setShowMenu] = useState(false);
-
-    const showMenuHeader = useCallback(() => {
-        setShowMenu(!showMenu)
-    },[showMenu])
+    console.log(match.path === PATHS.explore ? 'active': '');
     
-    console.log('Rederizado header');
-
     return (
         <div>
             <header className="header__nav">
@@ -112,7 +107,7 @@ export const HeaderTweeter = React.memo(() => {
                         </div>
                         <span className="span__user_name">{user.name}</span>
                         <button className="menu"
-                                onClick={showMenuHeader}>
+                                onClick={() => setShowMenu(!showMenu)}>
                             <span className={`material-icons ${showMenu ? 'menuActive' : ''} `}>
                                 {`arrow_drop_${!showMenu ? 'down' : 'up'}`}
                             </span>

@@ -13,15 +13,6 @@ export const useFetch = (token) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-
-    // const loa = useCallback((value) => {
-    //     setLoading(value);
-    // },[loading])
-
-    // const more = useCallback((value) => {
-    //     setHasMore(value);
-    // },[hasMore])
-
     const doFetch = async (query,dataInfo,method) => {
 
         let options = {}

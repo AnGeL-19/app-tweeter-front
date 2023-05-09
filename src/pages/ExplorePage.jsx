@@ -79,11 +79,8 @@ export const ExplorePage = () => {
     },[filter,hashtag])
 
     return (
-        <Layout>
 
-            <div className="explore_container_main">
-
-                {/* <main className="container_main"> */}
+            <main className="explore_container_main">
 
                     <div className="div_filter">
 
@@ -116,10 +113,7 @@ export const ExplorePage = () => {
                       
                     </div>
 
-                {/* </main> */}
-            </div>
+            </main>
 
-
-        </Layout>
     )
 }
