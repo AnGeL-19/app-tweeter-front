@@ -6,6 +6,7 @@ import { ExplorePage } from '../pages/ExplorePage';
 import { HomePage } from '../pages/HomePage';
 import { ProfilePage } from '../pages/ProfilePage';
 import { HeaderTweeter } from '../components/header/HeaderTweeter';
+import { Menu } from '../components/menu/Menu';
 
 export const TweeterRouter = () => {
     return (
@@ -23,6 +24,7 @@ export const TweeterRouter = () => {
                 </Switch>
             </div>
             
+            <Menu />
         </div>
     )
 }

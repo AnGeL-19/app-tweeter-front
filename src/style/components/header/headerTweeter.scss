@@ -55,9 +55,7 @@
                     list-style: none;
                     text-align: center;
 
-                    .none{
-                        display: none;
-                    }
+                    
                     
                     .nav_item{
                         
@@ -101,12 +99,17 @@
                 height: 32px;
                 margin-right: 11px;
 
-                img{
+                a{
                     width: 100%;
                     height: 100%;
-                    border-radius: 6px;
-                    object-fit: cover;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 6px;
+                        object-fit: cover;
+                    }
                 }
+                
 
             }
 
@@ -152,10 +155,15 @@
 
     .header__nav{
 
+        padding: 0 10px;
+
         .header__nav__divs{
   
             .nav__list{
-     
+
+                
+                display: none;
+                    
                 .nav__list__ul{
                     
                     width: 300px;
@@ -164,21 +172,30 @@
                       
                         width: 50px;
 
-                        .none{
-                            display: flex;
-                            justify-content: center;
-                        }
-
-                        .show{
-                            display: none;
-                        }
-
+                        
     
                     }
     
                 }
     
             } 
+    
+            .div__profile_user{
+
+                
+                .img_user{
+                    margin: 0;
+                }
+
+                .span__user_name{
+                    display: none;
+                }
+    
+                .menu{
+                    display: none;
+                }
+                
+            }
     
         }
     
@@ -189,8 +206,6 @@
 @media only screen and (max-width: 620px) {
 
     .header__nav{
-
-        padding: 0 10px;
 
         .header__nav__divs{
 
@@ -217,14 +232,14 @@
                       
                         width: 50px;
 
-                        .none{
-                            display: flex;
-                            justify-content: center;
-                        }
+                        // .none{
+                        //     display: flex;
+                        //     justify-content: center;
+                        // }
 
-                        .show{
-                            display: none;
-                        }
+                        // .show{
+                        //     display: none;
+                        // }
 
     
                     }

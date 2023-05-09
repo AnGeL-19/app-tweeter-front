@@ -13,7 +13,6 @@ export const MenuHeader = memo(() => {
     const user = useSelector(state => state.user);
 
     const handleLogout = () => {
-        console.log("si jala");
         dispatch(logoutUser());
     }
 
