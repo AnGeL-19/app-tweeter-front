@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {  registerUser } from '../../action/authAction';
 import { ComponentBtn } from '../../components/ComponentBtn';
@@ -8,10 +8,13 @@ import { useForm } from '../../hooks/useForm';
 import LogoTweeter from '../../static/tweeter.svg';
 import { Form } from '../../components/form/Form';
 import { Input } from '../../components/form/Input';
+import { addError, removeError } from '../../action/errorAction';
+import { useEffect } from 'react';
 
 export const RegisterPage = () => {
 
     const dispatch = useDispatch();
+    const {messageError} = useSelector(state => state.error);
 
     const {values, handleInputChange, reset} = useForm({
         name: '',
@@ -20,15 +23,22 @@ export const RegisterPage = () => {
         passwordConfirmation: '',
     });
 
+    useEffect(() => {
+        if (messageError.length !== 0) {
+            dispatch(removeError())
+        }
+    }, [])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(values);
 
-        if(values.password!==values.passwordConfirmation){
-            alert('Passoword is different')
+        if(values.password !== values.passwordConfirmation){
+            dispatch(addError('Passoword is different'))
             return;
         }
         dispatch(registerUser(values))
+        dispatch(removeError())
         reset()
     }
 
@@ -47,6 +57,13 @@ export const RegisterPage = () => {
                     </div>
                     
                     <h2 className="title_login">Register</h2>
+
+                    {
+                        (messageError.length !== 0)
+                        &&
+                        <p className="warnings">{messageError}</p>
+                    }
+                    
 
                     <Form onSubmit={handleSubmit}>
                         <Input 

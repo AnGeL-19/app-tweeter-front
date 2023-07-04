@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { loginUser,  } from '../../action/authAction';
 import { ComponentBtn } from '../../components/ComponentBtn';
@@ -8,20 +8,30 @@ import { useForm } from '../../hooks/useForm';
 import LogoTweeter from '../../static/tweeter.svg';
 import { Form } from '../../components/form/Form';
 import { Input } from '../../components/form/Input';
+import { removeError } from '../../action/errorAction';
+import { useEffect } from 'react';
 
 export const LoginPage = () => {
 
     const dispatch = useDispatch();
+    const {messageError} = useSelector(state => state.error);
     
     const {values, handleInputChange, reset} = useForm({
         email: '',
         password: '',
     });
 
+    useEffect(() => {
+        if (messageError.length !== 0) {
+            dispatch(removeError())
+        }
+    }, [])
+    
+
     const handleSubmit = (e) => {
         e.preventDefault();
-
         dispatch(loginUser(values))
+        dispatch(removeError())
         reset()   
     }
 
@@ -40,6 +50,13 @@ export const LoginPage = () => {
                     </div>
                     
                     <h2 className="title_login">Login</h2>
+
+                    {
+                        (messageError.length !== 0)
+                        &&
+                        <p className="warnings">{messageError}</p>
+                    }
+                    
 
                     <Form onSubmit={handleSubmit}>
                         <Input 

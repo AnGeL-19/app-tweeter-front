@@ -9,4 +9,7 @@ export const types = {
     userUpdateData: '[user] Update data user',
     userLogout: '[user] Logout data user',
     followUnfollowFollowing: '[user] Follow Unfollow user Following',
+
+    addError: '[error] Add error',
+    removeError: '[user] Remove error',
 }

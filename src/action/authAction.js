@@ -4,6 +4,7 @@ import { fetchApi, fetchGetApi } from "../helpers/fetch"
 
 import { types } from "../types/types";
 import { userData } from "./userAction";
+import { addError } from "./errorAction";
 
 
 export const loginUser = (data) => {
@@ -20,12 +21,18 @@ export const loginUser = (data) => {
                 dispatch(userData(body.data));
                 dispatch(loading(false))
                 
+                
             }else{
                 dispatch(loading(false)) 
+                
+                if (body.msg) return dispatch(addError(body.msg))
+                if (body.errors.email.msg) return dispatch(addError(body.errors.email.msg))
+            
             }
             
         }catch(err){
             dispatch(loading(false)) 
+            dispatch(addError('Server Error'))
         }
         
     }
@@ -44,12 +51,21 @@ export const registerUser = (data) => {
             const resp = await fetchApi(data ,'login/new/', 'POST');
             const body = await resp.json();
 
-            Cookies.set('token', body.token);
-            dispatch(login({ok:body.ok, token: body.token}));
-            dispatch(userData(body.data));
-            dispatch(loading(false))
+            
+            if (body.ok) {
+                Cookies.set('token', body.token);
+                dispatch(login({ok:body.ok, token: body.token}));
+                dispatch(userData(body.data));
+                dispatch(loading(false))
+            }else{
+                dispatch(loading(false)) 
+                if (body.msg) return dispatch(addError(body.msg))
+                if (body.errors.email.msg) return dispatch(addError(body.errors.email.msg))
+            }
+           
         }catch(err){
             dispatch(loading(false)) 
+            dispatch(addError('Server Error'))
         }
     }
 }
