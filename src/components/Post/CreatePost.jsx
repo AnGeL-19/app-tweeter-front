@@ -76,15 +76,15 @@ export const CreatePost = () => {
                 newData.hashtags = hashtags;
             }
 
-            // console.log(newData);
-            // const result = await trigger(newData, /* options */)
-            // if (result.ok) {
+            console.log(newData);
+            const result = await trigger(newData, /* options */)
+            if (result.ok) {
                 reset()
 
                 handleEliminateImg()
-            // }else {
-            //     console.log(result);
-            // }
+            }else {
+                console.log(result);
+            }
 
             
           } catch (e) {
