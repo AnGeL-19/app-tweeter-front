@@ -4,6 +4,13 @@ export const FilterPost = ({filters, setFilter }) => {
 
     const [selectF, setSelectFilter] = useState(filters);
 
+    // useEffect(() => {
+
+    //     setFilter(filters.find(f => f.select).url)
+
+    // },[])
+
+
     const handleSelect = async (e,filter) => {
         e.preventDefault();
         
@@ -33,9 +40,11 @@ export const FilterPost = ({filters, setFilter }) => {
             {
 
                 selectF.map((filter) => (
-                    <div onClick={(e) => handleSelect(e,filter)} 
+                    <div
+                        key={filter.nameObj} 
+                        onClick={(e) => handleSelect(e,filter)} 
                         className="filter" 
-                        id={`${filter.nameObj}`}>
+                        >
                         <div className={`line ${filter.select ? 'active-line' : ''}`} ></div>
                         <span id={`${filter.nameObj}`} 
                             className={`nameFilter ${filter.select ? 'active-text': 'gray3Color'}`}>

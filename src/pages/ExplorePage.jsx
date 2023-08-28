@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { FilterPost } from '../components/FilterPost'
-import { Layout } from '../components/layout/Layout'
 import { SearchComponent } from '../components/SearchComponent'
 import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
 
@@ -64,7 +63,6 @@ export const ExplorePage = () => {
         }
         
         if (hashtag) {
-            console.log('entra 1');
             setQueryData(`tweets/hashtag/search`)
             setQueryDataParams({hashtag: `#${hashtag}`})  
             return;

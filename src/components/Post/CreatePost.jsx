@@ -11,6 +11,7 @@ import { MenuImage } from './MenuImage';
 import { MenuPrivacity } from './MenuPrivacity';
 import { Form } from '../form/Form';
 import { Input } from '../form/Input';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 export const CreatePost = () => {
@@ -62,6 +63,7 @@ export const CreatePost = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
+
         try {
 
             const hashtags = findHashtag(values.description)
@@ -82,13 +84,44 @@ export const CreatePost = () => {
                 reset()
 
                 handleEliminateImg()
+                console.log('si jalo', result.tweet);
+                toast.success(result.msg,{
+                    position: "bottom-center",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    })
             }else {
                 console.log(result);
+                toast.warning('Error when creating a tweet ',{
+                    position: "bottom-center",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    })
             }
 
             
           } catch (e) {
             console.log(e);
+            toast.warning('Error when creating a tweet',{
+                position: "bottom-center",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                })
           }
 
         
@@ -213,6 +246,8 @@ export const CreatePost = () => {
                     
                 </div>
             </div>
+
+            <ToastContainer />
         </div>
     )
 }

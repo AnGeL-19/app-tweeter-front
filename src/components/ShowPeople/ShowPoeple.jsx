@@ -1,72 +1,76 @@
-import React, { createRef, lazy, memo, Suspense, useCallback, useEffect, useState } from 'react'
+import React, { lazy, memo, Suspense, useEffect, useState } from 'react'
 import useSWR from 'swr'
 // import { ItemWTFollow } from '../home/ItemWTFollow'
 import { LoadingComponent } from '../LoadingComponent';
 import { NotDataComponent } from '../NotDataComponent';
 import { fetcher } from '../../helpers/fetch'
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import { useRef } from 'react';
 
 const ItemWTFollow = lazy(() => import("../home/ItemWTFollow"))
 
 export const ShowPoeple = memo(({query, params}) => {
 
   const [optionPage, setOptionPage] = useState({
-    start: 0, 
-    end: 10,
+    page: 1,
     limit: 10
-})
+    })
 
-console.log({query, params});
+    const [hasMore, setHasMore] = useState(false);
 
-const [hasMore, setHasMore] = useState(false);
-const [users, setUsers] = useState([])
+    const ref = useRef(null)
+    const [users, setUsers] = useState([])
 
-const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,
-{
-    revalidateOnFocus: false,
-    // revalidateOnMount:false,
-    // revalidateOnReconnect: false,
-    refreshWhenOffline: false,
-    refreshWhenHidden: false,
-    refreshInterval: 0
-})
+    const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher)
 
+    const entry = useIntersectionObserver(ref, { rootMargin: '10%' })
+    const isVisible = !!entry?.isIntersecting
 
-useEffect(() => {
-    setUsers([])
-    setOptionPage( opt => ({
-        ...opt,
-        start: 0,
-        end: 10
-    }))  
-}, [query, params])
-
-
-useEffect(() => {
-   
-    if(data){
-        setHasMore(data.data.length > 0)
-        setUsers(prev => [...prev, ...data.data])
-    }
-
-}, [data])
-
-
-const observer = createRef();
-const lastTweetElementRef = useCallback(node => {
-
-  if (isLoading) return
-  if (observer.current) observer.current.disconnect() 
-  observer.current = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && hasMore) {
+    useEffect(() => {
+        setUsers([])
         setOptionPage( opt => ({
             ...opt,
-            start: opt.end,
-            end: opt.end + opt.limit
+            page: 1
         }))  
-    }
-  })
-  if (node) observer.current.observe(node)
-}, [isLoading,hasMore])
+        return () => {
+            console.log('saliendo');
+            setUsers([])
+            setOptionPage( opt => ({
+                ...opt,
+                page: 1
+            })) 
+            setHasMore(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        setUsers([])
+        setOptionPage( opt => ({
+            ...opt,
+            page: 1
+        }))  
+    }, [query, params])
+
+
+    useEffect(() => {
+    
+        if(data){
+            setHasMore(data.data.length > 0)
+            setUsers(prev => [...prev, ...data.data])
+        }
+
+    }, [data])
+
+    useEffect(() => {
+
+        if (isVisible && hasMore) {
+            setOptionPage( opt => ({
+                ...opt,
+                page: opt.page + 1
+            }))  
+        }
+
+    },[isVisible,hasMore])
 
 
   return (
@@ -78,20 +82,12 @@ const lastTweetElementRef = useCallback(node => {
                     {
                         (users && users.length > 0)
                         &&
-                        users.map((user,index) => {
-                            if (users.length === index+1 ) {
-                                return <ItemWTFollow
-                                  ref={lastTweetElementRef} 
-                                  key={user.uid+index} 
-                                  user={user}
-                                />
-                            } else {
-                                return <ItemWTFollow 
-                                  key={user.uid+index} 
-                                  user={user}
-                                />
-                            }
-                        })       
+                        users.map((user) => (
+                            <ItemWTFollow
+                                key={user.uid} 
+                                user={user}
+                            />
+                        ))       
                     }  
                 </Suspense>    
 
@@ -105,8 +101,13 @@ const lastTweetElementRef = useCallback(node => {
                         &&
                     <NotDataComponent text={'No users'} />  
                 }
-            </section>      
+            </section>  
 
+            {
+                !isLoading
+                &&
+                <div ref={ref}></div>
+            } 
         </div>
   )
 })

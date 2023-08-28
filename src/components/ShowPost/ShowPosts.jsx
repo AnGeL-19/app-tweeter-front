@@ -1,18 +1,15 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import { LoadingComponent } from '../LoadingComponent'
 import { NotDataComponent } from '../NotDataComponent'
 import { fetcher } from '../../helpers/fetch'
 import useIntersectionObserver from '../../hooks/useIntersectionObserver'
-
-const Post = lazy(() => import("./Post"))
-
+import Post from './Post'
 
 export const ShowPosts = ({query, params}) => {
 
     const [optionPage, setOptionPage] = useState({
-        start: 0, 
-        end: 5,
+        page: 1,
         limit: 5
     })
 
@@ -33,8 +30,7 @@ export const ShowPosts = ({query, params}) => {
         setTweets([])
         setOptionPage( opt => ({
             ...opt,
-            start: 0,
-            end: 5
+            page: 1
         }))  
     }, [query, params])
 
@@ -54,8 +50,7 @@ export const ShowPosts = ({query, params}) => {
         if (isVisible && hasMore) {
             setOptionPage( opt => ({
                 ...opt,
-                start: opt.end,
-                end: opt.end + opt.limit
+                page: opt.page + 1
             }))  
         }
 
@@ -66,21 +61,18 @@ export const ShowPosts = ({query, params}) => {
 
             <section className="show_posts">
 
-                <Suspense fallback={<LoadingComponent />}>
+                {
+                    (tweets)
+                        &&
+                    tweets.map((tweet) => (
+                        <Post 
+                            key={tweet.tid}                                      
+                            tweet={tweet} 
+                        />
+                    ))
+                    
+                }  
 
-                    {
-                        (tweets)
-                            &&
-                        tweets.map((tweet,index) => (
-                            <Post 
-                                key={tweet.tid+index}                                      
-                                tweet={tweet} 
-                            />
-                        ))
-                        
-                    }  
-
-                </Suspense>
 
                 {
                     (isLoading)

@@ -1,26 +1,53 @@
-import React from 'react'
+import React, { Suspense, useState } from 'react'
 import useSWR from 'swr'
 import { useParams } from 'react-router-dom';
 import { fetcher } from '../../helpers/fetch';
 import { LoadingComponent } from '../LoadingComponent';
 import { NotDataComponent } from '../NotDataComponent';
 import { ItemUserModal } from './ItemUserModal'
+import { useRef } from 'react';
+import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import { useEffect } from 'react';
 
 export const ModalFollow = ({userName, isFollowers}) => {
 
 
     const param = useParams();
+    const ref = useRef(null)
 
-    console.log(!isFollowers ? 
-        `user/followers/${param.id}`:
-        `user/following/${param.id}`);
+    const [optionPage, setOptionPage] = useState({
+        page: 1,
+        limit: 4
+    })
 
-    const { data: usersF, isLoading } = useSWR(!isFollowers ? 
-                                                        `user/followers/${param.id}`:
-                                                        `user/following/${param.id}`, 
-                                                        fetcher)
+    const [hasMore, setHasMore] = useState(false);
+    const [usersF, setUsersF] = useState([])
 
-    console.log(usersF);
+    const entry = useIntersectionObserver(ref, { rootMargin: '10%' })
+    const isVisible = !!entry?.isIntersecting
+
+    const { data, isLoading } = useSWR(`${isFollowers ? `user/followers/${param.id}`: `user/following/${param.id}`}?${new URLSearchParams({...optionPage})}`,fetcher)
+
+
+    useEffect(() => {
+    
+        if(data){
+            setHasMore(data.data.length > 0)
+            setUsersF(prev => [...prev, ...data.data])
+        }
+
+    }, [data])
+
+    useEffect(() => {
+
+        if (isVisible && hasMore) {
+            setOptionPage( opt => ({
+                ...opt,
+                page: opt.page + 1
+            }))  
+        }
+
+    },[isVisible,hasMore])
                                                         
     return (
      
@@ -30,23 +57,35 @@ export const ModalFollow = ({userName, isFollowers}) => {
             </div>
             <div className="users_followers">
 
-                {
-                    
-                        (isLoading)
-                        ? <LoadingComponent />
-                        :
-                            (!usersF || usersF.data.length === 0) 
-                            ? <NotDataComponent text={'No Followers'} />
-                            : 
-                            usersF.data.map((userf,index) => (
-                                <>
-                                    <div className="line"></div>
-                                    <ItemUserModal key={userf.uid+index} user={userf}  />
-                                </>
-                            ))
+                <Suspense fallback={<LoadingComponent />}>
+                    {
+                        (usersF && usersF.length > 0)
+                        &&
+                        usersF.map((userf) => (
+                            <div key={userf.uid}>
+                                <div className="line"></div>
+                                <ItemUserModal user={userf}  />
+                            </div>
+                        ))      
+                    }  
+                </Suspense>    
 
+
+                {
+                    (isLoading)
+                    ?
+                    <LoadingComponent />
+                    : 
+                    (!usersF || usersF.length === 0)
+                        &&
+                    <NotDataComponent text={'No users'} />  
                 }
-                
+
+              {
+                !isLoading
+                &&
+                <div ref={ref}></div>
+            }   
             </div>                
         </>
 

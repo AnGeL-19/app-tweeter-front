@@ -25,10 +25,10 @@ export const WhoToFollow = () => {
                     (users)
                     &&
                     users.data.map( (user, index) => (
-                        <>
-                            <div className="line" key={index}></div>
-                            <ItemWTFollow key={user.uid+'wh'} user={user}/> 
-                        </>
+                        <div key={user.uid+'wh'}>
+                            <div className="line" ></div>
+                            <ItemWTFollow  user={user}/> 
+                        </div>
                     ))
                 }
             </Suspense>

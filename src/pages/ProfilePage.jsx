@@ -1,4 +1,4 @@
-import React, {  useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { useEffect } from 'react'
 import useSWR from 'swr'
 import { useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ import { fetcher } from '../helpers/fetch'
 import { EditProfile } from '../components/profile/EditProfile'
 import { Modal } from '../components/modal/Modal'
 
-
+// const Modal = lazy(() => import('../components/modal/Modal'))
 
 export const ProfilePage = () => {
 
@@ -24,14 +24,14 @@ export const ProfilePage = () => {
             nameObj: 'tweets',
             select: true,
             name: 'Tweets',
-            url: `tweets/${param.id}`,
+            url: `user/${param.id}/tweets`,
             params: {}
         },
         {
             nameObj: 'TweetsReplies',
             select: false,
             name: 'Tweets & replies',
-            url: `tweets/retweets/${param.id}`,
+            url: `user/${param.id}/tweets/retweets`,
             params: {}
         },
         {
@@ -44,7 +44,7 @@ export const ProfilePage = () => {
             nameObj: 'likes',
             select: false,
             name: 'Likes',
-            url: `tweets/${param.id}`,
+            url: `user/${param.id}/tweets`,
             params: {
                 filter: 'likes'
             }
@@ -53,7 +53,7 @@ export const ProfilePage = () => {
 
     const user = useSelector(state => state.user);
 
-    const { data: userInfo, isLoading, error } = useSWR(`user/${param.id}`, fetcher)
+    const { data: userInfo, isLoading } = useSWR(`user/${param.id}`, fetcher)
 
 
     const [showModalFollowers, setShowModalFollowers] = useState(false);
@@ -62,14 +62,12 @@ export const ProfilePage = () => {
     const [filterFollower, setFilterFollower] = useState(false);
 
     const [filter, setFilter] = useState(objFilter)
-    const [queryData, setQueryData] = useState('')
+    const [queryData, setQueryData] = useState('')  
     const [queryDataParams, setQueryDataParams] = useState({})
 
     useEffect(() => {
-
-        setQueryData(filter.filter(f => f.select)[0].url)
-        setQueryDataParams(filter.filter(f => f.select)[0].params)
-
+        setQueryData(filter.find(f => f.select).url)
+        setQueryDataParams(filter.find(f => f.select).params)
     },[filter])
 
     return (
@@ -129,18 +127,24 @@ export const ProfilePage = () => {
             {
                 showModalFollowers
                     && 
-                <Modal  title={filterFollower ? 'Following':'Followers'} setShowModal={setShowModalFollowers}>
-                    <ModalFollow userName={ userInfo.data.name } isFollowers={filterFollower} />
-                </Modal>  
+                <Suspense fallback={<LoadingComponent />}>
+                    <Modal  title={filterFollower ? 'Following':'Followers'} setShowModal={setShowModalFollowers}>
+                        <ModalFollow userName={ userInfo.data.name } isFollowers={filterFollower} />
+                    </Modal>
+                </Suspense>
+                  
            
             }
 
             {
                 showModalEditInfo 
                     && 
-                <Modal title={'Edit Profile'} setShowModal={setShowModalEditInfo}>
-                    <EditProfile />
-                </Modal>
+                <Suspense fallback={<LoadingComponent />}>
+                    <Modal title={'Edit Profile'} setShowModal={setShowModalEditInfo}>
+                        <EditProfile />
+                    </Modal>
+                </Suspense>
+                
            
             }
         

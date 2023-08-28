@@ -10,7 +10,7 @@ import { SocialActions } from './SocialActions'
 import { Caracteristics } from './Caracteristics'
 import { HeaderReweet } from './HeaderReweet';
 
-const Post =  React.forwardRef(({tweet}, ref) => {
+const Post =  ({tweet}) => {
 
     const {userTweet} = tweet;
     const user = useSelector(state => state.user);
@@ -29,17 +29,13 @@ const Post =  React.forwardRef(({tweet}, ref) => {
     })
 
     return (
-        <div    ref={ref}
-                className="div__post">
+        <div className="div__post">
 
             {
                 tweet.userRetweet
                 &&
-                (
                 <HeaderReweet userRetweet={tweet.userRetweet} />
-                )
             }
-            
 
             <div className="post">
 
@@ -103,7 +99,7 @@ const Post =  React.forwardRef(({tweet}, ref) => {
 
         </div>
     )
-})
+}
 
 Comment.Post = {
     tweet: PropTypes.object.isRequired

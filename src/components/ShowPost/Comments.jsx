@@ -10,8 +10,7 @@ import { LoadingComponent } from '../LoadingComponent';
 export const Comments = ({tid,comments,lengthComments}) => {
 
     const [optionPage, setOptionPage] = useState({
-        start: 0, 
-        end: 5,
+        page: 1,
         limit: 5
     })
 
@@ -25,11 +24,6 @@ export const Comments = ({tid,comments,lengthComments}) => {
 
             if (result.ok) {
                
-                // console.log([
-                //     ...valueComments,
-                //     ...result.comments.filter(cc => valueComments.find(c => c.cid !== cc.cid))
-                // ]);
-
                 setValueComments(prev => [
                     ...prev,
                     ...result.comments.filter(cc => valueComments.find(c => c.cid !== cc.cid))
@@ -37,8 +31,7 @@ export const Comments = ({tid,comments,lengthComments}) => {
 
                 setOptionPage( opt => ({
                     ...opt,
-                    start: opt.end,
-                    end: opt.end + opt.limit
+                    page: opt.page + 1
                 })) 
             }
             
@@ -56,16 +49,20 @@ export const Comments = ({tid,comments,lengthComments}) => {
 
 
             {
-                isMutating
-                ?
-                <LoadingComponent />
-                :
+                (valueComments)
+                    &&
                 valueComments.map((comment) => (
                     <Comment key={comment.cid} comment={comment} />
-                ))
-                
-            }
+                ))       
+            } 
 
+
+            {
+                (isMutating)
+                &&
+                <LoadingComponent />  
+            }
+                  
             
 
             {

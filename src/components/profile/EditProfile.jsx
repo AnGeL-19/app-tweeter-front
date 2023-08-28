@@ -5,6 +5,7 @@ import { updateUserInfo } from '../../action/userAction';
 import { fetcherPut } from '../../helpers/fetch';
 import { useForm } from '../../hooks/useForm';
 import { ComponentBtn } from '../ComponentBtn'
+import { ToastContainer, toast } from 'react-toastify';
 
 export const EditProfile = () => {
 
@@ -41,13 +42,45 @@ export const EditProfile = () => {
 
             const result = await trigger(objUser, /* options */)
 
-            if (!result.ok) return console.log(result.msg);
+            if (result.ok){
+                toast.success(result.msg,{
+                    position: "bottom-center",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    })
+            }else{
+                toast.warning(result.msg,{
+                    position: "bottom-center",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    })
+            }
 
             console.log(result);
             dispatch(updateUserInfo(values))
 
         } catch (error) {
             console.log(error);
+            toast.warning('Error when creating a tweet ',{
+                position: "bottom-center",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                })
         }
         
         
@@ -191,6 +224,7 @@ export const EditProfile = () => {
                 
             </form>
 
+            <ToastContainer/>
         </div>
     
   )
