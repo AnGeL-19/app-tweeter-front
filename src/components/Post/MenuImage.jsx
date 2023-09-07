@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export const MenuImage = ({values,setImage,showMenuImage,showInputUrl}) => {
+export const MenuImage = ({values,setImage,showMenuImage}) => {
 
   const extensions = ["jpg","png","gif","svg"];
 
@@ -18,16 +18,12 @@ export const MenuImage = ({values,setImage,showMenuImage,showInputUrl}) => {
         const ext = extension[extension.length-1];
 
         if(extensions.includes(ext.toLowerCase())){
-            setImage( URL.createObjectURL(values.photo) );
+            setImage( {
+              url: URL.createObjectURL(values.photo),
+              dataImage: file
+            } );
         }
     }
-    showMenuImage(false)
-  }
-
-  const handleShowInput = () => {
-    console.log('se');
-    showInputUrl(true)
-    
     showMenuImage(false)
   }
 
@@ -56,10 +52,6 @@ export const MenuImage = ({values,setImage,showMenuImage,showInputUrl}) => {
           
         </div>
 
-        <div className="privacity" onClick={handleShowInput}>
-          <span className="material-icons mrg_r_9 black">collections</span>
-          <span className="reply">Url Image</span>
-        </div>
       </div>
     </div>
   )
