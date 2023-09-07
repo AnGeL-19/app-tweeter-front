@@ -2,23 +2,32 @@ import React, { useState } from 'react'
 import useSWRMutation from 'swr/mutation'
 import { useForm } from '../../hooks/useForm';
 import { FileImage } from '../FileImage'
-import { fetcherPost } from '../../helpers/fetch';
+import { fetcherFile, fetcherPost } from '../../helpers/fetch';
+import { toast } from 'react-toastify';
+import { LoadingComponent } from '../LoadingComponent';
 
 export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
  
     const { trigger, isMutating } = useSWRMutation('tweet/msg', fetcherPost)
+    const { trigger: triggerFile } = useSWRMutation(`upload/image`, fetcherFile)
 
     const extensions = ["jpg","png","gif","svg"];
 
-    const [imageCmt, setImageCmt] = useState(null);
+    const [imageCmt, setImageCmt] = useState({
+        url: '',
+        dataImage: null,
+    });
+
     const { values, handleInputChange, reset } = useForm({
         comment: '',
-        ImgCmt: null
     });
 
     const handleEliminateImgComment = () => {
         console.log("eliminar");
-        setImageCmt(null);
+        setImageCmt({
+            url: '',
+            dataImage: null,
+        });
     }
 
     const handleFileChangeCmt = (e) => {
@@ -26,12 +35,7 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
 
         if(file){
 
-            
-            values.ImgCmt = file;
-
-            console.log(values.ImgCmt);
-
-            const extension = values.ImgCmt.name.split(".");
+            const extension = file.name.split(".");
             console.log(extension);
 
             const ext = extension[extension.length-1];
@@ -39,11 +43,12 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
 
             if(extensions.includes(ext.toLowerCase())){
 
-                console.log( URL.createObjectURL(values.ImgCmt) );
+                console.log( URL.createObjectURL(file) );
 
-                setImageCmt( URL.createObjectURL(values.ImgCmt) );
-
-                console.log(imageCmt);
+                setImageCmt({
+                    url: URL.createObjectURL(file),
+                    dataImage: file
+                });
             //     setSucces(true);
             //     setError(false);
             //     dispatch(changeImgUser(file));
@@ -59,32 +64,52 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
-        const result = await trigger({
-            idTweet: tid,
-            comment : values.comment 
-        }, /* options */)
 
-        if (!result.ok) throw new Error('Error', result)
-
-        if (result.ok) {
-
-            const { userComment, ...rest } = result.newCommet
-            const newCmmt = {
-                ...rest,
-                userComment: {
-                    uid: user.uid,
-                    name: user.name,
-                    imgUser: user.imgUser
+        try {
+            const newData = {
+                idTweet: tid,
+                comment : values.comment
+            }
+    
+            if (imageCmt.dataImage) {
+                const formdata = new FormData();
+                formdata.append("fileImage", imageCmt.dataImage, imageCmt.url);
+    
+                const resultFile = await triggerFile(formdata, /* options */)
+    
+                console.log(resultFile);
+                if (resultFile.ok) {
+                    newData.img = resultFile.url
                 }
             }
-            setValuesStatus(status => ({
-                ...status,
-                comments: [...valuesStatus.comments, newCmmt]
-            }))
-            reset()
-        }else{
-            console.log(result);
+    
+            const result = await trigger(newData, /* options */)
+    
+            if (!result.ok) return;
+                
+                console.log(result.comment);
+
+                setValuesStatus(status => ({
+                    ...status,
+                    comments: [result.comment, ...valuesStatus.comments]
+                }))
+
+                handleEliminateImgComment()
+                reset()
+            
+        } catch (error) {
+            toast.warning('Error to create comment: ',{
+                position: "bottom-center",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                })
         }
+        
  
     }
 
@@ -123,9 +148,9 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
                             </span>
 
                         </label>
-
+                        {/* && !image.url */}
                         {
-                            values.comment.length > 0
+                            (values.comment.length > 0 ) 
                             &&
                             (
                             <button type='submit'>
@@ -144,11 +169,17 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
         </div>
 
         {
-            imageCmt
+            imageCmt.dataImage
             &&
-            <FileImage image={imageCmt} 
+            <FileImage image={imageCmt.url} 
                         functionCmt={handleEliminateImgComment}
                         small />
+        }
+
+        {
+            isMutating
+            &&
+            <LoadingComponent />  
         }
 
     </div>

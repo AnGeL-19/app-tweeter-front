@@ -6,6 +6,7 @@ import useSWRMutation from 'swr/mutation'
 import { Comment } from './Comment';
 import { fetcher } from '../../helpers/fetch';
 import { LoadingComponent } from '../LoadingComponent';
+import { useEffect } from 'react';
 
 export const Comments = ({tid,comments,lengthComments}) => {
 
@@ -17,6 +18,13 @@ export const Comments = ({tid,comments,lengthComments}) => {
     const { trigger, isMutating } = useSWRMutation(`tweet/${tid}/comments?${new URLSearchParams({...optionPage})}`, fetcher);
     const [valueComments, setValueComments] = useState(comments)
 
+    useEffect(() => {
+      
+        setValueComments(comments)
+
+    }, [comments])
+    
+
     const handleMoreComments = async () => {
 
         try {
@@ -24,9 +32,11 @@ export const Comments = ({tid,comments,lengthComments}) => {
 
             if (result.ok) {
                
+                const commentsRepeat = result.comments.filter(cc => !valueComments.find(c => c.cid === cc.cid))
+                
                 setValueComments(prev => [
                     ...prev,
-                    ...result.comments.filter(cc => valueComments.find(c => c.cid !== cc.cid))
+                    ...commentsRepeat
                 ])
 
                 setOptionPage( opt => ({
