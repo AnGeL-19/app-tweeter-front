@@ -49,12 +49,6 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
                     url: URL.createObjectURL(file),
                     dataImage: file
                 });
-            //     setSucces(true);
-            //     setError(false);
-            //     dispatch(changeImgUser(file));
-            }else{
-            //     setSucces(false);
-            //     setError(true);
             }
         }
         

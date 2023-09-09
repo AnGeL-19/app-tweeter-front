@@ -40,9 +40,6 @@ export const hashtagText = (value='') => {
         }
         </React.Fragment>
     )
-
-    console.log(text);
-
     return text;
 
 }

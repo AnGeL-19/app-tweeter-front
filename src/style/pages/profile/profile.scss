@@ -38,7 +38,7 @@
             justify-content: center;
 
             width: 100%;
-            // padding: 0 40px;
+            padding: 0 10px;
 
 
             .user_img_info{
@@ -236,20 +236,12 @@
             
             .profile__container_main{
         
-                .info_profile{
-
-                    .container_userinfo{
-                            
-                        padding: 0 20px;
-                        
                 
-                    }
-                }
             
                 .container_main{
             
                     width: 100%;
-                    padding: 0 20px;
+                    padding: 0 10px;
 
                     .div_filter{
                         width: 100%;
@@ -269,7 +261,7 @@
         
 }
 
-@media only screen and (max-width: 730px) {
+@media only screen and (max-width: 785px) {
 
     
     .container_profile{

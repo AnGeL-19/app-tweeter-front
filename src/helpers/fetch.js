@@ -56,6 +56,14 @@ export const fetcherFile = (url,{ arg }) => fetch(`${process.env.REACT_APP_URL_A
     body: arg
 }).then(r => r.json())
 
+export const fetcherFilePut = (url, arg ) => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{
+    method: 'PUT',
+    headers: {
+        'x-token': Cookies.get('token')
+    },
+    body: arg
+}).then(r => r.json())
+
 export const fetcherPut = (url,{ arg }) => fetch(`${process.env.REACT_APP_URL_API}/${url}`,{
     method: 'PUT',
     headers: {
