@@ -9,7 +9,7 @@ import { useRef } from 'react';
 
 const ItemWTFollow = lazy(() => import("../home/ItemWTFollow"))
 
-export const ShowPoeple = memo(({query, params}) => {
+export const ShowPoeple = memo(({query}) => {
 
   const [optionPage, setOptionPage] = useState({
     page: 1,
@@ -21,7 +21,7 @@ export const ShowPoeple = memo(({query, params}) => {
     const ref = useRef(null)
     const [users, setUsers] = useState([])
 
-    const { data, isLoading, error } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher)
+    const { data, isLoading } = useSWR(`${query}${query.includes('?')?'&':'?'}${new URLSearchParams({...optionPage})}`, fetcher)
 
     const entry = useIntersectionObserver(ref, { rootMargin: '10%' })
     const isVisible = !!entry?.isIntersecting
@@ -49,7 +49,7 @@ export const ShowPoeple = memo(({query, params}) => {
             ...opt,
             page: 1
         }))  
-    }, [query, params])
+    }, [query])
 
 
     useEffect(() => {

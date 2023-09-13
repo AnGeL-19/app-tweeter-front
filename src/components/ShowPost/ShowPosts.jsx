@@ -6,16 +6,19 @@ import { fetcher } from '../../helpers/fetch'
 import useIntersectionObserver from '../../hooks/useIntersectionObserver'
 import Post from './Post'
 
-export const ShowPosts = ({query, params}) => {
+export const ShowPosts = ({query}) => {
 
     const [optionPage, setOptionPage] = useState({
         page: 1,
         limit: 5
     })
 
+    console.log(`${query}${query.includes('?')?'&':'?'}${new URLSearchParams({...optionPage})}`, '-------->');
     const [hasMore, setHasMore] = useState(false);
     const [tweets, setTweets] = useState([])
-    const { data, isLoading } = useSWR(`${query}?${new URLSearchParams({...optionPage,...params})}`, fetcher,{
+    const { data, isLoading } = useSWR(`${query}${query.includes('?')?'&':'?'}${new URLSearchParams({...optionPage})}`, 
+    fetcher,
+    {
         revalidateOnFocus: false,
         refreshInterval: 0
     })
@@ -32,11 +35,11 @@ export const ShowPosts = ({query, params}) => {
             ...opt,
             page: 1
         }))  
-    }, [query, params])
+    }, [query])
 
 
     useEffect(() => {
-        
+        console.log(data);
         if(data){
             setHasMore(data.data.length > 0)
             setTweets(prev => [...prev, ...data.data])

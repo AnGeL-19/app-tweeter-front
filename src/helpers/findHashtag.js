@@ -28,7 +28,7 @@ export const hashtagText = (value='') => {
                     return (
                         <NavLink 
                             key={i+'ht'}
-                            to={`/explore?hashtag=${value.slice(1,value.length)}`} 
+                            to={`/explore/top?hashtag=${value.slice(1,value.length)}`} 
                             className="hashtag_link"
                         >
                             {`${value} `}

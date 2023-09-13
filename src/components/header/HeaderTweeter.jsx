@@ -19,6 +19,8 @@ const PATHS = {
     profile: '/profile',
 }
 
+// ARREGLAR LOS ROUTES, PONER RUTAS DINAMICAS
+
 export const HeaderTweeter = React.memo(() => {
 
     const route = useLocation()
@@ -57,7 +59,7 @@ export const HeaderTweeter = React.memo(() => {
                         </li>
 
                         <li className="item__li" >
-                            <NavLink to="/explore" 
+                            <NavLink to="/explore/top" 
                                         className="nav_item"
                                         activeClassName="selected"
                                         >
@@ -69,7 +71,7 @@ export const HeaderTweeter = React.memo(() => {
                         </li>
 
                         <li className="item__li">  
-                            <NavLink to="/bookmarks" 
+                            <NavLink to="/bookmarks/tweets" 
                                         className="nav_item"
                                         activeClassName="selected"
                                         >Bookmarks</NavLink>
@@ -80,7 +82,7 @@ export const HeaderTweeter = React.memo(() => {
                 </div>
                 <div className="div__profile_user">
                     <div className="img_user">
-                        <NavLink to={`/profile/${user.uid}`}>
+                        <NavLink to={`/profile/${user.uid}/tweets`}>
                             <img src={user.imgUser} alt="userimg" />
                         </NavLink>  
                     </div>

@@ -14,7 +14,7 @@ export const Trends = () => {
 
             <h2 className="title">Trends for you</h2>
             <div className="line"></div>
-            <Suspense fallback={<LoadingComponent />} > 
+            
                 {
                     (trends)
                     &&
@@ -22,7 +22,7 @@ export const Trends = () => {
                         <ItemTrend key={trend.hid} trend={trend} />
                     ))
                 }
-            </Suspense>
+            
 
             {
                 (isLoading)

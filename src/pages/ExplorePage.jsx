@@ -1,117 +1,102 @@
-import React, { useState, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { FilterPost } from '../components/FilterPost'
 import { SearchComponent } from '../components/SearchComponent'
 import { ShowPoeple } from '../components/ShowPeople/ShowPoeple'
-
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
 import { useQuery } from '../hooks/useQuery'
+import { useParams, useHistory } from 'react-router-dom'
+import { 
+    isSelectedParam, 
+    queryDataParams, 
+    queryDataParamsApi, 
+    selectedFilter, 
+    selectedParam,  
+} from '../helpers/selectedRoute'
 
-const objFilter = [
-    {
-        nameObj: 'top',
-        select: true,
-        name: 'Top',
-        url: 'tweets/populates',
-        params: {
-            filter: 'top'
-        }
-    },
-    {
-        nameObj: 'lastest',
-        select: false,
-        name: 'Lastest',
-        url: 'tweets/populates',
-        params: {
-            filter: 'lastest'
-        }
-    },
-    {
-        nameObj: 'people',
-        select: false,
-        name: 'People',
-        url: `user/people`,
-        params: {}
-    },
-    {
-        nameObj: 'media',
-        select: false,
-        name: 'Media',
-        url: '',
-        params: {}
-    },
-]
 
 export const ExplorePage = () => {
 
-    const query = useQuery()
-    const hashtag = query.get("hashtag");
+    const query = useQuery();
+    const param = useParams();
+    let history = useHistory();
 
-    const [showPeople, setShowPeople] = useState(false)
+    const objFilter = [
+        {
+            nameObj: 'top',
+            select: true,
+            name: 'Top',
+            url: 'tweets/explore',
+            page: '/explore',
+            filter: '/top'  
+        },
+        {
+            nameObj: 'lastest',
+            select: false,
+            name: 'Lastest',
+            url: 'tweets/explore',
+            page: '/explore',
+            filter: '/lastest'       
+        },
+        {
+            nameObj: 'people',
+            select: false,
+            name: 'People',
+            url: `user/people`,
+            page: '/explore',
+            filter: '/people' 
+        },
+        {
+            nameObj: 'media',
+            select: false,
+            name: 'Media',
+            url: '',
+            page: '/explore',
+            filter: '/media'
+        },
+    ]
 
-    const [filter, setFilter] = useState(objFilter)
-    const [queryData, setQueryData] = useState(filter.filter(f => f.select)[0].url)
-    const [queryDataParams, setQueryDataParams] = useState(filter.filter(f => f.select)[0].params)
+ 
+
+    const filters = useRef(selectedFilter(objFilter, param.filter))
+    const showPeople = useRef(isSelectedParam(filters.current,'people'))
+    const urlData = useRef(filters.current.find(f => f.select))
+    const filter = useRef(selectedParam(filters.current,param.filter))
+    const baseUrl = useRef(queryDataParamsApi(urlData.current, query))
+    const baseUrlWeb = useRef(queryDataParams(filter.current))
     
-    useEffect(() => {
-
-        if(filter.find(f => f.nameObj === 'people').select){
-            query.delete(hashtag)
-            setShowPeople(true)
-            setQueryData(filter.filter(f => f.select)[0].url)
-            setQueryDataParams(filter.filter(f => f.select)[0].params)  
-            return
-        }
-        
-        if (hashtag) {
-            setQueryData(`tweets/hashtag/search`)
-            setQueryDataParams({hashtag: `#${hashtag}`})  
-            return;
-        }
-        
-        
-        setQueryData(filter.filter(f => f.select)[0].url)
-        setQueryDataParams(filter.filter(f => f.select)[0].params)  
-        setShowPeople(false)
-        
-
-    },[filter,hashtag])
 
     return (
 
-            <main className="explore_container_main">
+        <main className="explore_container_main">
 
-                    <div className="div_filter">
+            <div className="div_filter">
 
-                        <FilterPost filters={ filter }  setFilter={ setFilter }/>
+                <FilterPost filters={ filters.current } query={query.toString()} />
 
-                    </div>
+            </div>
 
-                    <div className="div__input__post">
+            <div className="div__input__post">
 
-                        <SearchComponent setParam={setQueryDataParams} />
+                <SearchComponent param={baseUrlWeb.current} query={query.toString()} />
+                
+                
+                {
 
-                        {
-                            (showPeople)
-                            ? <ShowPoeple query={
-                                queryData
-                            } 
-                            params={
-                                queryDataParams
-                            }/>
-                            : 
-                            <ShowPosts query={
-                                queryData
-                            } 
-                            params={
-                                queryDataParams
-                            }
-                            />  
-                        }
-                        
-                      
-                    </div>
+                    (showPeople.current)
+                    ? <ShowPoeple query={
+                        baseUrl.current
+                    }/>
+                    : 
+                    <ShowPosts query={
+                        baseUrl.current
+                    }
+                    />  
+                }
+                
+                
+            </div>
 
-            </main>
+        </main>
 
     )
 }

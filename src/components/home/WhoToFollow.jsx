@@ -20,18 +20,17 @@ export const WhoToFollow = () => {
         <aside className="aside__follow">
 
             <h2 className="title">Who to follow</h2>
-            <Suspense  fallback={<LoadingComponent />} > 
-                {
-                    (users)
-                    &&
-                    users.data.map( (user, index) => (
-                        <div key={user.uid+'wh'}>
-                            <div className="line" ></div>
-                            <ItemWTFollow  user={user}/> 
-                        </div>
-                    ))
-                }
-            </Suspense>
+
+            {
+                (users)
+                &&
+                users.data.map( (user) => (
+                    <div key={user.uid+'wh'}>
+                        <div className="line" ></div>
+                        <ItemWTFollow  user={user}/> 
+                    </div>
+                ))
+            }
 
             {
                 (isLoading)

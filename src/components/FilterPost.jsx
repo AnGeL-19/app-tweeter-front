@@ -1,36 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 
-export const FilterPost = ({filters, setFilter }) => {
+export const FilterPost = ({ filters, query }) => {
 
-    const [selectF, setSelectFilter] = useState(filters);
-
-    // useEffect(() => {
-
-    //     setFilter(filters.find(f => f.select).url)
-
-    // },[])
-
-
+    let history = useHistory();
+    
     const handleSelect = async (e,filter) => {
         e.preventDefault();
-        
-        const updateObj = selectF.map(f => {
-            if (f.nameObj === filter.nameObj) {
-                return {
-                    ...f,
-                    select: true
-                }
-            }else{
-                return {
-                    ...f,
-                    select: false
-                }
-            }
-        })
-
-        setFilter(updateObj) 
-        setSelectFilter(updateObj);       
-        
+        history.push(`${filter.page}${filter.filter}${query.trim().length > 0 ? `?${query}`:''}`);         
     }
 
 
@@ -39,7 +16,7 @@ export const FilterPost = ({filters, setFilter }) => {
 
             {
 
-                selectF.map((filter) => (
+            filters.map((filter) => (
                     <div
                         key={filter.nameObj} 
                         onClick={(e) => handleSelect(e,filter)} 

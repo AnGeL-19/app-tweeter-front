@@ -19,7 +19,7 @@ export const MenuHeader = memo(() => {
     return (
         <div className="menu_profile">
             <div className="items_menu">
-                <NavLink to={`/profile/${user.uid}`} 
+                <NavLink to={`/profile/${user.uid}/tweets`} 
                         className="nav_item"
                         activeClassName="selected">
                     <span className="material-icons gray2Color">

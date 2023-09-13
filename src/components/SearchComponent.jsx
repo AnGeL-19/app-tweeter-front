@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import { ComponentBtn } from './ComponentBtn'
+import { useHistory } from 'react-router-dom';
 
-export const SearchComponent = ({setParam}) => {
+export const SearchComponent = ({param, query}) => {
 
-    const [valueSearch, setValueSearch] = useState({
-        search: ''
-    })
+    let history = useHistory();
+    const [valueSearch, setValueSearch] = useState('')
 
     const handleValue = (e) => {
-        e.preventDefault()
-        setParam(prev => ({
-            ...prev,
-            ...valueSearch
-        }))
-       
-        console.log(valueSearch);
-        setValueSearch({
-            search: ''
-        })
+        e.preventDefault();
+
+        const searchParams = new URLSearchParams(query);
+        if(!searchParams.has("search")){
+            searchParams.append("search", valueSearch)
+        }else{
+            searchParams.set("search", valueSearch)
+        }
+
+        history.push(`${param}${query.includes('?')?'&':'?'}${searchParams.toString()}`)
     }
 
   return (
@@ -32,11 +32,8 @@ export const SearchComponent = ({setParam}) => {
                 type="text" 
                 placeholder="Search"
                 name='search'
-                value={valueSearch.search}
-                onChange={ (e)=> setValueSearch((value)=>({
-                    ...value,
-                    [e.target.name]: e.target.value
-                }))}
+                value={valueSearch}
+                onChange={ (e)=> setValueSearch(e.target.value)}
             />
 
             <ComponentBtn type={'submit'} 

@@ -13,41 +13,48 @@ import { LoadingComponent } from '../components/LoadingComponent'
 import { fetcher } from '../helpers/fetch'
 import { EditProfile } from '../components/profile/EditProfile'
 import { Modal } from '../components/modal/Modal'
+import { useQuery } from '../hooks/useQuery'
+import { useRef } from 'react'
+import { queryDataParams, queryDataParamsApi, selectedFilter, selectedParam } from '../helpers/selectedRoute'
 
 // const Modal = lazy(() => import('../components/modal/Modal'))
 
 export const ProfilePage = () => {
 
+    const query = useQuery();
     const param = useParams();
+
     const objFilter = [
         {
             nameObj: 'tweets',
             select: true,
             name: 'Tweets',
             url: `user/${param.id}/tweets`,
-            params: {}
+            page: `/profile/${param.id}`,
+            filter: '/tweets'
         },
         {
-            nameObj: 'TweetsReplies',
+            nameObj: 'tweetsReplies',
             select: false,
             name: 'Tweets & replies',
             url: `user/${param.id}/tweets/retweets`,
-            params: {}
+            page: `/profile/${param.id}`,
+            filter: '/tweetsReplies'
         },
         {
             nameObj: 'media',
             select: false,
             name: 'Media',
-            params: {}
+            page: `/profile/${param.id}`,
+            filter: '/media'
         },
         {
             nameObj: 'likes',
             select: false,
             name: 'Likes',
             url: `user/${param.id}/tweets`,
-            params: {
-                filter: 'likes'
-            }
+            page: `/profile/${param.id}`,
+            filter: '/likes'
         },
     ]
 
@@ -55,20 +62,23 @@ export const ProfilePage = () => {
 
     const { data: userInfo, isLoading } = useSWR(`user/${param.id}`, fetcher)
 
-
     const [showModalFollowers, setShowModalFollowers] = useState(false);
     const [showModalEditInfo, setShowModalEditInfo] = useState(false);
-
     const [filterFollower, setFilterFollower] = useState(false);
 
-    const [filter, setFilter] = useState(objFilter)
-    const [queryData, setQueryData] = useState('')  
-    const [queryDataParams, setQueryDataParams] = useState({})
+    // const [filter, setFilter] = useState(objFilter)
+    // const [queryData, setQueryData] = useState('')  
+    // const [queryDataParams, setQueryDataParams] = useState({})
+
+    const filters = useRef(selectedFilter(objFilter, param.filter))
+    const urlData = useRef(filters.current.find(f => f.select))
+    const baseUrl = useRef(queryDataParamsApi(urlData.current, query))
 
     useEffect(() => {
-        setQueryData(filter.find(f => f.select).url)
-        setQueryDataParams(filter.find(f => f.select).params)
-    },[filter])
+        console.log(filters.current, urlData.current, baseUrl.current);
+    },[])
+
+
 
     return (
         <>
@@ -100,12 +110,15 @@ export const ProfilePage = () => {
             
                                             <div className="div_filter">
                     
-                                            <FilterPost filters={ filter }  setFilter={ setFilter } />
+                                                <FilterPost filters={ filters.current } query={query.toString()} />
                     
                                             </div>
                     
                                             <div className="div__container_posts">
-                                                <ShowPosts query={queryData} params={queryDataParams} />
+                                            <ShowPosts query={
+                                                    baseUrl.current
+                                                }
+                                            />
                                             </div>
                                             
                     
