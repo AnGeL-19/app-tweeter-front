@@ -45,10 +45,7 @@ export const EditProfile = () => {
             const { password, ...rest } = values
 
             objUser = rest
-            // console.log(rest,"------");
             if ((password.trim().length > 0)) objUser.password = password
-
-            console.log(objUser);
 
             const result = await trigger(objUser, /* options */)
 
@@ -76,11 +73,10 @@ export const EditProfile = () => {
                     })
             }
 
-            console.log(result);
             dispatch(updateUserInfo(values))
 
         } catch (error) {
-            console.log(error);
+
             toast.warning('Error when creating a tweet ',{
                 position: "bottom-center",
                 autoClose: 1500,
@@ -92,11 +88,7 @@ export const EditProfile = () => {
                 theme: "light",
                 })
         }
-        
-        
-        // console.log(values);
 
-        // reset()
     }
 
     const handleFileChange = async (e) => {

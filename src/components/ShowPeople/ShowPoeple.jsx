@@ -33,7 +33,6 @@ export const ShowPoeple = memo(({query}) => {
             page: 1
         }))  
         return () => {
-            console.log('saliendo');
             setUsers([])
             setOptionPage( opt => ({
                 ...opt,

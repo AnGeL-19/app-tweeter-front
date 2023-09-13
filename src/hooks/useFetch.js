@@ -62,11 +62,6 @@ export const useFetch = (token) => {
 
     }
 
-    const fe = useCallback((query,dataInfo,method) => {
-        doFetch(query,dataInfo,method)
-        console.log('entra fetch');
-    },[])
-
 
     const cleanData = () => {
         setData([])
@@ -78,39 +73,4 @@ export const useFetch = (token) => {
 }
 
 
-export const useFetch2 = (token) => {
-
-
-    const getDataFetch = async (query) => {
-
-        try{
-
-
-            const response = await fetch(`${process.env.REACT_APP_URL_API}/${query}`, {
-                    method: 'GET',
-                    headers: {
-                                'x-token': token
-                    }
-                }
-            );
-            const respData = await response.json();
-
-            return respData.data
-            
-
-        }catch(err){
-            console.log(err)
-            return []
-        }
-        
-
-    }
-
-    // const cleanData = () => {
-    //     setData([])
-    // }
-
-    return {getDataFetch}
-
-}
 

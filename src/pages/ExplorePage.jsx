@@ -18,7 +18,6 @@ export const ExplorePage = () => {
 
     const query = useQuery();
     const param = useParams();
-    let history = useHistory();
 
     const objFilter = [
         {
@@ -55,7 +54,6 @@ export const ExplorePage = () => {
         },
     ]
 
- 
 
     const filters = useRef(selectedFilter(objFilter, param.filter))
     const showPeople = useRef(isSelectedParam(filters.current,'people'))

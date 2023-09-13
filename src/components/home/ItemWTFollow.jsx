@@ -25,7 +25,6 @@ const ItemWTFollow = React.forwardRef(({user}, ref) => {
 
             dispatch(followUnFollowFollowing(user.uid, usersF.following))
 
-            console.log(result);
             if (follow.includes(user.uid)) {
                 setFollow( follow.filter( f => f !== user.uid ) )
             }else{

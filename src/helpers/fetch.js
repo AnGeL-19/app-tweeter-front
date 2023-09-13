@@ -19,8 +19,6 @@ export const fetchApi = (data, label, method,token) => {
 export const fetchGetApi = (label,token) => {
 
     const url = `${process.env.REACT_APP_URL_API}/${label}`;
-    console.log(url);
-    console.log({label,token});
     return fetch(url,{
         method: 'GET',
         headers: {

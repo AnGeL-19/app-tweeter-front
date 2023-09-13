@@ -7,7 +7,6 @@ import { ComponentBtn } from '../ComponentBtn';
 
 export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , setShowModalEdit}) => {
 
-    // const usersF = useSelector(state => state.user);
     const dispatch = useDispatch();
     const { trigger, isMutating } = useSWRMutation(`user/followUnfollow/${dataUser.uid}`, fetcherPut)
     
@@ -35,7 +34,6 @@ export const ProfileInfo = ({ dataUser, user, setFilterFollower, setShowModal , 
 
             dispatch(followUnFollowFollowing(dataUser.uid, user.following))
 
-            console.log(result);
             if (follow.includes(user.uid)) {
                 setFollow( follow.filter( f => f !== dataUser.uid ) )
             }else{

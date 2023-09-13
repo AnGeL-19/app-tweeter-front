@@ -31,8 +31,6 @@ export const RegisterPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
-
         if(values.password !== values.passwordConfirmation){
             dispatch(addError('Passoword is different'))
             return;

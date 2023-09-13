@@ -81,21 +81,18 @@ export const CreatePost = () => {
 
                 const resultFile = await triggerFile(formdata, /* options */)
 
-                console.log(resultFile);
                 if (resultFile.ok) {
                     newData.img = resultFile.url
                 }
             }
 
 
-            console.log(newData);
             const result = await trigger(newData, /* options */)
 
             if (result.ok) {
                 reset()
 
                 handleEliminateImg()
-                console.log('si jalo', result.tweet);
                 toast.success(result.msg,{
                     position: "bottom-center",
                     autoClose: 1500,
@@ -107,7 +104,6 @@ export const CreatePost = () => {
                     theme: "light",
                     })
             }else {
-                console.log(result);
                 toast.warning('Error when creating a tweet ',{
                     position: "bottom-center",
                     autoClose: 1500,
@@ -122,7 +118,6 @@ export const CreatePost = () => {
 
             
           } catch (e) {
-            console.log(e);
             toast.warning('Error when creating a tweet',{
                 position: "bottom-center",
                 autoClose: 1500,

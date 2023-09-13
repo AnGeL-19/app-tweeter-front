@@ -13,7 +13,6 @@ export const ShowPosts = ({query}) => {
         limit: 5
     })
 
-    console.log(`${query}${query.includes('?')?'&':'?'}${new URLSearchParams({...optionPage})}`, '-------->');
     const [hasMore, setHasMore] = useState(false);
     const [tweets, setTweets] = useState([])
     const { data, isLoading } = useSWR(`${query}${query.includes('?')?'&':'?'}${new URLSearchParams({...optionPage})}`, 
@@ -39,7 +38,6 @@ export const ShowPosts = ({query}) => {
 
 
     useEffect(() => {
-        console.log(data);
         if(data){
             setHasMore(data.data.length > 0)
             setTweets(prev => [...prev, ...data.data])

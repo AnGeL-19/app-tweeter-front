@@ -13,7 +13,6 @@ export const BtnSocialAction = ({user, tweet, setValuesStatus, btnSocialAction }
         const result = await trigger({
             idTweet: tweet.tid
         }, /* options */)
-        console.log(result);
 
         if (!result.ok) throw new Error('Error', result)
 

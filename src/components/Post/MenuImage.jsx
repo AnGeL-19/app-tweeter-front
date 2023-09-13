@@ -8,7 +8,6 @@ export const MenuImage = ({values,setImage,showMenuImage}) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
-    console.log(file);
     if(file){
    
         values.photo = file;

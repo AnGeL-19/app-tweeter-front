@@ -1,11 +1,8 @@
 import React, { Suspense, useState } from 'react'
-import { useEffect } from 'react'
 import useSWR from 'swr'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-
 import { FilterPost } from '../components/FilterPost'
-
 import { ModalFollow } from '../components/profile/ModalFollow'
 import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { ShowPosts } from '../components/ShowPost/ShowPosts'
@@ -15,9 +12,9 @@ import { EditProfile } from '../components/profile/EditProfile'
 import { Modal } from '../components/modal/Modal'
 import { useQuery } from '../hooks/useQuery'
 import { useRef } from 'react'
-import { queryDataParams, queryDataParamsApi, selectedFilter, selectedParam } from '../helpers/selectedRoute'
+import { queryDataParamsApi, selectedFilter,  } from '../helpers/selectedRoute'
 
-// const Modal = lazy(() => import('../components/modal/Modal'))
+
 
 export const ProfilePage = () => {
 
@@ -66,18 +63,9 @@ export const ProfilePage = () => {
     const [showModalEditInfo, setShowModalEditInfo] = useState(false);
     const [filterFollower, setFilterFollower] = useState(false);
 
-    // const [filter, setFilter] = useState(objFilter)
-    // const [queryData, setQueryData] = useState('')  
-    // const [queryDataParams, setQueryDataParams] = useState({})
-
     const filters = useRef(selectedFilter(objFilter, param.filter))
     const urlData = useRef(filters.current.find(f => f.select))
     const baseUrl = useRef(queryDataParamsApi(urlData.current, query))
-
-    useEffect(() => {
-        console.log(filters.current, urlData.current, baseUrl.current);
-    },[])
-
 
 
     return (

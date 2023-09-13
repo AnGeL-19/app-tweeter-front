@@ -23,7 +23,6 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
     });
 
     const handleEliminateImgComment = () => {
-        console.log("eliminar");
         setImageCmt({
             url: '',
             dataImage: null,
@@ -36,14 +35,10 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
         if(file){
 
             const extension = file.name.split(".");
-            console.log(extension);
 
             const ext = extension[extension.length-1];
-            console.log(ext);
 
             if(extensions.includes(ext.toLowerCase())){
-
-                console.log( URL.createObjectURL(file) );
 
                 setImageCmt({
                     url: URL.createObjectURL(file),
@@ -70,8 +65,7 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
                 formdata.append("fileImage", imageCmt.dataImage, imageCmt.url);
     
                 const resultFile = await triggerFile(formdata, /* options */)
-    
-                console.log(resultFile);
+
                 if (resultFile.ok) {
                     newData.img = resultFile.url
                 }
@@ -80,8 +74,6 @@ export const AddComment = ({user,tid,valuesStatus,setValuesStatus}) => {
             const result = await trigger(newData, /* options */)
     
             if (!result.ok) return;
-                
-                console.log(result.comment);
 
                 setValuesStatus(status => ({
                     ...status,

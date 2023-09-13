@@ -43,7 +43,6 @@ export const SocialActions = ({tweet, user, showAddComment,setShowAddComment,val
     ]
 
     const handleAddComment = () => {
-        console.log('commets');
         setShowAddComment(!showAddComment);
     }
 

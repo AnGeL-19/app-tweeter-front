@@ -1,9 +1,4 @@
-import Cookies from "js-cookie";
-import { useSelector } from "react-redux";
-import { fetchApi, fetchGetApi } from "../helpers/fetch"
-
 import { types } from "../types/types";
-
 
 export const userData = (dataUser) => {
     return async(dispatch) => {

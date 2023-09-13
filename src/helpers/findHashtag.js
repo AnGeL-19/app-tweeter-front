@@ -13,10 +13,6 @@ export const findHashtag = (value='') => {
 
 export const hashtagText = (value='') => {
 
-    // const regex = new RegExp(/#+([a-zA-Z0-9_]+)/ig);
-
-    // console.log(value.split(' ').map( (value, i) => value));
-    // console.log(value.split(' ').map( (value, i) => !regex.test(value.trim())));
 
     const text = (
         <React.Fragment>
